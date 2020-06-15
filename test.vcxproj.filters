@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="ソース ファイル">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="ヘッダー ファイル">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="リソース ファイル">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Scene">
+      <UniqueIdentifier>{e9b2d7c1-e37c-477c-875b-440276eafd1b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\SceneManager">
+      <UniqueIdentifier>{0232bf81-e968-4c20-bcf9-45a666f175db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\PlayScene">
+      <UniqueIdentifier>{7066b894-6a46-4292-ab48-936964053d50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\TutorialScene">
+      <UniqueIdentifier>{ba29dfcd-3874-430b-b56c-c8b3dc45be7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\ResultScene">
+      <UniqueIdentifier>{2f641310-61ee-4bbe-9529-f03362128b29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\TitleScene">
+      <UniqueIdentifier>{b5a67af7-9987-4bf6-ab53-9913ce521a77}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="result.cpp">
+      <Filter>Scene\ResultScene</Filter>
+    </ClCompile>
+    <ClCompile Include="tutorial.cpp">
+      <Filter>Scene\TutorialScene</Filter>
+    </ClCompile>
+    <ClCompile Include="title.cpp">
+      <Filter>Scene\TitleScene</Filter>
+    </ClCompile>
+    <ClCompile Include="play.cpp">
+      <Filter>Scene\PlayScene</Filter>
+    </ClCompile>
+    <ClCompile Include="scene_manager.cpp">
+      <Filter>Scene\SceneManager</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="result.hpp">
+      <Filter>Scene\ResultScene</Filter>
+    </ClInclude>
+    <ClInclude Include="tutorial.hpp">
+      <Filter>Scene\TutorialScene</Filter>
+    </ClInclude>
+    <ClInclude Include="title.hpp">
+      <Filter>Scene\TitleScene</Filter>
+    </ClInclude>
+    <ClInclude Include="play.hpp">
+      <Filter>Scene\PlayScene</Filter>
+    </ClInclude>
+    <ClInclude Include="scene_manager.hpp">
+      <Filter>Scene\SceneManager</Filter>
+    </ClInclude>
+    <ClInclude Include="base_scene.hpp">
+      <Filter>Scene</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
