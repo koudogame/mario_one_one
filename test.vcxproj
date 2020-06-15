@@ -151,6 +151,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="block_base.cpp" />
+    <ClCompile Include="field.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="play.cpp" />
     <ClCompile Include="result.cpp" />
@@ -160,7 +162,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="base_scene.hpp" />
+    <ClInclude Include="block_base.hpp" />
+    <ClInclude Include="field.hpp" />
     <ClInclude Include="play.hpp" />
+    <ClInclude Include="release.hpp" />
     <ClInclude Include="result.hpp" />
     <ClInclude Include="scene_manager.hpp" />
     <ClInclude Include="title.hpp" />
