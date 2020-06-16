@@ -52,6 +52,12 @@ void SceneManager::update()
     scene_->update();
 }
 
+// シーン更新
+void SceneManager::draw()
+{
+    scene_->draw();
+}
+
 // シーン消去
 void SceneManager::finalize()
 {

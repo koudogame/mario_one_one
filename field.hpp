@@ -2,12 +2,15 @@
 #include <vector>
 #include <fstream>
 #include "block_base.hpp"
+#include "release.hpp"
+
 
 class Field
 {
 public :
     bool initialize(std::fstream& stage);
-    void update(int Texture, int ScreenOver);
+    void update();
+    void draw(int ScreenOver);
     void finalize();
 
 private :

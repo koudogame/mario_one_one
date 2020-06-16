@@ -5,10 +5,14 @@ bool ResultScene::initialize()
     return true;
 }
 
-void ResultScene::finalize()
+void ResultScene::update()
 {
 }
 
-void ResultScene::update()
+void ResultScene::draw()
+{
+}
+
+void ResultScene::finalize()
 {
 }

@@ -6,8 +6,9 @@ class ResultScene :
 {
 public :
     bool initialize() override;
-    void finalize() override;
     void update() override;
+    void draw() override;
+    void finalize() override;
 
 private:
 };

@@ -9,4 +9,5 @@ public:
 
     // Œ^–¼‡‚í‚¹‚Äg‚¤ ( ˆá‚¤‚ÆŒÄ‚Î‚ê‚È‚¢B)
     virtual void update() {};
+    virtual void draw() {};
 };

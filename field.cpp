@@ -1,5 +1,5 @@
 #include "field.hpp"
-#include "release.hpp"
+
 static constexpr int kBlocksize = 64;
 
 bool Field::initialize(std::fstream& stage)
@@ -37,18 +37,18 @@ bool Field::initialize(std::fstream& stage)
 
                 //if (id == )
                 //{
-                //    field_[layer][i][j] = new ;
+                field_[layer][i][j] = new BlockBase;
                 //}
 
                 // •`‰æ”ÍˆÍ‚ðÝ’è
                 rect.top = id / 16 * kBlocksize;
                 rect.left = id % 16 * kBlocksize;
-                rect.bottom = rect.top + kBlocksize;
-                rect.right = rect.left + kBlocksize;
+                rect.bottom = 64;
+                rect.right = 64;
 
-                // À•W‚ðÝ’è
-                position_x = 64 * j;
-                position_y = 64 * i;
+                // Œ©‚¦‚È‚¢‹ó‚Ì•”•ª‚Ì•ª‚¾‚¯ (-n*64)
+                position_x = (64 * j);
+                position_y = (64 * i) - 256;
 
                 field_[layer][i][j]->initialize(id, rect, position_x, position_y);
             }
@@ -57,20 +57,36 @@ bool Field::initialize(std::fstream& stage)
     return true;
 }
 
-void Field::update(int Texture, int ScreenOver)
+void Field::update()
 {
-    for (int layer = 0; layer < 2; layer++)
+    //for( int layer = 0; layer < 2; layer++ )
+    //{
+    //    for( int i = 0; i < height_; i++ )
+    //    {
+    //        for( int j = 0; j < width_; j++ )
+    //        {
+    //            // — ”wŒi‚Ì•`‰æAcA‰¡‚ð‰æ‘œ‚ÌØ‚èŽæ‚è‚É‡‚í‚¹‚Ä•`‰æ
+    //            field_[ layer ][ i ][ j ]->update();
+    //        }
+    //    }
+    //}
+}
+
+void Field::draw(int ScreenOver)
+{
+    for( int layer = 0; layer < 2; layer++ )
     {
-        for (int i = 0; i < height_; i++)
+        for( int i = 0; i < height_; i++ )
         {
-            for (int j = 0; j < width_; j++)
+            for( int j = 0; j < width_; j++ )
             {
                 // — ”wŒi‚Ì•`‰æAcA‰¡‚ð‰æ‘œ‚ÌØ‚èŽæ‚è‚É‡‚í‚¹‚Ä•`‰æ
-                field_[layer][i][j]->update(texture_, ScreenOver);
+                field_[ layer ][ i ][ j ]->draw( texture_, ScreenOver );
             }
         }
     }
 }
+
 
 void Field::finalize()
 {

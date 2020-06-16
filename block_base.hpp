@@ -1,5 +1,5 @@
 #pragma once
-#include <windef.h>
+#include <windows.h>
 #include <DxLib.h>
 
 // パーツ構造体
@@ -7,7 +7,7 @@ struct Parts
 {
     int Id;                     // ID番号の取得
     RECT rect;             // 切り取り範囲
-    int x, y;               // ポジション
+    int x, y;                 // ポジション
 
     // 初期化
     Parts()
@@ -26,7 +26,8 @@ protected:
 
 public :
     virtual bool initialize(const int Id, const RECT Rect, const int X, const int Y);
-    virtual void update(int Texture, const int ScreenOver);
+    virtual void update();
+    virtual void draw( int Texture, const int ScreenOver );
 
     inline const int getId() {return parts_.Id; }
     inline const int getPositionX() { return parts_.x; }

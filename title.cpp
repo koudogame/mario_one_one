@@ -5,10 +5,14 @@ bool TitleScene::initialize()
     return true;
 }
 
-void TitleScene::finalize()
+void TitleScene::update()
 {
 }
 
-void TitleScene::update()
+void TitleScene::draw()
+{
+}
+
+void TitleScene::finalize()
 {
 }

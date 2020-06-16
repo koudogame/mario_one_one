@@ -34,6 +34,12 @@
     <Filter Include="BlockBase">
       <UniqueIdentifier>{16f10872-073c-4aee-a7aa-824cac0b22e1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Field">
+      <UniqueIdentifier>{546c0533-e355-4170-abbe-2506ff079f6b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Player">
+      <UniqueIdentifier>{af27e4b3-1ea6-46cd-8dd0-123f5a6b0a96}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -58,7 +64,7 @@
       <Filter>BlockBase</Filter>
     </ClCompile>
     <ClCompile Include="field.cpp">
-      <Filter>Scene\PlayScene</Filter>
+      <Filter>Field</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -80,14 +86,14 @@
     <ClInclude Include="base_scene.hpp">
       <Filter>Scene</Filter>
     </ClInclude>
-    <ClInclude Include="field.hpp">
-      <Filter>Scene\PlayScene</Filter>
-    </ClInclude>
     <ClInclude Include="release.hpp">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="block_base.hpp">
       <Filter>BlockBase</Filter>
+    </ClInclude>
+    <ClInclude Include="field.hpp">
+      <Filter>Field</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -7,8 +7,9 @@ class TitleScene :
 {
 public:
     bool initialize() override;
+    void update() override;
+    void draw() override;
     void finalize() override;
-    void update() override;  
 
 private:
 };

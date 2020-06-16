@@ -5,10 +5,14 @@ bool TutorialScene::initialize()
     return true;
 }
 
-void TutorialScene::finalize()
+void TutorialScene::update()
 {
 }
 
-void TutorialScene::update()
+void TutorialScene::draw()
+{
+}
+
+void TutorialScene::finalize()
 {
 }
