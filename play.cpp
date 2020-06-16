@@ -39,7 +39,7 @@ void PlayScene::update()
 
 void PlayScene::draw()
 {
-    field_->draw(0/*‚±‚±‚ÉScreenOver*/);
+    field_->draw(player_->getScrollCnt());
     player_->draw();
 }
 

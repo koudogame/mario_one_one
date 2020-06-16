@@ -6,8 +6,8 @@
 struct Parts
 {
     int Id;                     // ID番号の取得
-    RECT rect;             // 切り取り範囲
-    int x, y;                 // ポジション
+    RECT rect;                  // 切り取り範囲
+    int x, y;                   // ポジション
 
     // 初期化
     Parts()
