@@ -1,8 +1,7 @@
 #pragma once 
 #include "base_scene.hpp"
-
-// ‚±‚±‚ÉŒã‚©‚çField, Player‚ð‚©‚±‚¤
 #include "field.hpp"
+#include "player.hpp"
 
 
 class PlayScene :
@@ -19,4 +18,5 @@ public :
 
 private:
     Field* field_;
+    Player* player_;
 };

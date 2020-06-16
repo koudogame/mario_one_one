@@ -4,7 +4,7 @@ static constexpr int kBlocksize = 64;
 
 bool Field::initialize(std::fstream& stage)
 {
-    texture_ = LoadGraph("Texture/mario1.png");
+    texture_ = LoadGraph("Texture/mario_field.png");
 
     // ファイルポインタを先頭に移動
     stage.seekg(0);

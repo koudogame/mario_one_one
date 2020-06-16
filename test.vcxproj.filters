@@ -66,6 +66,9 @@
     <ClCompile Include="field.cpp">
       <Filter>Field</Filter>
     </ClCompile>
+    <ClCompile Include="player.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="result.hpp">
@@ -94,6 +97,9 @@
     </ClInclude>
     <ClInclude Include="field.hpp">
       <Filter>Field</Filter>
+    </ClInclude>
+    <ClInclude Include="player.hpp">
+      <Filter>Player</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
