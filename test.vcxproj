@@ -164,6 +164,7 @@
   <ItemGroup>
     <ClInclude Include="base_scene.hpp" />
     <ClInclude Include="block_base.hpp" />
+    <ClInclude Include="both_hands.hpp" />
     <ClInclude Include="field.hpp" />
     <ClInclude Include="play.hpp" />
     <ClInclude Include="player.hpp" />

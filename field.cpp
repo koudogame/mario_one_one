@@ -105,3 +105,43 @@ void Field::finalize()
         }
     }
 }
+
+int Field::getRightShoulderId( Side side_ )
+{
+    // 右肩のマップ番号
+    int x = side_.right_shoulder_x / 64;
+    int y = (side_.right_shoulder_y) / 64;
+
+    // 右上のId
+    return field_[ 1 ][ y ][ x ]->getId();
+}
+
+int Field::getRightHandId( Side side_ )
+{
+    // 右手のマップ番号
+    int x = side_.right_hand_x / 64;
+    int y = (side_.right_hand_y) / 64;
+
+    // 右下のId
+    return field_[ 1 ][ y ][ x ]->getId();
+}
+
+int Field::getLeftShoulderId( Side side_ )
+{
+    // 左肩のマップ番号
+    int x = side_.left_shoulder_x / 64;
+    int y = (side_.left_shoulder_y) / 64;
+
+    // 右上のId
+    return field_[ 1 ][ y ][ x ]->getId();
+}
+
+int Field::getLeftHandId( Side side_ )
+{
+    // 左手のマップ番号
+    int x = side_.left_hand_x / 64;
+    int y = (side_.left_hand_y) / 64;
+
+    // 左下のId
+    return field_[ 1 ][ y ][ x ]->getId();
+}

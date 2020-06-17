@@ -1,4 +1,5 @@
 #include "field.hpp"
+#include "both_hands.hpp"
 #include "release.hpp"
 
 constexpr int kSize        = 64;
@@ -7,7 +8,8 @@ constexpr int kJumpPower   = 25;
 constexpr int kStartX      = 256;
 constexpr int kStartY      = 576;
 constexpr int kEndLine     = 576;
-constexpr float kGravity   = 0.98F;
+constexpr int kDeadLine    = 704;
+constexpr int kGravity     = 1;
 
 // マリオの状態保存
 enum Status
@@ -20,7 +22,7 @@ enum Status
 class Player
 {
 public:
-    Player();
+    Player(Field* Field);
     ~Player();
     bool initialize();
     void update();
@@ -28,12 +30,20 @@ public:
     void finalize();
 
     void animation();
-    
+
+    inline Side getSide() { return side_; }
+
     /*背景の描画を流す数値*/
     inline int getScrollCnt() { return scroll_cnt_; }                
 
 private:
+    Side side_;                // Side構造体を持つ
+    Field* field_;
+
     int texture_;              // テクスチャハンドル
+
+    int total_movement_x_;     // 総合移動量x
+    int total_movement_y_;     // 総合移動量y
 
     int pos_x_;                // 座標x
     int pos_y_;                // 座標y 

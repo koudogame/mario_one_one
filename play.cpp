@@ -16,7 +16,7 @@ bool PlayScene::initialize()
 {
     // インスタンスの生成
     field_ = new Field();
-    player_ = new Player();
+    player_ = new Player(field_);
 
     // ファイルに対する入力ストリーム
     std::fstream stage;
