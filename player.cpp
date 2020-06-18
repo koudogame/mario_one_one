@@ -33,7 +33,7 @@ bool Player::initialize()
     right_ = 0;
     bottom_ = 0;
 
-    status_ = kFireMario                                                                                                                      ;
+    status_ = kMario;
 
     scroll_cnt_ = 0;               // 右に抜けた分増やしていく
 
@@ -56,6 +56,7 @@ bool Player::initialize()
     if( status_ != kMario )
     {
         pos_y_ -= kSize;
+        total_movement_y_ -= kSize;
     }
 
     return true;
@@ -67,15 +68,20 @@ void Player::update()
     if( !(GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_RIGHT) == 0 )
     {
         direction_ = true;         // 向きを右向きに変える
-        right_button_ = false;     // 押している(トラッカー)
+        right_button_ = false;     // 押している(トラッカー)            
+        
 
-        // 右肩ポジション設定
+        // 上と両サイドは変更なし
         side_.right_shoulder_x = total_movement_x_ + kSize + 1;
+        side_.right_hand_x = total_movement_x_ + kSize + 1;
         side_.right_shoulder_y = total_movement_y_;
 
-        // 右手ポジション設定
-        side_.right_hand_x = total_movement_x_ + kSize + 1;
-        side_.right_hand_y = total_movement_y_ + kSize;
+        // status_がkMarioの時
+        if( status_ == kMario )
+         side_.right_hand_y = total_movement_y_ + kSize;
+        else
+         side_.right_hand_y = total_movement_y_ + (kSize * 2);
+
 
         // 当たり判定のないブロックのとき
         if( field_->getRightShoulderId( side_ ) > 64 &&
@@ -93,6 +99,8 @@ void Player::update()
                 pos_x_ = kEndLine;
             }
         }
+
+        // デバッグ用変数
         int shoulder = field_->getRightShoulderId( side_ );
         int hand = field_->getRightHandId( side_ );
 
@@ -107,13 +115,16 @@ void Player::update()
         direction_ = false;        // 向きを左向きに変える
         left_button_ = false;      // 押している
 
-        // 左肩ポジション設定
+        // 上と両サイドは変更なし
         side_.left_shoulder_x = total_movement_x_ - 1;
+        side_.left_hand_x     = total_movement_x_ - 1;
         side_.left_shoulder_y = total_movement_y_;
 
-        // 左肩ポジション設定
-        side_.left_hand_x     = total_movement_x_ - 1;
-        side_.left_hand_y     = total_movement_y_ + kSize;
+        if( status_ == kMario )
+            side_.left_hand_y = total_movement_y_ + kSize;
+        else
+            side_.left_hand_y = total_movement_y_ + (kSize * 2);
+
 
         // マリオの右側に衝突するブロックがないとき
         if( field_->getLeftShoulderId( side_ ) > 64 &&
