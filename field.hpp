@@ -3,6 +3,7 @@
 #include <fstream>
 #include "block_base.hpp"
 #include "both_hands.hpp"
+#include "up_and_down.hpp"
 #include "release.hpp"
 
 
@@ -16,13 +17,20 @@ public :
 
     // 体の右側
     int getRightShoulderId( Side side_ );
-    int getRightHandId( Side side_ );
+    int getRightHandId    ( Side side_ );
     // 体の左側
-    int getLeftShoulderId( Side side_ );
-    int getLeftHandId( Side side_ );
+    int getLeftShoulderId ( Side side_ );
+    int getLeftHandId     ( Side side_ );
+    // 体の上側
+    int getRightHeadId    ( UpDown updown_ );
+    int getLeftHeadId     ( UpDown updown_ );
+    // 体の下側
+    int getRightFootId    ( UpDown updown_ );
+    int getLeftFootId     ( UpDown updown_ );
 
 private :
-    Side side_;
+    Side side_;                // Side構造体
+    UpDown updown_;            // UpDown構造体
 
     int texture_;              // テクスチャハンドル保存用
     int height_;               // 高さ

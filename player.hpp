@@ -1,5 +1,6 @@
 #include "field.hpp"
 #include "both_hands.hpp"
+#include "up_and_down.hpp"
 #include "release.hpp"
 
 constexpr int kSize        = 64;
@@ -9,6 +10,7 @@ constexpr int kStartX      = 256;
 constexpr int kStartY      = 576;
 constexpr int kEndLine     = 576;
 constexpr int kDeadLine    = 704;
+constexpr int kSkyBlue     = 191;
 constexpr int kGravity     = 1;
 
 // マリオの状態保存
@@ -29,16 +31,22 @@ public:
     void draw();
     void finalize();
 
-    void animation();
+    void animation();          // マリオのアニメーション
+    void collision();          // 足元の衝突判定を行う
+    void landing();            // 着地したときの処理を行う
+    void hit();                // 頭をぶつけたときの判定
 
-    inline Side getSide() { return side_; }
+    inline Side getSide() { return side_; }         // 体の左右
+    inline UpDown getUpDown() { return updown_; }   // 体の上下
 
     /*背景の描画を流す数値*/
     inline int getScrollCnt() { return scroll_cnt_; }                
 
 private:
     Side side_;                // Side構造体を持つ
-    Field* field_;
+    UpDown updown_;            // UpDown構造体を持つ
+
+    Field* field_;             // Fieldの関数が使えるようにする
 
     int texture_;              // テクスチャハンドル
 
@@ -74,4 +82,10 @@ private:
 
     int acceleration_;         // ジャンプ力を付与
     bool jumping_;             // true : 飛べる, false : 飛べない
+
+    int break_right_x_;        // 右頭のぶつかった座標x
+    int break_right_y_;        // 右頭のぶつかった座標y
+
+    int break_left_x_;         // 左頭のぶつかった座標x
+    int break_left_y_;         // 左頭のぶつかった座標y
 };

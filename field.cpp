@@ -145,3 +145,43 @@ int Field::getLeftHandId( Side side_ )
     // 左下のId
     return field_[ 1 ][ y ][ x ]->getId();
 }
+
+int Field::getRightHeadId( UpDown updown_ )
+{
+    // 右頭のマップ番号
+    int x = updown_.right_head_x / 64;
+    int y = updown_.right_head_y / 64;
+
+    // 右頭のId
+    return field_[ 1 ][ y ][ x ]->getId();
+}
+
+int Field::getLeftHeadId( UpDown updown_ )
+{
+    // 左頭のマップ番号
+    int x = updown_.left_head_x / 64;
+    int y = updown_.left_head_y / 64;
+
+    // 左頭のId
+    return field_[ 1 ][ y ][ x ]->getId();
+}
+
+int Field::getRightFootId( UpDown updown_ )
+{
+    // 右足のマップ番号
+    int x = updown_.right_foot_x / 64;
+    int y = updown_.right_foot_y / 64;
+
+    // 右足のId
+    return field_[ 1 ][ y ][ x ]->getId();
+}
+
+int Field::getLeftFootId( UpDown updown_ )
+{
+    // 左足のマップ番号
+    int x = updown_.left_foot_x / 64;
+    int y = updown_.left_foot_y / 64;
+
+    // 左足のId
+    return field_[ 1 ][ y ][ x ]->getId();
+}

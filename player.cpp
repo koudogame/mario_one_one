@@ -20,37 +20,43 @@ Player::~Player()
 
 bool Player::initialize()
 {
-    texture_ = LoadGraph( "Texture/mario_anime.png" );
-    pos_x_ = kStartX;
-    pos_y_ = kStartY;
+    texture_          = LoadGraph( "Texture/mario_anime.png" );
+    pos_x_            = kStartX;
+    pos_y_            = kStartY;
 
     // 数値の中のポジション
     total_movement_x_ = 256;
     total_movement_y_ = 832;
 
-    left_ = 0;
-    top_ = 0;
-    right_ = 0;
-    bottom_ = 0;
+    left_             = 0;
+    top_              = 0;
+    right_            = 0;
+    bottom_           = 0;
 
-    status_ = kMario;
+    status_           = kMario;
 
-    scroll_cnt_ = 0;               // 右に抜けた分増やしていく
+    scroll_cnt_       = 0;            // 右に抜けた分増やしていく
 
-    animation_ = 0;                // 立っているだけの状態
-    direction_ = true;             // 初期は右向き
+    animation_        = 0;            // 立っているだけの状態
+    direction_        = true;         // 初期は右向き
 
-    animation_cnt_ = 0;            // 何もしていないときは動かない
-    animation_flag_ = true;        // ジャンプしているとき以外は移動時アニメーション
+    animation_cnt_    = 0;            // 何もしていないときは動かない
+    animation_flag_   = true;         // ジャンプしているとき以外は移動時アニメーション
 
     old_right_button_ = true;
-    old_left_button_ = true;
+    old_left_button_  = true;
 
-    right_button_ = true;
-    left_button_ = true;
+    right_button_     = true;
+    left_button_      = true;
 
-    acceleration_ = 0;
-    jumping_ = true;
+    acceleration_     = 0;
+    jumping_          = true;
+
+    break_right_x_    = 0;
+    break_right_y_    = 0;
+
+    break_left_x_     = 0;
+    break_left_y_     = 0;
 
     // 始まったときstatus_がkMario以外なら
     if( status_ != kMario )
@@ -70,17 +76,16 @@ void Player::update()
         direction_ = true;         // 向きを右向きに変える
         right_button_ = false;     // 押している(トラッカー)            
         
-
         // 上と両サイドは変更なし
         side_.right_shoulder_x = total_movement_x_ + kSize + 1;
         side_.right_hand_x = total_movement_x_ + kSize + 1;
-        side_.right_shoulder_y = total_movement_y_;
+        side_.right_shoulder_y = total_movement_y_ + 1;
 
         // status_がkMarioの時
         if( status_ == kMario )
-         side_.right_hand_y = total_movement_y_ + kSize;
+         side_.right_hand_y = total_movement_y_ + kSize - 1;
         else
-         side_.right_hand_y = total_movement_y_ + (kSize * 2);
+         side_.right_hand_y = total_movement_y_ + (kSize * 2) - 1;
 
 
         // 当たり判定のないブロックのとき
@@ -120,10 +125,11 @@ void Player::update()
         side_.left_hand_x     = total_movement_x_ - 1;
         side_.left_shoulder_y = total_movement_y_;
 
+        // 下の位置だけ状態に応じて変更する
         if( status_ == kMario )
-            side_.left_hand_y = total_movement_y_ + kSize;
+            side_.left_hand_y = total_movement_y_ + kSize - 1;
         else
-            side_.left_hand_y = total_movement_y_ + (kSize * 2);
+            side_.left_hand_y = total_movement_y_ + (kSize * 2) - 1;
 
 
         // マリオの右側に衝突するブロックがないとき
@@ -185,51 +191,76 @@ void Player::update()
 
         // マリオを飛ばす
         pos_y_ += acceleration_;
-        total_movement_y_ = pos_y_;
+        total_movement_y_ += acceleration_;
     }
 
-    ////////////////////////////////////////////////////
-    // デバッグ用 足元判定が取れるまでkEndLineを設定する
+    // ２段着地しないようにする魔法の数字
+    if( acceleration_ >= 20)
+    {
+        acceleration_ = 20;
+    }
+
+    // マリオの頭
+    updown_.right_head_x     = total_movement_x_ + kSize;
+    updown_.right_head_y     = total_movement_y_ - 1;
+    updown_.left_head_x      = total_movement_x_;
+    updown_.left_head_y      = total_movement_y_ - 1;
+
+    // マリオの足元
+    updown_.right_foot_x     = total_movement_x_ + kSize;
+    updown_.left_foot_x      = total_movement_x_;
+
     if( status_ == kMario )
     {
-        if( pos_y_ > kEndLine )
-        {
-            pos_y_ = kStartY - 1;
-            total_movement_y_ = 831;
-
-            // 着地        
-            if( animation_flag_ == false )
-            {
-                animation_ = 0;
-                animation_flag_ = true;
-            }
-            jumping_ = true;
-        }
+        updown_.right_foot_y = total_movement_y_ + kSize + 1;
+        updown_.left_foot_y  = total_movement_y_ + kSize + 1;
     }
     else
     {
-        if( pos_y_ > kEndLine - 64)
-        {
-            pos_y_ = kStartY - 65;
-            total_movement_y_ = 763;
+        updown_.right_foot_y = total_movement_y_ + (kSize * 2) + 1;
+        updown_.left_foot_y  = total_movement_y_ + (kSize * 2) + 1;
+    }
 
-            // 着地        
-            if( animation_flag_ == false )
+    // 上へ飛んでいるときにだけhit()を呼ぶ
+    if( acceleration_ < 0 )
+    {
+        // 頭の上にある時
+        if( field_->getRightHeadId( updown_ ) <= 64
+            || field_->getLeftHeadId( updown_ ) <= 64 )
+        {
+            // 右頭にあたるとき
+            if( field_->getRightHeadId( updown_ ) <= 64 )
             {
-                animation_ = 0;
-                animation_flag_ = true;
+                break_right_x_ = (total_movement_x_ / 64) + 1;
+                break_right_y_ = total_movement_y_ / 64;
             }
-            jumping_ = true;
+
+            // 左頭にあたるとき
+            if( field_->getLeftHeadId( updown_ ) <= 64 )
+            {
+                break_left_x_ = total_movement_x_ / 64;
+                break_left_y_ = total_movement_y_ / 64;
+            }
+            // デバッグ用変数
+            int Head = field_->getRightHeadId( updown_ );
+            int Foot = field_->getRightFootId( updown_ );
+
+            // 頭をぶつけたときの判定
+            hit();
         }
     }
-    ////////////////////////////////////////////////////
-
+    // 上へ飛ぶ加速がなくなったときに下の判定を取り始める
+    else
+    {
+        // 足元の衝突判定
+        collision();
+    }
 }
 
 void Player::draw()
-{   
+{
     // 状態は変わってもwidthは変わらない
-     left_ = animation_ * kSize;
+    left_ = animation_ * kSize;
     right_ = kSize;
 
     // マリオのとき
@@ -250,19 +281,9 @@ void Player::draw()
         top_ = kSize * 8;
         bottom_ = kSize * 2;
     }
-
-    if( direction_ == true )
-    {
-        // 右向きマリオの描画
-        DrawRectGraph( pos_x_, pos_y_, left_, top_, right_, bottom_,
-            texture_, TRUE, FALSE );
-    }
-    else
-    {
-        // 左向きマリオの描画
-        DrawRectGraph( pos_x_, pos_y_, left_, top_, right_, bottom_,
-            texture_, TRUE, TRUE );
-    }
+    // 右向きマリオの描画
+    DrawRectGraph( pos_x_, pos_y_, left_, top_, right_, bottom_,
+        texture_, TRUE, !direction_ );
 }
 
 void Player::finalize()
@@ -294,3 +315,82 @@ void Player::animation()
     }
 
 }
+
+void Player::collision()
+{
+    // 足元にあるブロックが乗れるとき
+    if( field_->getRightFootId( updown_ ) <= 64 ||
+        field_->getLeftFootId( updown_ ) <= 64 )
+    {
+        landing();          // 着地処理
+
+        acceleration_ = 0;  // 落下速度
+
+        int block_line = std::round( static_cast<float>(total_movement_y_) / 64 );
+        pos_y_ = (block_line - 4) * 64;
+        total_movement_y_ = block_line * 64;
+    }
+    // 足元に何もなく浮いているとき
+    else if( field_->getRightFootId( updown_ ) == kSkyBlue && field_->getLeftFootId( updown_ ) == kSkyBlue )
+    {
+        // 飛べないようにする
+        jumping_ = false;
+
+        // マリオが画面外いに行ったとき
+        if( pos_y_ > 670 )
+        {
+            // gameover
+            acceleration_ = -kJumpPower;
+        }
+    }
+    // 足元にあるブロックが乗れないとき
+    else
+    {
+        if( status_ == kMario )
+        {
+            // 床より下の時
+            if( pos_y_ > kEndLine )
+            {
+                landing(); // 着地処理
+
+                pos_y_ = kStartY - 1;
+                total_movement_y_ = 831;
+            }
+        }
+        else
+        {
+            // 床より下の時
+            if( pos_y_ > kEndLine - 64 )
+            {
+                landing(); // 着地処理
+
+                pos_y_ = kStartY - 65;
+                total_movement_y_ = 763;
+            }
+        }
+    }
+}
+
+void Player::landing()
+{
+    // フラグリセット        
+    if( animation_flag_ == false )
+    {
+        animation_ = 0;
+        animation_flag_ = true;
+    }
+    jumping_ = true;
+}
+
+void Player::hit()
+{
+    // 上への加速度を無くす
+    acceleration_ = 0;
+
+    int block_line = std::round( static_cast<float>(total_movement_y_) / 64 );
+
+    // プレイヤーの立つ場所を上の辺の高さにする
+    pos_y_ = (block_line - 4) * 64;
+    total_movement_y_ = block_line * 64;
+}
+
