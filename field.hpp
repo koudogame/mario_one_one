@@ -8,9 +8,10 @@
 
 /* New‚·‚éClass */
 #include "mystery.hpp"
+#include "brick.hpp"
 
+constexpr int kBrick = 19;
 constexpr int kMystery = 48;
-
 
 class Field
 {

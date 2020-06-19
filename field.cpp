@@ -35,9 +35,13 @@ bool Field::initialize(std::fstream& stage)
 
                 stage.read(reinterpret_cast<char*>(&id), sizeof(char));
 
-                if (id == kMystery)
+                if( id == kBrick )
                 {
-                field_[layer][i][j] = new Mystery;
+                    field_[ layer ][ i ][ j ] = new Brick;
+                }
+                else if( id == kMystery )
+                {
+                    field_[ layer ][ i ][ j ] = new Mystery;
                 }
                 else
                 {

@@ -75,6 +75,9 @@
     <ClCompile Include="mystery.cpp">
       <Filter>BlockBase\Mystery</Filter>
     </ClCompile>
+    <ClCompile Include="brick.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="result.hpp">
@@ -115,6 +118,9 @@
     </ClInclude>
     <ClInclude Include="mystery.hpp">
       <Filter>BlockBase\Mystery</Filter>
+    </ClInclude>
+    <ClInclude Include="brick.hpp">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
