@@ -6,12 +6,17 @@
 #include "up_and_down.hpp"
 #include "release.hpp"
 
+/* New‚·‚éClass */
+#include "mystery.hpp"
+
+constexpr int kMystery = 48;
+
 
 class Field
 {
 public :
     bool initialize(std::fstream& stage);
-    void update();
+    void update( int Brx, int Bry, int Blx, int Bly );
     void draw(int ScreenOver);
     void finalize();
 

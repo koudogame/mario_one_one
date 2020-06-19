@@ -34,6 +34,7 @@ bool Player::initialize()
     bottom_           = 0;
 
     status_           = kMario;
+    past_status_      = status_;
 
     scroll_cnt_       = 0;            // 右に抜けた分増やしていく
 
@@ -70,6 +71,25 @@ bool Player::initialize()
 
 void Player::update()
 {
+    // 進化ボタン(デバッグ用特殊コマンド)
+    if( !(GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_Y) == 0 )
+    {
+        // 最終進化じゃないとき
+        if( status_ < kFireMario )
+        {
+            status_ += 1;          // マリオ変身
+
+            if( past_status_ == kMario )
+            {
+                pos_y_ -= kSize;
+                total_movement_y_ -= kSize;
+            }
+
+            // 変身後の状態を保存
+            past_status_ = status_;
+        }
+    }    
+
     // 右入力
     if( !(GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_RIGHT) == 0 )
     {
@@ -78,8 +98,8 @@ void Player::update()
         
         // 上と両サイドは変更なし
         side_.right_shoulder_x = total_movement_x_ + kSize + 1;
-        side_.right_hand_x = total_movement_x_ + kSize + 1;
-        side_.right_shoulder_y = total_movement_y_ + 1;
+        side_.right_hand_x     = total_movement_x_ + kSize + 1;
+        side_.right_shoulder_y = total_movement_y_;
 
         // status_がkMarioの時
         if( status_ == kMario )
@@ -105,10 +125,6 @@ void Player::update()
             }
         }
 
-        // デバッグ用変数
-        int shoulder = field_->getRightShoulderId( side_ );
-        int hand = field_->getRightHandId( side_ );
-
         animation();               // 歩いているアニメーション
     }
     else
@@ -132,7 +148,7 @@ void Player::update()
             side_.left_hand_y = total_movement_y_ + (kSize * 2) - 1;
 
 
-        // マリオの右側に衝突するブロックがないとき
+        // マリオの左側に衝突するブロックがないとき
         if( field_->getLeftShoulderId( side_ ) > 64 &&
             field_->getLeftHandId( side_ ) > 64 )
         {
@@ -148,6 +164,9 @@ void Player::update()
                 total_movement_x_ -= kSpeed;
             }
         }
+        // デバッグ用変数
+        int shoulder = field_->getLeftShoulderId( side_ );
+        int hand = field_->getLeftHandId( side_ );
 
         animation();               // 歩いているアニメーション
     }
@@ -200,15 +219,15 @@ void Player::update()
         acceleration_ = 20;
     }
 
-    // マリオの頭
-    updown_.right_head_x     = total_movement_x_ + kSize;
+    // マリオの頭(幅を左右10小さく)
+    updown_.right_head_x     = total_movement_x_ + 54;
     updown_.right_head_y     = total_movement_y_ - 1;
-    updown_.left_head_x      = total_movement_x_;
+    updown_.left_head_x      = total_movement_x_ + 10;
     updown_.left_head_y      = total_movement_y_ - 1;
 
     // マリオの足元
-    updown_.right_foot_x     = total_movement_x_ + kSize;
-    updown_.left_foot_x      = total_movement_x_;
+    updown_.right_foot_x     = total_movement_x_ + 54;
+    updown_.left_foot_x      = total_movement_x_ + 10;
 
     if( status_ == kMario )
     {
@@ -224,30 +243,27 @@ void Player::update()
     // 上へ飛んでいるときにだけhit()を呼ぶ
     if( acceleration_ < 0 )
     {
-        // 頭の上にある時
-        if( field_->getRightHeadId( updown_ ) <= 64
-            || field_->getLeftHeadId( updown_ ) <= 64 )
+        // 右頭にあたるとき
+        if( field_->getRightHeadId( updown_ ) <= 64 )
         {
-            // 右頭にあたるとき
-            if( field_->getRightHeadId( updown_ ) <= 64 )
-            {
-                break_right_x_ = (total_movement_x_ / 64) + 1;
-                break_right_y_ = total_movement_y_ / 64;
-            }
+            break_right_x_ = (total_movement_x_ / 64) + 1;
+            break_right_y_ = total_movement_y_ / 64;  
+        }
 
-            // 左頭にあたるとき
-            if( field_->getLeftHeadId( updown_ ) <= 64 )
-            {
-                break_left_x_ = total_movement_x_ / 64;
-                break_left_y_ = total_movement_y_ / 64;
-            }
-            // デバッグ用変数
-            int Head = field_->getRightHeadId( updown_ );
-            int Foot = field_->getRightFootId( updown_ );
+        // 左頭にあたるとき
+        if( field_->getLeftHeadId( updown_ ) <= 64 )
+        {
+            break_left_x_ = (total_movement_x_ / 64);
+            break_left_y_ = total_movement_y_ / 64;
+        }
 
+        if( field_->getRightHeadId( updown_ ) <= 64 ||
+            field_->getLeftHeadId( updown_ ) <= 64 )
+        {
             // 頭をぶつけたときの判定
             hit();
         }
+
     }
     // 上へ飛ぶ加速がなくなったときに下の判定を取り始める
     else
@@ -255,6 +271,10 @@ void Player::update()
         // 足元の衝突判定
         collision();
     }
+
+    int Color = GetColor( 255, 255, 255 );
+    DrawFormatString( 0, 0, Color, "%d", break_right_x_ );
+    DrawFormatString( 0, 100, Color, "%d", break_left_x_ );
 }
 
 void Player::draw()

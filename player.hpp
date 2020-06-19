@@ -40,7 +40,13 @@ public:
     inline UpDown getUpDown() { return updown_; }   // 体の上下
 
     /*背景の描画を流す数値*/
-    inline int getScrollCnt() { return scroll_cnt_; }                
+    inline int getScrollCnt() { return scroll_cnt_; }
+
+    /*頭の当たったとき*/
+    inline int getBreakLeftX() { return break_left_x_; }        /*左頭の配列x*/
+    inline int getBreakLeftY() { return break_left_y_; }        /*左頭の配列y*/
+    inline int getBreakRightX() { return break_right_x_; }      /*右頭の配列x*/
+    inline int getBreakRightY() { return break_right_y_; }      /*右頭の配列y*/
 
 private:
     Side side_;                // Side構造体を持つ
@@ -63,6 +69,7 @@ private:
     int bottom_;               // Height
 
     int status_;               // マリオの状態
+    int past_status_;          // マリオの過去の状態
 
     int scroll_cnt_;           // 半分をマリオが超えたときにスクロール
 

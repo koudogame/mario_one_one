@@ -35,10 +35,14 @@ bool Field::initialize(std::fstream& stage)
 
                 stage.read(reinterpret_cast<char*>(&id), sizeof(char));
 
-                //if (id == )
-                //{
-                field_[layer][i][j] = new BlockBase;
-                //}
+                if (id == kMystery)
+                {
+                field_[layer][i][j] = new Mystery;
+                }
+                else
+                {
+                    field_[ layer ][ i ][ j ] = new BlockBase;
+                }
 
                 // 描画範囲を設定
                 rect.top = id / 16 * kBlocksize;
@@ -57,8 +61,21 @@ bool Field::initialize(std::fstream& stage)
     return true;
 }
 
-void Field::update()
+void Field::update( int Brx, int Bry, int Blx, int Bly )
 {
+    // 叩かれた右側のupdate()を呼ぶ
+    if( Brx != 0 || Bry != 0 )
+    {
+        // 更新されたBlockBase->update()を呼び出す
+        field_[ 1 ][ Bry ][ Brx ]->update();
+    }
+
+    // 叩かれた左側のupdate()を呼ぶ
+    if( Blx != 0 || Bly != 0 )
+    {
+        // 更新されたBlockBase->update()を呼び出す
+        field_[ 1 ][ Bly ][ Blx ]->update();
+    }
     //for( int layer = 0; layer < 2; layer++ )
     //{
     //    for( int i = 0; i < height_; i++ )

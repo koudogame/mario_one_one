@@ -40,6 +40,9 @@
     <Filter Include="Player">
       <UniqueIdentifier>{af27e4b3-1ea6-46cd-8dd0-123f5a6b0a96}</UniqueIdentifier>
     </Filter>
+    <Filter Include="BlockBase\Mystery">
+      <UniqueIdentifier>{27ed7dfc-f0ff-44f7-875e-7b7498222e74}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -68,6 +71,9 @@
     </ClCompile>
     <ClCompile Include="player.cpp">
       <Filter>Player</Filter>
+    </ClCompile>
+    <ClCompile Include="mystery.cpp">
+      <Filter>BlockBase\Mystery</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -106,6 +112,9 @@
     </ClInclude>
     <ClInclude Include="up_and_down.hpp">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="mystery.hpp">
+      <Filter>BlockBase\Mystery</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
