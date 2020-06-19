@@ -9,7 +9,7 @@ constexpr int kJumpPower   = 25;
 constexpr int kStartX      = 256;
 constexpr int kStartY      = 576;
 constexpr int kEndLine     = 576;
-constexpr int kDeadLine    = 704;
+constexpr int kDeadLine    = 800;
 constexpr int kSkyBlue     = 191;
 constexpr int kGravity     = 1;
 
@@ -27,7 +27,7 @@ public:
     Player(Field* Field);
     ~Player();
     bool initialize();
-    void update();
+    bool update();
     void draw();
     void finalize();
 
@@ -72,6 +72,8 @@ private:
     int past_status_;          // マリオの過去の状態
 
     int scroll_cnt_;           // 半分をマリオが超えたときにスクロール
+
+    bool gameover_flag_;       // true : 生きている, false : 死んでいる
 
     int animation_;            // 動いているときの切り取り範囲
     bool direction_;           // true : 右向き, false : 左向き

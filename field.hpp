@@ -21,6 +21,7 @@ public :
     void finalize();
 
     // 体の右側
+    //int// getPoint( RightLeft, Parts, XY ) { return human[ RightLeft ][ parts ][ XY ]; }8
     int getRightShoulderId( Side side_ );
     int getRightHandId    ( Side side_ );
     // 体の左側
@@ -34,9 +35,6 @@ public :
     int getLeftFootId     ( UpDown updown_ );
 
 private :
-    Side side_;                // Side構造体
-    UpDown updown_;            // UpDown構造体
-
     int texture_;              // テクスチャハンドル保存用
     int height_;               // 高さ
     int width_;                // 横幅

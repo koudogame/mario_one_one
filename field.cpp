@@ -189,6 +189,13 @@ int Field::getRightFootId( UpDown updown_ )
     int x = updown_.right_foot_x / 64;
     int y = updown_.right_foot_y / 64;
 
+    //int human[ kRL::kRLSize ][ kPartsSize ][ kXYSize ]
+    //{
+    //    kRight,kLeft,
+    //    kFoot,kHead,kSholuder,kHand,
+    //    kX,kY
+    //};
+
     // ‰E‘«‚ÌId
     return field_[ 1 ][ y ][ x ]->getId();
 }
