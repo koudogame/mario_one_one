@@ -66,20 +66,20 @@ bool Field::initialize(std::fstream& stage)
     return true;
 }
 
-void Field::update( int Brx, int Bry, int Blx, int Bly )
+void Field::update(int Brx, int Bry, int Blx, int Bly, int Status)
 {
     // 叩かれた右側のupdate()を呼ぶ
     if( Brx != 0 || Bry != 0 )
     {
         // 更新されたBlockBase->update()を呼び出す
-        field_[ 1 ][ Bry ][ Brx ]->update();
+        field_[ 1 ][ Bry ][ Brx ]->update(Status);
     }
 
     // 叩かれた左側のupdate()を呼ぶ
     if( Blx != 0 || Bly != 0 )
     {
         // 更新されたBlockBase->update()を呼び出す
-        field_[ 1 ][ Bly ][ Blx ]->update();
+        field_[ 1 ][ Bly ][ Blx ]->update(Status);
     }
 }
 

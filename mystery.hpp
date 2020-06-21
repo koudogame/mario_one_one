@@ -5,5 +5,5 @@ class Mystery :
     public BlockBase
 {
 public :
-    void update() override;
+    void update(int Status) override;
 };

@@ -1,6 +1,6 @@
 #include "mystery.hpp"
 
-void Mystery::update()
+void Mystery::update(int Status)
 {
     // ‚Í‚Ä‚È‚ª’@‚©‚ê‚½‚Æ‚«
     if( parts_.Id == 48 || parts_.Id == 49 )

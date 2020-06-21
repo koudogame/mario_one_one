@@ -34,8 +34,8 @@ bool PlayScene::initialize()
 void PlayScene::update()
 {    
     player_->update();
-    field_->update( player_->getBreakRightX(), player_->getBreakRightY(),
-        player_->getBreakLeftX(), player_->getBreakLeftY() );
+    field_->update(player_->getBreakRightX(), player_->getBreakRightY(),
+        player_->getBreakLeftX(), player_->getBreakLeftY(), player_->getStatus());
 }
 
 void PlayScene::draw()

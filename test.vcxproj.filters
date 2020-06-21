@@ -43,6 +43,9 @@
     <Filter Include="BlockBase\Mystery">
       <UniqueIdentifier>{27ed7dfc-f0ff-44f7-875e-7b7498222e74}</UniqueIdentifier>
     </Filter>
+    <Filter Include="BlockBase\Brick">
+      <UniqueIdentifier>{6f2ef463-b6b7-424a-990a-944cf661d1ff}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -76,7 +79,7 @@
       <Filter>BlockBase\Mystery</Filter>
     </ClCompile>
     <ClCompile Include="brick.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>BlockBase\Brick</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -110,17 +113,11 @@
     <ClInclude Include="player.hpp">
       <Filter>Player</Filter>
     </ClInclude>
-    <ClInclude Include="both_hands.hpp">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="up_and_down.hpp">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="mystery.hpp">
       <Filter>BlockBase\Mystery</Filter>
     </ClInclude>
     <ClInclude Include="brick.hpp">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>BlockBase\Brick</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

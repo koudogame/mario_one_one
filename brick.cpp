@@ -1,11 +1,9 @@
 #include "brick.hpp"
 
-void Brick::update()
+void Brick::update(int Status)
 {
-    // â‘Î‰ó‚ê‚é‚¾‚¯‚Æ‰¼’è
-
-    // if( status_ != kMario )
-    //{
+    if (Status != 0)
+    {
         // ƒŒƒ“ƒK‚ª’@‚©‚ê‚½‚Æ‚«
         parts_.Id = 191;
 
@@ -15,5 +13,5 @@ void Brick::update()
         rect.bottom = 64;
         rect.right = 64;
         parts_.rect = rect;
-    //}
+    }
 }

@@ -12,17 +12,14 @@ bool BlockBase::initialize(const int Id, const RECT Rect, const int X, const int
     return true;
 }
 
-void BlockBase::update()
+void BlockBase::update(int Status)
 {
 }
 
 void BlockBase::draw( int Texture, const int ScreenOver )
 {
-    int texture_position_x;
-    int texture_position_y;
-
-    texture_position_x = parts_.x - ScreenOver;
-    texture_position_y = parts_.y;
+    int texture_position_x = parts_.x - ScreenOver;
+    int texture_position_y = parts_.y;
 
     // RECTw’è‚µ‚Ä•`‰æ‚ğs‚¤ŠÖ”
     DrawRectGraph(

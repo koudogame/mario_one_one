@@ -166,7 +166,6 @@
   <ItemGroup>
     <ClInclude Include="base_scene.hpp" />
     <ClInclude Include="block_base.hpp" />
-    <ClInclude Include="both_hands.hpp" />
     <ClInclude Include="brick.hpp" />
     <ClInclude Include="field.hpp" />
     <ClInclude Include="mystery.hpp" />
@@ -177,7 +176,6 @@
     <ClInclude Include="scene_manager.hpp" />
     <ClInclude Include="title.hpp" />
     <ClInclude Include="tutorial.hpp" />
-    <ClInclude Include="up_and_down.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

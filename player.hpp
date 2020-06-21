@@ -37,6 +37,9 @@ public:
     /*背景の描画を流す数値*/
     inline int getScrollCnt() { return scroll_cnt_; }
 
+    /*マリオの状態をfieldにも知らせる*/
+    inline int getStatus() { return status_; }
+
     /*頭の当たったとき*/
     inline int getBreakLeftX() { return break_left_x_; }        /*左頭の配列x*/
     inline int getBreakLeftY() { return break_left_y_; }        /*左頭の配列y*/

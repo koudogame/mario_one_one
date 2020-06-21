@@ -26,7 +26,7 @@ protected:
 
 public :
     virtual bool initialize(const int Id, const RECT Rect, const int X, const int Y);
-    virtual void update();
+    virtual void update(int Status);
     virtual void draw( int Texture, const int ScreenOver );
 
     inline const int getId() {return parts_.Id; }

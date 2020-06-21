@@ -30,7 +30,7 @@ class Field
 {
 public :
     bool initialize(std::fstream& stage);
-    void update( int Brx, int Bry, int Blx, int Bly );
+    void update( int Brx, int Bry, int Blx, int Bly , int Status);
     void draw(int ScreenOver);
     void finalize();
 
