@@ -2,8 +2,6 @@
 #include <vector>
 #include <fstream>
 #include "block_base.hpp"
-#include "both_hands.hpp"
-#include "up_and_down.hpp"
 #include "release.hpp"
 
 /* NewするClass */
@@ -13,6 +11,21 @@
 constexpr int kBrick = 19;
 constexpr int kMystery = 48;
 
+enum RL
+{
+    kRight, kLeft, kRL
+};
+
+enum BodyParts
+{
+    kShoulder, kHands, kHead, kFoot, kBodyParts
+};
+
+enum Position
+{
+    kX, kY, kPosition
+};
+
 class Field
 {
 public :
@@ -21,21 +34,15 @@ public :
     void draw(int ScreenOver);
     void finalize();
 
-    // 体の右側
-    //int// getPoint( RightLeft, Parts, XY ) { return human[ RightLeft ][ parts ][ XY ]; }8
-    int getRightShoulderId( Side side_ );
-    int getRightHandId    ( Side side_ );
-    // 体の左側
-    int getLeftShoulderId ( Side side_ );
-    int getLeftHandId     ( Side side_ );
-    // 体の上側
-    int getRightHeadId    ( UpDown updown_ );
-    int getLeftHeadId     ( UpDown updown_ );
-    // 体の下側
-    int getRightFootId    ( UpDown updown_ );
-    int getLeftFootId     ( UpDown updown_ );
+    // 体のポジションをセットする関数
+    void setPosition(RL rl, BodyParts parts, Position position, int Movement);
+
+    // 体のマップIdを返す三次元配列
+    int getPoint(RL rl, BodyParts parts);
 
 private :
+    int  bodyId_[kRL][kBodyParts][kPosition];
+
     int texture_;              // テクスチャハンドル保存用
     int height_;               // 高さ
     int width_;                // 横幅

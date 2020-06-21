@@ -1,6 +1,4 @@
 #include "field.hpp"
-#include "both_hands.hpp"
-#include "up_and_down.hpp"
 #include "release.hpp"
 
 constexpr int kSize        = 64;
@@ -36,9 +34,6 @@ public:
     void landing();            // 着地したときの処理を行う
     void hit();                // 頭をぶつけたときの判定
 
-    inline Side getSide() { return side_; }         // 体の左右
-    inline UpDown getUpDown() { return updown_; }   // 体の上下
-
     /*背景の描画を流す数値*/
     inline int getScrollCnt() { return scroll_cnt_; }
 
@@ -49,9 +44,6 @@ public:
     inline int getBreakRightY() { return break_right_y_; }      /*右頭の配列y*/
 
 private:
-    Side side_;                // Side構造体を持つ
-    UpDown updown_;            // UpDown構造体を持つ
-
     Field* field_;             // Fieldの関数が使えるようにする
 
     int texture_;              // テクスチャハンドル

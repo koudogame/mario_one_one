@@ -62,6 +62,7 @@ bool Field::initialize(std::fstream& stage)
             }
         }
     }
+
     return true;
 }
 
@@ -80,17 +81,6 @@ void Field::update( int Brx, int Bry, int Blx, int Bly )
         // 更新されたBlockBase->update()を呼び出す
         field_[ 1 ][ Bly ][ Blx ]->update();
     }
-    //for( int layer = 0; layer < 2; layer++ )
-    //{
-    //    for( int i = 0; i < height_; i++ )
-    //    {
-    //        for( int j = 0; j < width_; j++ )
-    //        {
-    //            // 裏背景の描画、縦、横を画像の切り取りに合わせて描画
-    //            field_[ layer ][ i ][ j ]->update();
-    //        }
-    //    }
-    //}
 }
 
 void Field::draw(int ScreenOver)
@@ -127,89 +117,18 @@ void Field::finalize()
     }
 }
 
-int Field::getRightShoulderId( Side side_ )
+void Field::setPosition(RL rl, BodyParts parts, Position position, int Movement)
 {
-    // 右肩のマップ番号
-    int x = side_.right_shoulder_x / 64;
-    int y = (side_.right_shoulder_y) / 64;
-
-    // 右上のId
-    return field_[ 1 ][ y ][ x ]->getId();
+    // ポジションをセット
+    bodyId_[rl][parts][position] = Movement;
 }
 
-int Field::getRightHandId( Side side_ )
+int Field::getPoint(RL rl, BodyParts parts)
 {
-    // 右手のマップ番号
-    int x = side_.right_hand_x / 64;
-    int y = (side_.right_hand_y) / 64;
+    // セットしたIDを計算してゲット
+    int x = bodyId_[rl][parts][0] / 64;
+    int y = bodyId_[rl][parts][1] / 64;
 
-    // 右下のId
-    return field_[ 1 ][ y ][ x ]->getId();
-}
-
-int Field::getLeftShoulderId( Side side_ )
-{
-    // 左肩のマップ番号
-    int x = side_.left_shoulder_x / 64;
-    int y = (side_.left_shoulder_y) / 64;
-
-    // 右上のId
-    return field_[ 1 ][ y ][ x ]->getId();
-}
-
-int Field::getLeftHandId( Side side_ )
-{
-    // 左手のマップ番号
-    int x = side_.left_hand_x / 64;
-    int y = (side_.left_hand_y) / 64;
-
-    // 左下のId
-    return field_[ 1 ][ y ][ x ]->getId();
-}
-
-int Field::getRightHeadId( UpDown updown_ )
-{
-    // 右頭のマップ番号
-    int x = updown_.right_head_x / 64;
-    int y = updown_.right_head_y / 64;
-
-    // 右頭のId
-    return field_[ 1 ][ y ][ x ]->getId();
-}
-
-int Field::getLeftHeadId( UpDown updown_ )
-{
-    // 左頭のマップ番号
-    int x = updown_.left_head_x / 64;
-    int y = updown_.left_head_y / 64;
-
-    // 左頭のId
-    return field_[ 1 ][ y ][ x ]->getId();
-}
-
-int Field::getRightFootId( UpDown updown_ )
-{
-    // 右足のマップ番号
-    int x = updown_.right_foot_x / 64;
-    int y = updown_.right_foot_y / 64;
-
-    //int human[ kRL::kRLSize ][ kPartsSize ][ kXYSize ]
-    //{
-    //    kRight,kLeft,
-    //    kFoot,kHead,kSholuder,kHand,
-    //    kX,kY
-    //};
-
-    // 右足のId
-    return field_[ 1 ][ y ][ x ]->getId();
-}
-
-int Field::getLeftFootId( UpDown updown_ )
-{
-    // 左足のマップ番号
-    int x = updown_.left_foot_x / 64;
-    int y = updown_.left_foot_y / 64;
-
-    // 左足のId
-    return field_[ 1 ][ y ][ x ]->getId();
+    // IDを計算して返す
+    return field_[1][y][x]->getId();
 }
