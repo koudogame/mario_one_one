@@ -1,6 +1,6 @@
 #include "field.hpp"
 
-static constexpr int kBlocksize = 64;
+constexpr int kBlocksize = 64;
 
 bool Field::initialize( std::fstream& stage )
 {
@@ -92,21 +92,20 @@ void Field::draw(int ScreenOver)
         }
 }
 
-
 void Field::finalize()
 {
     // テクスチャ開放
-    DeleteGraph(texture_);
+    DeleteGraph( texture_ );
 
     // 三次元配列開放
-        for (int i = 0; i < height_; i++)
+    for( int i = 0; i < height_; i++ )
+    {
+        for( int j = 0; j < width_; j++ )
         {
-            for (int j = 0; j < width_; j++)
-            {
-                SAFE_DELETE(field_[0][i][j]);
-            }
+            SAFE_DELETE( field_[ 0 ][ i ][ j ] );
         }
     }
+}
 
 void Field::setPosition(RL rl, BodyParts parts, Position position, int Movement)
 {
@@ -121,5 +120,5 @@ int Field::getPoint(RL rl, BodyParts parts)
     int y = bodyId_[rl][parts][1] / 64;
 
     // IDを計算して返す
-    return field_[0][y][x]->getId();
+    return field_[ 0 ][ y ][ x ]->getId();
 }

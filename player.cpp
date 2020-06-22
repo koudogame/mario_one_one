@@ -461,4 +461,3 @@ void Player::hit()
     pos_y_ = (block_line - 4) * 64;
     total_movement_y_ = block_line * 64;
 }
-

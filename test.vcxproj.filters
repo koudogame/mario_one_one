@@ -46,6 +46,15 @@
     <Filter Include="BlockBase\Brick">
       <UniqueIdentifier>{6f2ef463-b6b7-424a-990a-944cf661d1ff}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ItemBase">
+      <UniqueIdentifier>{517fff34-4481-4668-9794-baab46bd0830}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Item">
+      <UniqueIdentifier>{da0fb93d-554b-4321-ba7e-f666a288fb58}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ItemBase\Coin">
+      <UniqueIdentifier>{31586293-f6ca-48a4-b520-a19a10e7b4cb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -80,6 +89,15 @@
     </ClCompile>
     <ClCompile Include="brick.cpp">
       <Filter>BlockBase\Brick</Filter>
+    </ClCompile>
+    <ClCompile Include="item_base.cpp">
+      <Filter>ItemBase</Filter>
+    </ClCompile>
+    <ClCompile Include="item.cpp">
+      <Filter>Item</Filter>
+    </ClCompile>
+    <ClCompile Include="coin.cpp">
+      <Filter>ItemBase\Coin</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -118,6 +136,15 @@
     </ClInclude>
     <ClInclude Include="brick.hpp">
       <Filter>BlockBase\Brick</Filter>
+    </ClInclude>
+    <ClInclude Include="item_base.hpp">
+      <Filter>ItemBase</Filter>
+    </ClInclude>
+    <ClInclude Include="item.hpp">
+      <Filter>Item</Filter>
+    </ClInclude>
+    <ClInclude Include="coin.hpp">
+      <Filter>ItemBase\Coin</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

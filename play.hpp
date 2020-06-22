@@ -2,7 +2,7 @@
 #include "base_scene.hpp"
 #include "field.hpp"
 #include "player.hpp"
-
+#include "item.hpp"
 
 class PlayScene :
     public BaseScene
@@ -16,7 +16,8 @@ public :
     void draw() override;
     void finalize() override;
 
-private:
+private:   
+    Item* item_;
     Field* field_;
     Player* player_;
 };
