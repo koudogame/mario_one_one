@@ -8,7 +8,7 @@ void Mystery::update(int Status)
         // のちにキノコを出す処理
 
         // はてなボックスを使用済み
-        parts_.Id = 50;
+        parts_.Id = 16;
 
         RECT rect;
         rect.top = parts_.Id / 16 * 64;
