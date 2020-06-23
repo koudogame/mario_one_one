@@ -1,19 +1,5 @@
 #include "player.hpp"
 
-Player::Player( Field* field )
-{
-    field_ = field;
-    texture_ = NULL;
-    
-    // 目に見えるポジション
-    pos_x_ = kStartX;
-    pos_y_ = kStartY;
-
-    // 数値の中のポジション
-    total_movement_x_ = 256;
-    total_movement_y_ = 832;
-}
-
 Player::~Player()
 {
 }
@@ -80,23 +66,22 @@ bool Player::update()
         if( !(GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_RIGHT) == 0 )
         {
             direction_ = true;         // 向きを右向きに変える
-            right_button_ = false;     // 押している(トラッカー)     
+            right_button_ = false;     // 押している(トラッカー)    
 
-            field_->setPosition(kRight, kShoulder, kX, total_movement_x_ + kSize + 1);
-            field_->setPosition(kRight, kHands, kX, total_movement_x_ + kSize + 1);
-            field_->setPosition(kLeft, kShoulder, kY, total_movement_y_);
+            body_[ kRight ][ kShoulder ][ kX ] = (total_movement_x_ + kSize + 1);
+            body_[ kRight ][ kShoulder ][ kY ] = (total_movement_y_);
 
+            body_[ kRight ][ kHands ][ kX ] = (total_movement_x_ + kSize + 1);
             // status_がkMarioの時
-            if (status_ == kMario)
-                field_->setPosition(kRight, kHands, kY, total_movement_y_ + kSize - 1);
+            if( status_ == kMario )
+                body_[ kRight ][ kHands ][ kY ] = (total_movement_y_ + kSize - 1);
             else
-                field_->setPosition(kRight, kHands, kY, total_movement_y_ + (kSize * 2) - 1);
+                body_[ kRight ][ kHands ][ kY ] = (total_movement_y_ + (kSize * 2) - 1);
 
             // 当たり判定のないブロックのとき
-            if (field_->getPoint(kRight, kShoulder) > 64 &&
-                field_->getPoint(kRight, kHands) > 64)
+            if( Collision::collision( kRight, kShoulder ) > 64 &&
+                Collision::collision( kRight, kHands ) > 64 )
             {
-
                 // 右への移動
                 pos_x_ += kSpeed;
                 total_movement_x_ += kSpeed;
@@ -121,20 +106,20 @@ bool Player::update()
             left_button_ = false;      // 押している
 
             // 上と両サイドは変更なし
-            field_->setPosition(kLeft, kShoulder, kX, total_movement_x_ - 1);
-            field_->setPosition(kLeft, kHands, kX, total_movement_x_ - 1);
-            field_->setPosition(kLeft, kShoulder, kY, total_movement_y_);
+            body_[ kLeft ][ kShoulder ][ kX ] = (total_movement_x_ - 1);
+            body_[ kLeft ][ kShoulder ][ kY ] = (total_movement_y_);
+
+            body_[ kLeft ][ kHands ][ kX ] = (total_movement_x_ - 1);
 
             // 下の位置だけ状態に応じて変更する
-            if (status_ == kMario)
-                field_->setPosition(kLeft, kHands, kY, total_movement_y_ + kSize - 1);
+            if( status_ == kMario )
+                body_[ kLeft ][ kHands ][ kY ] = (total_movement_y_ + kSize - 1);
             else
-                field_->setPosition(kLeft, kHands, kY, total_movement_y_ + (kSize * 2) - 1);
-
+                body_[ kLeft ][ kHands ][ kY ] = (total_movement_y_ + (kSize * 2) - 1);
 
             // マリオの左側に衝突するブロックがないとき
-            if (field_->getPoint(kLeft, kShoulder) > 64 &&
-                field_->getPoint(kLeft, kHands) > 64)
+            if( Collision::collision( kLeft, kShoulder ) > 64 &&
+                Collision::collision( kLeft, kHands ) > 64 )
             {
                 // ポジションゼロより左の時
                 if( pos_x_ <= 0 )
@@ -201,45 +186,45 @@ bool Player::update()
         }
 
         // マリオの頭(幅を左右10小さく)
-        field_->setPosition(kRight, kHead, kX, total_movement_x_ + 54);
-        field_->setPosition(kRight, kHead, kY, total_movement_y_ - 1);
-        field_->setPosition(kLeft, kHead, kX, total_movement_x_ + 10);
-        field_->setPosition(kLeft, kHead, kY, total_movement_y_ - 1);
+        body_[ kRight ][ kHead ][ kX ] = (total_movement_x_ + 54);
+        body_[ kRight ][ kHead ][ kY ] = (total_movement_y_ - 1);
+        body_[ kLeft ][ kHead ][ kX ] = (total_movement_x_ + 10);
+        body_[ kLeft ][ kHead ][ kY ] = (total_movement_y_ - 1);
 
         // マリオの足元
-        field_->setPosition(kRight, kFoot, kX, total_movement_x_ + 54);
-        field_->setPosition(kLeft, kFoot, kX, total_movement_x_ + 10);
+        body_[ kRight ][ kFoot ][ kX ] = (total_movement_x_ + 54);
+        body_[ kLeft ][ kFoot ][ kX ] = (total_movement_x_ + 10);
 
         if( status_ == kMario )
         {
-            field_->setPosition(kRight, kFoot, kY, total_movement_y_ + kSize + 1);
-            field_->setPosition(kLeft, kFoot, kY, total_movement_y_ + kSize + 1);
+            body_[ kRight ][ kFoot ][ kY ] = (total_movement_y_ + kSize + 1);
+            body_[ kLeft ][ kFoot ][ kY ] = (total_movement_y_ + kSize + 1);
         }
         else
         {
-            field_->setPosition(kRight, kFoot, kY, total_movement_y_ + (kSize * 2) + 1);
-            field_->setPosition(kLeft, kFoot, kY, total_movement_y_ + (kSize * 2) + 1);
+            body_[ kRight ][ kFoot ][ kY ] = (total_movement_y_ + (kSize * 2) + 1);
+            body_[ kLeft ][ kFoot ][ kY ] = (total_movement_y_ + (kSize * 2) + 1);
         }
 
         // 上へ飛んでいるときにだけhit()を呼ぶ
         if( acceleration_ < 0 )
         {
             // 右頭にあたるとき
-            if( field_->getPoint( kRight, kHead ) <= 64 )
+            if( Collision::collision( kRight, kHead ) <= 64 )
             {
                 break_right_x_ = (total_movement_x_ / 64) + 1;
                 break_right_y_ = total_movement_y_ / 64;
             }
 
             // 左頭にあたるとき
-            if( field_->getPoint( kLeft, kHead ) <= 64 )
+            if( Collision::collision( kLeft, kHead ) <= 64 )
             {
                 break_left_x_ = (total_movement_x_ / 64);
                 break_left_y_ = total_movement_y_ / 64;
             }
 
-            if (field_->getPoint(kRight, kHead) <= 64 ||
-                field_->getPoint(kLeft, kHead) <= 64)
+            if( Collision::collision( kRight, kHead ) <= 64 ||
+                Collision::collision( kLeft, kHead ) <= 64 )
             {
                 // 頭をぶつけたときの判定
                 hit();
@@ -314,7 +299,6 @@ bool Player::update()
 
     return true;
 }
-
 void Player::draw()
 {
     // この情報が残ったまま大きくなると、
@@ -386,26 +370,26 @@ void Player::animation()
 void Player::collision()
 {
     // 足元にあるブロックが乗れるとき
-    if (field_->getPoint(kRight, kFoot) <= 64 ||
-        field_->getPoint(kLeft, kFoot) <= 64)
+    if( Collision::collision( kRight , kFoot ) <= 64 ||
+        Collision::collision( kLeft , kFoot ) <= 64 )
     {
         landing();          // 着地処理
 
         acceleration_ = 0;  // 落下速度
 
-        int block_line = std::round(static_cast<float>(total_movement_y_) / 64);
+        int block_line = std::round( static_cast<float>(total_movement_y_) / 64 );
         pos_y_ = (block_line - 4) * 64;
         total_movement_y_ = block_line * 64;
     }
     // 足元に何もなく浮いているとき
-    else if (field_->getPoint(kRight, kFoot) == kSkyBlue &&
-        field_->getPoint(kLeft, kFoot) == kSkyBlue)
+    else if( Collision::collision( kRight , kFoot ) == kSkyBlue ||
+        Collision::collision( kLeft , kFoot ) == kSkyBlue )
     {
         // 飛べないようにする
         jumping_ = false;
 
         // マリオが画面外に行ったとき
-        if (pos_y_ > 670)
+        if( pos_y_ > 670 )
         {
             // gameover
             gameover_flag_ = false;
@@ -414,10 +398,10 @@ void Player::collision()
     // 足元にあるブロックが乗れないとき
     else
     {
-        if (status_ == kMario)
+        if( status_ == kMario )
         {
             // 床より下の時
-            if (pos_y_ > kEndLine)
+            if( pos_y_ > kEndLine )
             {
                 landing(); // 着地処理
 
@@ -428,7 +412,7 @@ void Player::collision()
         else
         {
             // 床より下の時
-            if (pos_y_ > kEndLine - 64)
+            if( pos_y_ > kEndLine - 64 )
             {
                 landing(); // 着地処理
 

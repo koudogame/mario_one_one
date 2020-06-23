@@ -17,7 +17,7 @@ struct ItemParts
     }
 };
 
-class ItemBase
+class ItemBase 
 {
 protected:
     ItemParts item_;

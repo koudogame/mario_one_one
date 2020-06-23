@@ -107,18 +107,8 @@ void Field::finalize()
     }
 }
 
-void Field::setPosition(RL rl, BodyParts parts, Position position, int Movement)
+int Field::getId( int PosX, int PosY )
 {
-    // ポジションをセット
-    bodyId_[rl][parts][position] = Movement;
-}
-
-int Field::getPoint(RL rl, BodyParts parts)
-{
-    // セットしたIDを計算してゲット
-    int x = bodyId_[rl][parts][0] / 64;
-    int y = bodyId_[rl][parts][1] / 64;
-
     // IDを計算して返す
-    return field_[ 0 ][ y ][ x ]->getId();
+    return field_[ 0 ][ PosY ][ PosX ]->getId();
 }

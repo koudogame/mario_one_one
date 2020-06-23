@@ -154,6 +154,7 @@
     <ClCompile Include="block_base.cpp" />
     <ClCompile Include="brick.cpp" />
     <ClCompile Include="coin.cpp" />
+    <ClCompile Include="collision.cpp" />
     <ClCompile Include="field.cpp" />
     <ClCompile Include="item.cpp" />
     <ClCompile Include="item_base.cpp" />
@@ -171,6 +172,7 @@
     <ClInclude Include="block_base.hpp" />
     <ClInclude Include="brick.hpp" />
     <ClInclude Include="coin.hpp" />
+    <ClInclude Include="collision.hpp" />
     <ClInclude Include="field.hpp" />
     <ClInclude Include="item.hpp" />
     <ClInclude Include="item_base.hpp" />

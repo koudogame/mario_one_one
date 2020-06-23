@@ -1,4 +1,5 @@
-#include "field.hpp"
+#include <DxLib.h>
+#include "collision.hpp"
 #include "release.hpp"
 
 constexpr int kSize        = 64;
@@ -19,21 +20,21 @@ enum Status
     kFireMario
 };
 
-class Player
+class Player :
+    public Collision
 {
 public:
-    Player(Field* Field);
+    Player( Field* field ) : Collision( field ){};
     ~Player();
     bool initialize();
     bool update();
     void draw();
     void finalize();
 
-    void animation();          // マリオのアニメーション
-    void collision();          // 足元の衝突判定を行う
-    void landing();            // 着地したときの処理を行う
-    void hit();                // 頭をぶつけたときの判定
-
+    void animation();                                           // マリオのアニメーション
+    void collision();                                           // 足元の衝突判定を行う
+    void landing();                                             // 着地したときの処理を行う
+    void hit();                                                 // 頭をぶつけたときの判定
     /*背景の描画を流す数値*/
     inline int getScrollCnt() { return scroll_cnt_; }
 
@@ -47,8 +48,6 @@ public:
     inline int getBreakRightY() { return break_right_y_; }      /*右頭の配列y*/
 
 private:
-    Field* field_;             // Fieldの関数が使えるようにする
-
     int texture_;              // テクスチャハンドル
 
     int total_movement_x_;     // 総合移動量x

@@ -99,6 +99,9 @@
     <ClCompile Include="coin.cpp">
       <Filter>ItemBase\Coin</Filter>
     </ClCompile>
+    <ClCompile Include="collision.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="result.hpp">
@@ -145,6 +148,9 @@
     </ClInclude>
     <ClInclude Include="coin.hpp">
       <Filter>ItemBase\Coin</Filter>
+    </ClInclude>
+    <ClInclude Include="collision.hpp">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

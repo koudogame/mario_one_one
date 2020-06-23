@@ -11,21 +11,6 @@
 constexpr int kBrick = 19;
 constexpr int kMystery = 48;
 
-enum RL
-{
-    kRight, kLeft, kRL
-};
-
-enum BodyParts
-{
-    kShoulder, kHands, kHead, kFoot, kBodyParts
-};
-
-enum Position
-{
-    kX, kY, kPosition
-};
-
 class Field
 {
 public :
@@ -34,15 +19,10 @@ public :
     void draw(int ScreenOver);
     void finalize();
 
-    // 体のポジションをセットする関数
-    void setPosition(RL rl, BodyParts parts, Position position, int Movement);
-
     // 体のマップIdを返す三次元配列
-    int getPoint(RL rl, BodyParts parts);
+    int getId( int PosX, int PosY );
 
 private :
-    int  bodyId_[kRL][kBodyParts][kPosition];
-
     int texture_;              // テクスチャハンドル保存用
     int height_;               // 高さ
     int width_;                // 横幅
