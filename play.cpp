@@ -16,8 +16,8 @@ PlayScene::~PlayScene()
 bool PlayScene::initialize()
 {
     // インスタンスの生成
-    item_ = new Item();
-    field_ = new Field();
+    field_ = new Field();   
+    item_ = new Item( field_ );
     player_ = new Player( field_ );
 
     // ファイルに対する入力ストリーム

@@ -1,5 +1,11 @@
 #include "item.hpp"
 
+
+Item::Item( Field* Field )
+{
+    field_ = Field;
+}
+
 bool Item::initialize( std::fstream& stage )
 {
     texture_ = LoadGraph( "texture/mario_item.png" );

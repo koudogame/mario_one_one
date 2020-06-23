@@ -16,6 +16,7 @@ constexpr int kItemsize = 64;
 class Item
 {
 public :
+    Item( Field* Field );
     bool initialize( std::fstream& stage );
     void update( int Brx, int Bry, int Blx, int Bly, int Status );
     void draw( int Screenover );
