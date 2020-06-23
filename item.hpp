@@ -3,6 +3,7 @@
 #include <fstream>
 #include "item_base.hpp"
 #include "release.hpp"
+#include "field.hpp"
 
 /* NewするClass */
 #include "coin.hpp"
@@ -20,7 +21,9 @@ public :
     void draw( int Screenover );
     void finalize();
 
-private :
+private :  
+    Field* field_;
+
     int texture_;       // テクスチャハンドル保存用
     int height_;        // 高さ
     int width_;         // 横幅

@@ -79,8 +79,7 @@ bool Player::update()
                 body_[ kRight ][ kHands ][ kY ] = (total_movement_y_ + (kSize * 2) - 1);
 
             // 当たり判定のないブロックのとき
-            if( Collision::collision( kRight, kShoulder ) > 64 &&
-                Collision::collision( kRight, kHands ) > 64 )
+            if( Collision::sideColl( kRight ) == true)
             {
                 // 右への移動
                 pos_x_ += kSpeed;
@@ -118,8 +117,7 @@ bool Player::update()
                 body_[ kLeft ][ kHands ][ kY ] = (total_movement_y_ + (kSize * 2) - 1);
 
             // マリオの左側に衝突するブロックがないとき
-            if( Collision::collision( kLeft, kShoulder ) > 64 &&
-                Collision::collision( kLeft, kHands ) > 64 )
+            if( Collision::sideColl( kLeft ) == true )
             {
                 // ポジションゼロより左の時
                 if( pos_x_ <= 0 )
@@ -186,13 +184,13 @@ bool Player::update()
         }
 
         // マリオの頭(幅を左右10小さく)
-        body_[ kRight ][ kHead ][ kX ] = (total_movement_x_ + 54);
+        body_[ kRight ][ kHead ][ kX ] = (total_movement_x_ + (kSize - 10));
         body_[ kRight ][ kHead ][ kY ] = (total_movement_y_ - 1);
         body_[ kLeft ][ kHead ][ kX ] = (total_movement_x_ + 10);
         body_[ kLeft ][ kHead ][ kY ] = (total_movement_y_ - 1);
 
         // マリオの足元
-        body_[ kRight ][ kFoot ][ kX ] = (total_movement_x_ + 54);
+        body_[ kRight ][ kFoot ][ kX ] = (total_movement_x_ + (kSize - 10));
         body_[ kLeft ][ kFoot ][ kX ] = (total_movement_x_ + 10);
 
         if( status_ == kMario )
@@ -356,13 +354,9 @@ void Player::animation()
             animation_cnt_ = 0;
 
             if( animation_ <= 2 )
-            {
                 animation_++;
-            }
             else
-            {
                 animation_ = 1;
-            }
         }
     }
 }
@@ -370,8 +364,7 @@ void Player::animation()
 void Player::collision()
 {
     // 足元にあるブロックが乗れるとき
-    if( Collision::collision( kRight , kFoot ) <= 64 ||
-        Collision::collision( kLeft , kFoot ) <= 64 )
+    if( Collision::footColl() == 1 )
     {
         landing();          // 着地処理
 
@@ -382,8 +375,7 @@ void Player::collision()
         total_movement_y_ = block_line * 64;
     }
     // 足元に何もなく浮いているとき
-    else if( Collision::collision( kRight , kFoot ) == kSkyBlue ||
-        Collision::collision( kLeft , kFoot ) == kSkyBlue )
+    else if( Collision::footColl() == 2 )
     {
         // 飛べないようにする
         jumping_ = false;

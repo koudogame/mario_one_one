@@ -2,15 +2,6 @@
 #include "collision.hpp"
 #include "release.hpp"
 
-constexpr int kSize        = 64;
-constexpr int kSpeed       = 6;
-constexpr int kJumpPower   = 25;
-constexpr int kStartX      = 256;
-constexpr int kStartY      = 576;
-constexpr int kEndLine     = 576;
-constexpr int kDeadLine    = 800;
-constexpr int kSkyBlue     = 191;
-constexpr int kGravity     = 1;
 
 // マリオの状態保存
 enum Status
@@ -24,7 +15,17 @@ class Player :
     public Collision
 {
 public:
-    Player( Field* field ) : Collision( field ){};
+    static constexpr int kSize = 64;
+    static constexpr int kSpeed = 6;
+    static constexpr int kJumpPower = 25;
+    static constexpr int kStartX = 256;
+    static constexpr int kStartY = 576;
+    static constexpr int kEndLine = 576;
+    static constexpr int kDeadLine = 800;
+    static constexpr int kSkyBlue = 191;
+    static constexpr int kGravity = 1;
+
+    Player( Field* field ) : Collision( field ) {};
     ~Player();
     bool initialize();
     bool update();
@@ -35,6 +36,7 @@ public:
     void collision();                                           // 足元の衝突判定を行う
     void landing();                                             // 着地したときの処理を行う
     void hit();                                                 // 頭をぶつけたときの判定
+
     /*背景の描画を流す数値*/
     inline int getScrollCnt() { return scroll_cnt_; }
 
@@ -82,9 +84,6 @@ private:
     // いまの状態を保存する
     bool right_button_;        // true : 押してない, false : 押しています 
     bool left_button_;         // true : 押してない, false : 押しています
-
-    int acceleration_;         // ジャンプ力を付与
-    bool jumping_;             // true : 飛べる, false : 飛べない
 
     int break_right_x_;        // 右頭のぶつかった座標x
     int break_right_y_;        // 右頭のぶつかった座標y

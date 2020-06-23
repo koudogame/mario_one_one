@@ -1,6 +1,8 @@
 #pragma once
 #include <Windows.h>
 #include <DxLib.h>
+#include "collision.hpp"
+
 
 // パーツ構造体
 struct ItemParts
@@ -17,7 +19,8 @@ struct ItemParts
     }
 };
 
-class ItemBase 
+class ItemBase :
+    public Collision
 {
 protected:
     ItemParts item_;
@@ -25,6 +28,9 @@ protected:
     int status_;
 
 public:
+    static const int kGravity  = 1;
+
+    ItemBase( Field* field ) : Collision( field ) {};
     virtual bool initialize( const int Id, const RECT Rect, const int X, const int Y );
     virtual void update();
     virtual void draw( int Texture, const int Screenover );

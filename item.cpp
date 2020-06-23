@@ -32,9 +32,9 @@ bool Item::initialize( std::fstream& stage )
             stage.read( reinterpret_cast<char*>(&id), sizeof( char ) );
 
             if( id == kCoin )
-                item_[ 0 ][ i ][ j ] = new Coin;
+                item_[ 0 ][ i ][ j ] = new Coin(field_);
             else
-                item_[ 0 ][ i ][ j ] = new ItemBase;
+                item_[ 0 ][ i ][ j ] = new ItemBase(field_);
 
             // •`‰æ”ÍˆÍ‚ğİ’è
             rect.top = id / 16 * kItemsize;
