@@ -1,8 +1,8 @@
 #include "coin.hpp"
 
-void Coin::update()
+void Coin::update(int Screenover)
 {
-    if( up_ == false )
+    if( !up_ )
     {
         if( jumping_ == kJump )
         {

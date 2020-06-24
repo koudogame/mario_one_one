@@ -36,8 +36,10 @@ bool Item::initialize( std::fstream& stage )
             int id = 0;
 
             stage.read( reinterpret_cast<char*>(&id), sizeof( char ) );
-
-            if( id == kCoin )
+            
+            if( id == kPowerup )
+                item_[ 0 ][ i ][ j ] = new Powerup( field_ );
+            else if( id == kCoin )
                 item_[ 0 ][ i ][ j ] = new Coin(field_);
             else
                 item_[ 0 ][ i ][ j ] = new ItemBase(field_);
@@ -59,14 +61,14 @@ bool Item::initialize( std::fstream& stage )
     return true;
 }
 
-void Item::update( int Brx, int Bry, int Blx, int Bly, int Status )
+void Item::update( int Brx, int Bry, int Blx, int Bly, int Status, int Screenover )
 {
     // èÌÇ…update()ÇÕåƒÇŒÇÍÇÈ
     for( int i = 0; i < height_; i++ )
     {
         for( int j = 0; j < width_; j++ )
         {
-            item_[ 0 ][ i ][ j ]->update();
+            item_[ 0 ][ i ][ j ]->update(Screenover);
         }
     }
 

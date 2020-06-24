@@ -7,8 +7,10 @@
 
 /* New‚·‚éClass */
 #include "coin.hpp"
+#include "power_up.hpp"
 
-constexpr int kCoin = 48;
+constexpr int kPowerup  = 0;
+constexpr int kCoin     = 48;
 constexpr int kItemsize = 64;
 
 /* New‚·‚éClass */
@@ -18,7 +20,7 @@ class Item
 public :
     Item( Field* Field );
     bool initialize( std::fstream& stage );
-    void update( int Brx, int Bry, int Blx, int Bly, int Status );
+    void update( int Brx, int Bry, int Blx, int Bly, int Status, int Screenover );
     void draw( int Screenover );
     void finalize();
 

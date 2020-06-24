@@ -14,7 +14,7 @@ bool ItemBase::initialize( const int Id, const RECT Rect, const int X, const int
     return true;
 }
 
-void ItemBase::update()
+void ItemBase::update(int Screenover)
 {
 }
 

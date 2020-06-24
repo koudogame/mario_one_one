@@ -58,6 +58,9 @@
     <Filter Include="Collision">
       <UniqueIdentifier>{81851509-b997-4517-adc1-0f867bd46718}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ItemBase\Powerup">
+      <UniqueIdentifier>{58766ec7-c238-4950-895b-8f1d64215cff}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -104,6 +107,9 @@
     </ClCompile>
     <ClCompile Include="collision.cpp">
       <Filter>Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="power_up.cpp">
+      <Filter>ItemBase\Powerup</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -154,6 +160,9 @@
     </ClInclude>
     <ClInclude Include="collision.hpp">
       <Filter>Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="power_up.hpp">
+      <Filter>ItemBase\Powerup</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

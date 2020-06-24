@@ -42,7 +42,7 @@ void PlayScene::update()
     field_->update(player_->getBreakRightX(), player_->getBreakRightY(),
         player_->getBreakLeftX(), player_->getBreakLeftY(), player_->getStatus());
     item_->update( player_->getBreakRightX(), player_->getBreakRightY(),
-        player_->getBreakLeftX(), player_->getBreakLeftY(), player_->getStatus());
+        player_->getBreakLeftX(), player_->getBreakLeftY(), player_->getStatus(), player_->getScrollCnt());
 }
 
 void PlayScene::draw()

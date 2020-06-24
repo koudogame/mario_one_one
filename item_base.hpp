@@ -32,7 +32,7 @@ public:
 
     ItemBase( Field* field ) : Collision( field ) {};
     virtual bool initialize( const int Id, const RECT Rect, const int X, const int Y );
-    virtual void update();
+    virtual void update(int Screenover);
     virtual void draw( int Texture, const int Screenover );
     virtual void flagChange( int Status );
 

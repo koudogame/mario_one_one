@@ -10,7 +10,7 @@ public :
     static const int kNoBlock   = 115;
 
     Coin( Field* field ) : ItemBase( field ) {};
-    void update() override;
+    void update(int Screenover) override;
     void flagChange(int Status) override;
 
 private : 
