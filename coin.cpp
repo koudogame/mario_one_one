@@ -4,14 +4,14 @@ void Coin::update()
 {
     if( up_ == false )
     {
-        if( jumping_ == true )
+        if( jumping_ == kJump )
         {
-            jumping_ = false;
+            jumping_ = kNoJump;
             acceleration_ = -kJumpPower;
             item_.y -= 64;
         }
 
-        if( jumping_ == false )
+        if( jumping_ == kNoJump )
         {
             acceleration_ += kGravity;
 
@@ -28,21 +28,25 @@ void Coin::update()
             {
                 item_.Id = kNoBlock;
                 RECT rect;
-                rect.top = item_.Id / 16 * 64;
-                rect.left = item_.Id % 16 * 64;
+                rect.top    = item_.Id / 16 * 64;
+                rect.left   = item_.Id % 16 * 64;
                 rect.bottom = 64;
-                rect.right = 64;
-                item_.rect = rect;
+                rect.right  = 64;
+                item_.rect  = rect;
 
-                jumping_ = true;
+                jumping_ = kNoMove;
             }
         }
     }
 }
 
 void Coin::flagChange( int Status )
-{    
-    up_ = false;
-    jumping_ = true;
-    status_ = Status;
+{
+    if( punch_ )
+    {
+        punch_   = false;
+        up_      = false;
+        jumping_ = kJump;
+        status_  = Status;
+    }
 }

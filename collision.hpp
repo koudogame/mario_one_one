@@ -16,6 +16,11 @@ enum Position
     kX, kY, kPosition
 };
 
+enum JumpFlag
+{
+    kJump, kNoJump, kNoMove
+};
+
 class Collision
 {
 public :
@@ -27,7 +32,7 @@ public :
 
 protected :
     int acceleration_;                              // ジャンプ力を付与
-    bool jumping_;                                  // true : 飛べる, false : 飛べない
+    int jumping_;                                   // 0 : 飛べる, 1 : 飛べない, 2 : 何もしない
 
     int body_[ kRL ][ kBodyParts ][ kPosition ];    // 数値格納用
 

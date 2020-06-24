@@ -39,7 +39,7 @@ bool Player::initialize()
     left_button_      = true;
 
     acceleration_     = 0;
-    jumping_          = true;
+    jumping_          = kJump;
 
     break_right_x_    = 0;
     break_right_y_    = 0;
@@ -159,16 +159,15 @@ bool Player::update()
             // ジャンプ中にアニメーションを動かさないようにする
             animation_flag_ = false;
 
-            // 着地したら再び飛べるようにする
-            if( jumping_ == true )
+            if( jumping_ == kJump )
             {
-                jumping_ = false;
+                jumping_ = kNoJump;
                 acceleration_ = -kJumpPower;
             }
         }
 
         // ジャンプをした時重力をかける
-        if( jumping_ == false )
+        if( jumping_ == kNoJump )
         {
             acceleration_ += kGravity;
 
@@ -378,7 +377,7 @@ void Player::collision()
     else if( Collision::footColl() == 2 )
     {
         // 飛べないようにする
-        jumping_ = false;
+        jumping_ = kNoJump;
 
         // マリオが画面外に行ったとき
         if( pos_y_ > 670 )
@@ -423,7 +422,7 @@ void Player::landing()
         animation_ = 0;
         animation_flag_ = true;
     }
-    jumping_ = true;
+    jumping_ = kJump;
 }
 
 void Player::hit()

@@ -55,6 +55,9 @@
     <Filter Include="ItemBase\Coin">
       <UniqueIdentifier>{31586293-f6ca-48a4-b520-a19a10e7b4cb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Collision">
+      <UniqueIdentifier>{81851509-b997-4517-adc1-0f867bd46718}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -100,7 +103,7 @@
       <Filter>ItemBase\Coin</Filter>
     </ClCompile>
     <ClCompile Include="collision.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>Collision</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -150,7 +153,7 @@
       <Filter>ItemBase\Coin</Filter>
     </ClInclude>
     <ClInclude Include="collision.hpp">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>Collision</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
