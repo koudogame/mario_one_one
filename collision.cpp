@@ -48,35 +48,3 @@ int Collision::collision( RL Rl, BodyParts Parts )
 
     return field_->getId( x, y );
 }
-
-void Collision::setMarioPos( int PosX, int PosY )
-{
-    mario_pos_x_ = PosX;
-    mario_pos_y_ = PosY;
-}
-
-void Collision::setItemPos( int PosX, int PosY )
-{
-    item_pos_x_ = PosX;
-    item_pos_y_ = PosY + (kSize * 4);
-}
-
-bool Collision::getCollision(int Status)
-{
-    int mx1 = mario_pos_x_;
-    int my1 = mario_pos_y_;
-
-    int mx2 = mario_pos_x_ + kSize;
-    int my2 = mario_pos_y_ + kSize;
-
-    int ex1 = item_pos_x_;
-    int ey1 = item_pos_y_;
-
-    int ex2 = item_pos_x_ + kSize;
-    int ey2 = item_pos_y_ + kSize;
-
-    if(!(mx1 <= ex2 || ex1 <= mx2 || my1 <= ey2 || ey1 <= my2))
-        return false;
-
-    return true;
-}

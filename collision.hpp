@@ -44,13 +44,4 @@ protected:
 private:
     Field* field_;
 
-    /* 同じ画面にいるので画面座標で管理する */
-
-    // マリオのポジションを保存  
-     int mario_pos_x_;
-     int mario_pos_y_;
-
-    // アイテムの場所を保存( 呼ばれるたびに更新 )
-     int item_pos_x_;
-     int item_pos_y_;
 };

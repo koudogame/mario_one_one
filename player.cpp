@@ -234,26 +234,21 @@ bool Player::update()
             collision();
         }
 
-        // Collisionに登録
-        Collision::setMarioPos(total_movement_x_, total_movement_y_);
+            //// 最終進化じゃないとき
+            //if( status_ < kFireMario )
+            //{
+            //    status_ += 1;          // マリオ変身
 
-        if( Collision::getCollision( status_ ) == false )
-        {
-            // 最終進化じゃないとき
-            if( status_ < kFireMario )
-            {
-                status_ += 1;          // マリオ変身
+            //    if( past_status_ == kMario )
+            //    {
+            //        pos_y_ -= kSize;
+            //        total_movement_y_ -= kSize;
+            //    }
 
-                if( past_status_ == kMario )
-                {
-                    pos_y_ -= kSize;
-                    total_movement_y_ -= kSize;
-                }
-
-                // 変身後の状態を保存
-                past_status_ = status_;
-            }
-        }
+            //    // 変身後の状態を保存
+            //    past_status_ = status_;
+            //}
+        
 
         // 退化ボタン(デバッグ用特殊コマンド)
         if( !(GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_DOWN) == 0 )
