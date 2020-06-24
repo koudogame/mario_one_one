@@ -107,6 +107,9 @@ void Powerup::update(int Screenover)
                 // “–‚½‚è”»’è‚Ì‚ ‚é‚Æ‚«
                 if( Collision::sideColl( kRight ) == false )
                     direction_ *= -1;
+
+                // Collision‚É“o˜^
+                Collision::setItemPos( item_.x, item_.y );
             }
         }
     }

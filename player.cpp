@@ -234,9 +234,10 @@ bool Player::update()
             collision();
         }
 
-        ////////////////////////////////////////////////
-        // 進化ボタン(デバッグ用特殊コマンド)
-        if( !(GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_UP) == 0 )
+        // Collisionに登録
+        Collision::setMarioPos(total_movement_x_, total_movement_y_);
+
+        if( Collision::getCollision( status_ ) == false )
         {
             // 最終進化じゃないとき
             if( status_ < kFireMario )
