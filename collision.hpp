@@ -31,11 +31,6 @@ public:
     int footColl();                                   // return 1(Id <= 64),return 2(Id == 191), return 0 その他
     int collision( RL, BodyParts );
 
-    virtual void setMarioPos( int PosX, int PosY );           // マリオのポジションをセット
-    void setItemPos( int PosX, int PosY );            // アイテムのポジションをセット
-
-    bool getCollision();                              // アイテムとマリオの当たり判定
-
 protected:
     int acceleration_;                                // ジャンプ力を付与
     int jumping_;                                     // 0 : 飛べる, 1 : 飛べない, 2 : 何もしない
@@ -43,10 +38,4 @@ protected:
 
 private:
     Field* field_;
-
-    static int mario_pos_x_;                          // マリオポジション
-    static int mario_pos_y_;
-
-    static int item_pos_x_;                           // アイテムポジション
-    static int item_pos_y_;
 };

@@ -15,7 +15,10 @@ public :
     Powerup( Field* field ) : ItemBase( field ) {};
     void update(int Screenover) override;
     void flagChange( int Status )override;
-    void setMarioPos( int x, int y )override;
+
+    int getPosX() override;
+    int getPosY() override;
+    void posCollision() override;
 
 private : 
     int up_cnt_     = 0;

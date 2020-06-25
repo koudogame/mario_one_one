@@ -61,6 +61,9 @@
     <Filter Include="ItemBase\Powerup">
       <UniqueIdentifier>{58766ec7-c238-4950-895b-8f1d64215cff}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PosCollision">
+      <UniqueIdentifier>{6dcd9be0-06ad-470b-ab87-bbcb9277e7dc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -110,6 +113,9 @@
     </ClCompile>
     <ClCompile Include="power_up.cpp">
       <Filter>ItemBase\Powerup</Filter>
+    </ClCompile>
+    <ClCompile Include="pos_collision.cpp">
+      <Filter>PosCollision</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -163,6 +169,9 @@
     </ClInclude>
     <ClInclude Include="power_up.hpp">
       <Filter>ItemBase\Powerup</Filter>
+    </ClInclude>
+    <ClInclude Include="pos_collision.hpp">
+      <Filter>PosCollision</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

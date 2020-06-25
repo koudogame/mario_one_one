@@ -3,6 +3,7 @@
 #include "field.hpp"
 #include "player.hpp"
 #include "item.hpp"
+#include "pos_collision.hpp"
 
 class PlayScene :
     public BaseScene
@@ -20,4 +21,5 @@ private:
     Item* item_;
     Field* field_;
     Player* player_;
+    PosCollision* pos_col_;
 };

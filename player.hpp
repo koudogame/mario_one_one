@@ -36,12 +36,17 @@ public:
     void collision();                                           // 足元の衝突判定を行う
     void landing();                                             // 着地したときの処理を行う
     void hit();                                                 // 頭をぶつけたときの判定
+    void posCollision();                                        // アイテムに当たったとき
 
     /*背景の描画を流す数値*/
     inline int getScrollCnt() { return scroll_cnt_; }
 
     /*マリオの状態をfieldにも知らせる*/
     inline int getStatus() { return status_; }
+
+    /*マリオのポジションを渡す*/
+    inline int getPositionX() { return total_movement_x_; }
+    inline int getPositionY() { return total_movement_y_; }
 
     /*頭の当たったとき*/
     inline int getBreakLeftX() { return break_left_x_; }        /*左頭の配列x*/

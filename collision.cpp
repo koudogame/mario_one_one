@@ -1,8 +1,4 @@
 #include "collision.hpp"
-int Collision::mario_pos_x_;                                 // マリオポジション
-int Collision::mario_pos_y_;
-int Collision::item_pos_x_;                                  // アイテムポジション
-int Collision::item_pos_y_;
 
 Collision::Collision( Field* Field )
 {
@@ -52,46 +48,3 @@ int Collision::collision( RL Rl, BodyParts Parts )
 
     return field_->getId( x, y );
 }
-
-void Collision::setMarioPos( int PosX, int PosY )
-{
-    mario_pos_x_ = PosX;
-    mario_pos_y_ = PosY;
-}
-
-void Collision::setItemPos( int PosX, int PosY )
-{
-    item_pos_x_ = PosX;
-    item_pos_y_ = PosY;
-}
-
-bool Collision::getCollision()
-{
-    // 矩形と矩形の当たり判定
-    {
-        int mario_left = mario_pos_x_;
-        int mario_right = mario_pos_x_ + kSize;
-
-        int mario_top = mario_pos_y_;
-        int mario_bottom = mario_pos_y_ + kSize;
-
-        int item_left = item_pos_x_;
-        int item_right = item_pos_x_ + kSize;
-
-        int item_top = item_pos_y_;
-        int item_bottom = item_pos_y_ + kSize;
-
-        // 4本の軸の判定
-        if( (mario_right > item_left) && (item_right > mario_left)
-            && (mario_bottom > item_top) && (item_bottom > mario_top) )
-        {
-            // 衝突しています
-            return false;
-        }
-
-        // 衝突していません
-        return true;
-    }
-}
-
-

@@ -34,3 +34,17 @@ void ItemBase::draw( int Texture, const int Screenover )
 void ItemBase::flagChange( int Status )
 {
 }
+
+int ItemBase::getPosX()
+{
+    return 0;
+}
+
+int ItemBase::getPosY()
+{
+    return 0;
+}
+
+void ItemBase::posCollision()
+{
+}

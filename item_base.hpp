@@ -35,7 +35,12 @@ public:
     virtual void update(int Screenover);
     virtual void draw( int Texture, const int Screenover );
     virtual void flagChange( int Status );
+    
+    virtual int getPosX();
+    virtual int getPosY();
 
+    virtual void posCollision();
+    
     inline const int getId() { return item_.Id; }
     inline const int getPositionX() { return item_.x; }
     inline const int getPositionY() { return item_.y; }

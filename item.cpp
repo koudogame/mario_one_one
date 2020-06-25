@@ -110,3 +110,9 @@ void Item::finalize()
         }
     }
 }
+
+void Item::posCollision( int i, int j )
+{
+    item_[ 0 ][ i ][ j ]->posCollision();
+}
+

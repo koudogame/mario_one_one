@@ -7,6 +7,7 @@ PlayScene::PlayScene()
     item_ = nullptr;
     field_ = nullptr;
     player_ = nullptr;
+    pos_col_ = nullptr;
 }
 
 PlayScene::~PlayScene()
@@ -19,6 +20,7 @@ bool PlayScene::initialize()
     field_ = new Field();   
     item_ = new Item( field_ );
     player_ = new Player( field_ );
+    pos_col_ = new PosCollision();
 
     // ファイルに対する入力ストリーム
     std::fstream stage;
@@ -44,15 +46,24 @@ void PlayScene::update()
     item_->update( player_->getBreakRightX(), player_->getBreakRightY(),
         player_->getBreakLeftX(), player_->getBreakLeftY(), player_->getStatus(), player_->getScrollCnt());
 
-    //for( auto itr : item_ )
-    //    Collision( player_->getPosX(),player_->getPosY(), item_pos ) == false
-    //    player_col;
-    //item_col;
+    // get関数を呼んで数値を渡す
+    for( int i = 0; i < item_->getHeight(); i++ )
+    {
+        for( int j = 0; j < item_->getWidth(); j++ )
+        {
+            if( pos_col_->getCollision( player_->getPositionX(), player_->getPositionY(),
+                item_->getItemPosX( i, j ), item_->getItemPosY( i, j ) ) == false )
+            {
+                int id = item_->getID( i, j );
 
-    //for( auto itr : enemy )
-    //    Collision( player_pos, enemy_pos ) == false;
-    //player_col_enemy;
-    //enemy_col_player;
+                if( id == kPowerup || id == kPowerup2 )
+                {
+                    player_->posCollision();
+                    item_->posCollision( i, j );
+                }
+            }
+        }
+    }
 }
 
 void PlayScene::draw()
@@ -73,4 +84,5 @@ void PlayScene::finalize()
     delete item_;
     delete field_;
     delete player_;
+    delete pos_col_;
 }

@@ -118,24 +118,6 @@ void Powerup::update( int Screenover )
                 if( Collision::sideColl( kLeft ) == false )
                     direction_ *= -1;
             }
-
-            Collision::setItemPos( (item_.x - 1), (item_.y - 1) + (kSize * 4) );
-            
-            if( Collision::getCollision() == false )
-            {
-                // アイテムを消す処理を書く
-                jumping_ = kNoMove;
-
-                item_.y = 670;
-
-                item_.Id = kNoBlock;
-                RECT rect;
-                rect.top = item_.Id / 16 * kSize;
-                rect.left = item_.Id % 16 * kSize;
-                rect.bottom = kSize;
-                rect.right = kSize;
-                item_.rect = rect;
-            }
         }
     }
 }
@@ -147,9 +129,28 @@ void Powerup::flagChange( int Status )
     status_ = Status;
 }
 
-void Powerup::setMarioPos( int x, int y )
+int Powerup::getPosX()
 {
-    if( punch_ == false )
-        if( item_.Id == kMashroom )
-            Collision::setMarioPos( x, y );
+    return (item_.x - 1);
+}
+
+int Powerup::getPosY()
+{
+    return (item_.y - 1) + (kSize * 4);
+}
+
+void Powerup::posCollision()
+{
+    // アイテムを消す処理を書く
+    jumping_ = kNoMove;
+
+    item_.y = 670;
+
+    item_.Id = kNoBlock;
+    RECT rect;
+    rect.top = item_.Id / 16 * kSize;
+    rect.left = item_.Id % 16 * kSize;
+    rect.bottom = kSize;
+    rect.right = kSize;
+    item_.rect = rect;
 }
