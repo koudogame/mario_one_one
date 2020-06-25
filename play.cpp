@@ -37,12 +37,22 @@ bool PlayScene::initialize()
 }
 
 void PlayScene::update()
-{    
+{
     player_->update();
     field_->update(player_->getBreakRightX(), player_->getBreakRightY(),
         player_->getBreakLeftX(), player_->getBreakLeftY(), player_->getStatus());
     item_->update( player_->getBreakRightX(), player_->getBreakRightY(),
         player_->getBreakLeftX(), player_->getBreakLeftY(), player_->getStatus(), player_->getScrollCnt());
+
+    //for( auto itr : item_ )
+    //    Collision( player_->getPosX(),player_->getPosY(), item_pos ) == false
+    //    player_col;
+    //item_col;
+
+    //for( auto itr : enemy )
+    //    Collision( player_pos, enemy_pos ) == false;
+    //player_col_enemy;
+    //enemy_col_player;
 }
 
 void PlayScene::draw()

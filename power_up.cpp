@@ -1,6 +1,6 @@
 #include "power_up.hpp"
 
-void Powerup::update(int Screenover)
+void Powerup::update( int Screenover )
 {
     if( !up_ )
     {
@@ -49,10 +49,10 @@ void Powerup::update(int Screenover)
         {
             if( item_.Id == kMashroom )
             {
-                if(Screenover <= item_.x + kSize)
-                item_.x += kSpeed * direction_;      // í‚Éi‚Þ
+                if( Screenover <= item_.x + kSize )
+                    item_.x += kSpeed * direction_;      // í‚Éi‚Þ
 
-                // ‘«‚Ì“o˜^
+                    // ‘«‚Ì“o˜^
                 body_[ kRight ][ kFoot ][ kX ] = (item_.x + (kSize - 10));
                 body_[ kRight ][ kFoot ][ kY ] = (item_.y + kSize + 1) + (kSize * 4);
 
@@ -100,22 +100,56 @@ void Powerup::update(int Screenover)
 
                 // ‰EŽè‚Ì“o˜^
                 body_[ kRight ][ kShoulder ][ kX ] = (item_.x + kSize + 1);
-                body_[ kRight ][ kShoulder ][ kY ] =( item_.y + 10) + (kSize * 4);
-                body_[ kRight ][ kHands ][ kX ]    = (item_.x + kSize + 1);
-                body_[ kRight ][ kHands ][ kY ]    = (item_.y - 10) + (kSize * 4);
+                body_[ kRight ][ kShoulder ][ kY ] = (item_.y + 10) + (kSize * 4);
+                body_[ kRight ][ kHands ][ kX ] = (item_.x + kSize + 1);
+                body_[ kRight ][ kHands ][ kY ] = (item_.y - 10) + (kSize * 4);
 
                 // “–‚½‚è”»’è‚Ì‚ ‚é‚Æ‚«
                 if( Collision::sideColl( kRight ) == false )
                     direction_ *= -1;
+
+                // ¶Žè‚Ì“o˜^
+                body_[ kLeft ][ kShoulder ][ kX ] = (item_.x - 1);
+                body_[ kLeft ][ kShoulder ][ kY ] = (item_.y + 10) + (kSize * 4);
+                body_[ kLeft ][ kHands ][ kX ] = (item_.x - 1);
+                body_[ kLeft ][ kHands ][ kY ] = (item_.y - 10) + (kSize * 4);
+
+                // “–‚½‚è”»’è‚Ì‚ ‚é‚Æ‚«
+                if( Collision::sideColl( kLeft ) == false )
+                    direction_ *= -1;
+            }
+
+            Collision::setItemPos( (item_.x - 1), (item_.y - 1) + (kSize * 4) );
+            
+            if( Collision::getCollision() == false )
+            {
+                // ƒAƒCƒeƒ€‚ðÁ‚·ˆ—‚ð‘‚­
+                jumping_ = kNoMove;
+
+                item_.y = 670;
+
+                item_.Id = kNoBlock;
+                RECT rect;
+                rect.top = item_.Id / 16 * kSize;
+                rect.left = item_.Id % 16 * kSize;
+                rect.bottom = kSize;
+                rect.right = kSize;
+                item_.rect = rect;
             }
         }
     }
 }
-
 
 void Powerup::flagChange( int Status )
 {
     up_ = false;
     jumping_ = kJump;
     status_ = Status;
+}
+
+void Powerup::setMarioPos( int x, int y )
+{
+    if( punch_ == false )
+        if( item_.Id == kMashroom )
+            Collision::setMarioPos( x, y );
 }
