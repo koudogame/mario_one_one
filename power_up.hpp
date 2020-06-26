@@ -20,9 +20,14 @@ public :
     int getPosY() override;
     void posCollision() override;
 
+    void flowerAnimation();
+
 private : 
     int up_cnt_     = 0;
     int direction_  = 1;
     bool up_flag_   = true;
     bool punch_     = true;
+
+    int animation_cnt_    = 0;
+    int flower_animation_ = 0;
 };

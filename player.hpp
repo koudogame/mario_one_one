@@ -24,6 +24,7 @@ public:
     static constexpr int kDeadLine = 800;
     static constexpr int kSkyBlue = 191;
     static constexpr int kGravity = 1;
+    static constexpr int kInvincible = 120;
 
     Player( Field* field ) : Collision( field ) {};
     ~Player();
@@ -36,13 +37,17 @@ public:
     void collision();                                           // 足元の衝突判定を行う
     void landing();                                             // 着地したときの処理を行う
     void hit();                                                 // 頭をぶつけたときの判定
-    void posCollision();                                        // アイテムに当たったとき
+    void itemCollision();                                        // アイテムに当たったとき
+    void enemyCollision();
 
     /*背景の描画を流す数値*/
     inline int getScrollCnt() { return scroll_cnt_; }
 
     /*マリオの状態をfieldにも知らせる*/
     inline int getStatus() { return status_; }
+
+    /*無敵状態か確認*/
+    inline bool getInvincible() { return invincible_; }
 
     /*マリオのポジションを渡す*/
     inline int getPositionX() { return total_movement_x_; }
@@ -95,4 +100,7 @@ private:
 
     int break_left_x_;         // 左頭のぶつかった座標x
     int break_left_y_;         // 左頭のぶつかった座標y
+
+    int invincible_cnt_;       // 無敵時間の計測
+    bool invincible_;          // true : ぶつかる, false : 無敵状態
 };

@@ -118,6 +118,10 @@ void Powerup::update( int Screenover )
                 if( Collision::sideColl( kLeft ) == false )
                     direction_ *= -1;
             }
+            else if( item_.Id == kFlower )
+            {
+                flowerAnimation();
+            }
         }
     }
 }
@@ -131,12 +135,18 @@ void Powerup::flagChange( int Status )
 
 int Powerup::getPosX()
 {
+    if( !up_flag_ )
     return (item_.x - 1);
+
+    return 0;
 }
 
 int Powerup::getPosY()
 {
+    if( !up_flag_ )
     return (item_.y - 1) + (kSize * 4);
+
+    return 0;
 }
 
 void Powerup::posCollision()
@@ -153,4 +163,21 @@ void Powerup::posCollision()
     rect.bottom = kSize;
     rect.right = kSize;
     item_.rect = rect;
+}
+
+void Powerup::flowerAnimation()
+{
+    animation_cnt_++;
+
+    if( animation_cnt_ > 2 )
+    {
+        animation_cnt_ = 0;
+        flower_animation_ += 1;
+
+        if( flower_animation_ >= 2 )
+            flower_animation_ = 0;
+    }
+
+    item_.rect.left = flower_animation_ * kSize;
+    item_.rect.right = kSize;
 }

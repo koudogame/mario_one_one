@@ -14,8 +14,6 @@ constexpr int kPowerup2 = 16;
 constexpr int kCoin     = 48;
 constexpr int kItemsize = 64;
 
-/* NewするClass */
-
 class Item
 {
 public :
@@ -25,21 +23,20 @@ public :
     void draw( int Screenover );
     void finalize();
 
-    int getItemPosX( int i, int j ) { return item_[ 0 ][ i ][ j ]->getPosX(); }
-    int getItemPosY( int i, int j ) { return item_[ 0 ][ i ][ j ]->getPosY(); }
-
-    int getWidth() { return width_; }
-    int getHeight() { return height_; }
-
-    int getID( int i, int j ) { return item_[ 0 ][ i ][ j ]->getId(); }
     void posCollision( int i, int j );
+
+    inline int getItemPosX( int i, int j ) { return item_[ 0 ][ i ][ j ]->getPosX(); }
+    inline int getItemPosY( int i, int j ) { return item_[ 0 ][ i ][ j ]->getPosY(); }
+    inline int getWidth() { return width_; }
+    inline int getHeight() { return height_; }
+    inline int getId( int i, int j ) { return item_[ 0 ][ i ][ j ]->getId(); }
 
 private :  
     Field* field_;
 
     int texture_;       // テクスチャハンドル保存用
-    int height_;        // 高さ
     int width_;         // 横幅
+    int height_;        // 高さ
     
     // マップチップ配列
     std::vector<std::vector<std::vector<ItemBase*>>> item_;

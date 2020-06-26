@@ -29,9 +29,10 @@ protected:
 
 public:
     static const int kGravity  = 1;
+    static const int kItemBase = 64;
 
     ItemBase( Field* field ) : Collision( field ) {};
-    virtual bool initialize( const int Id, const RECT Rect, const int X, const int Y );
+    virtual void initialize( const int Id, const RECT Rect, const int X, const int Y );
     virtual void update(int Screenover);
     virtual void draw( int Texture, const int Screenover );
     virtual void flagChange( int Status );

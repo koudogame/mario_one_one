@@ -19,7 +19,7 @@ bool Player::initialize()
     right_            = 0;
     bottom_           = 0;
 
-    status_           = kMario;
+    status_           = kFireMario;
     past_status_      = status_;
 
     scroll_cnt_       = 0;            // 右に抜けた分増やしていく
@@ -46,6 +46,9 @@ bool Player::initialize()
 
     break_left_x_     = 0;
     break_left_y_     = 0;
+
+    invincible_       = true;
+    invincible_cnt_   = 0;
 
     // 始まったときstatus_がkMario以外なら
     if( status_ != kMario )
@@ -233,29 +236,7 @@ bool Player::update()
             // 足元の衝突判定
             collision();
         }
-
-        // 退化ボタン(デバッグ用特殊コマンド)
-        if( !(GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_DOWN) == 0 )
-        {
-            status_ -= 1;              // マリオ退化
-
-            if( past_status_ == kSuperMario )
-            {
-                pos_y_ += kSize;
-                total_movement_y_ += kSize;
-            }
-
-            if( status_ < 0 )
-            {
-                gameover_flag_ = false;
-                acceleration_ = -kJumpPower;
-            }
-            // 変身後の状態を保存
-            past_status_ = status_;
-        }
-        ///////////////////////////////////////////////
     }
-
     // 死んでいるとき
     else
     {
@@ -272,6 +253,19 @@ bool Player::update()
         // マリオを飛ばす
         pos_y_ += acceleration_;
         total_movement_y_ += acceleration_;
+    }
+
+    // 無敵時間制限
+    if( !invincible_ )
+    {
+        invincible_cnt_++;
+
+        // 時間が来たら無敵解除
+        if( invincible_cnt_ > kInvincible )
+        {
+            invincible_cnt_ = 0;
+            invincible_ = true;
+        }
     }
 
     return true;
@@ -313,7 +307,7 @@ void Player::draw()
             texture_, TRUE, !direction_ );
     }
     else
-        DrawRectGraph( pos_x_, pos_y_, 0, 64, 64, 64, texture_, TRUE, FALSE );
+        DrawRectGraph( pos_x_, pos_y_, 0, kSize, kSize, kSize, texture_, TRUE, FALSE );
 }
 void Player::finalize()
 {
@@ -350,8 +344,8 @@ void Player::collision()
         acceleration_ = 0;  // 落下速度
 
         int block_line = std::round( static_cast<float>(total_movement_y_) / 64 );
-        pos_y_ = (block_line - 4) * 64;
-        total_movement_y_ = block_line * 64;
+        pos_y_ = (block_line - 4) * kSize;
+        total_movement_y_ = block_line * kSize;
     }
     // 足元に何もなく浮いているとき
     else if( Collision::footColl() == 2 )
@@ -413,11 +407,11 @@ void Player::hit()
     int block_line = std::round( static_cast<float>(total_movement_y_) / 64 );
 
     // プレイヤーの立つ場所を上の辺の高さにする
-    pos_y_ = (block_line - 4) * 64;
-    total_movement_y_ = block_line * 64;
+    pos_y_ = (block_line - 4) * kSize;
+    total_movement_y_ = block_line * kSize;
 }
 
-void Player::posCollision()
+void Player::itemCollision()
 {
     // 最終進化じゃないとき
     if( status_ < kFireMario )
@@ -433,4 +427,24 @@ void Player::posCollision()
         // 変身後の状態を保存
         past_status_ = status_;
     }
+}
+
+void Player::enemyCollision()
+{
+    status_ -= 1;              // マリオ退化
+    invincible_ = false;       // マリオ無敵に変える
+
+    if( past_status_ == kSuperMario )
+    {
+        pos_y_ += kSize;
+        total_movement_y_ += kSize;
+    }
+
+    if( status_ < 0 )
+    {
+        gameover_flag_ = false;
+        acceleration_ = -kJumpPower;
+    }
+    // 変身後の状態を保存
+    past_status_ = status_;
 }

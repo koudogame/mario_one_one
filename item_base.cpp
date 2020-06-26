@@ -1,8 +1,7 @@
 #include "item_base.hpp"
 
-constexpr int kItemBase = 64;
 
-bool ItemBase::initialize( const int Id, const RECT Rect, const int X, const int Y )
+void ItemBase::initialize( const int Id, const RECT Rect, const int X, const int Y )
 {
     item_.Id = Id;
     item_.rect = Rect;
@@ -10,8 +9,6 @@ bool ItemBase::initialize( const int Id, const RECT Rect, const int X, const int
     item_.y = Y;
 
     up_ = true;
-
-    return true;
 }
 
 void ItemBase::update(int Screenover)
@@ -37,11 +34,13 @@ void ItemBase::flagChange( int Status )
 
 int ItemBase::getPosX()
 {
+    // ‚»‚ê‚¼‚ê‚ÅOverride‚µ‚Ä’l‚ð“n‚·
     return 0;
 }
 
 int ItemBase::getPosY()
 {
+    // ‚»‚ê‚¼‚ê‚ÅOverride‚µ‚Ä’l‚ð“n‚·
     return 0;
 }
 

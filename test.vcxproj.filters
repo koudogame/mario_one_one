@@ -64,6 +64,15 @@
     <Filter Include="PosCollision">
       <UniqueIdentifier>{6dcd9be0-06ad-470b-ab87-bbcb9277e7dc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Enemy">
+      <UniqueIdentifier>{1c061138-1eac-4d01-bda0-312cbdeeab0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EnemyBase">
+      <UniqueIdentifier>{58bfa1aa-1e97-4c00-8a21-9b653899f7fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EnemyBase\Kuribo">
+      <UniqueIdentifier>{73003f2f-fb15-459b-ae6e-543f0f5a1a9e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -116,6 +125,15 @@
     </ClCompile>
     <ClCompile Include="pos_collision.cpp">
       <Filter>PosCollision</Filter>
+    </ClCompile>
+    <ClCompile Include="enemy_base.cpp">
+      <Filter>EnemyBase</Filter>
+    </ClCompile>
+    <ClCompile Include="enemy.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="kuribo.cpp">
+      <Filter>EnemyBase\Kuribo</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -172,6 +190,15 @@
     </ClInclude>
     <ClInclude Include="pos_collision.hpp">
       <Filter>PosCollision</Filter>
+    </ClInclude>
+    <ClInclude Include="enemy.hpp">
+      <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="enemy_base.hpp">
+      <Filter>EnemyBase</Filter>
+    </ClInclude>
+    <ClInclude Include="kuribo.hpp">
+      <Filter>EnemyBase\Kuribo</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
