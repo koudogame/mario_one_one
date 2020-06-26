@@ -11,7 +11,7 @@
 
 constexpr int kPowerup  = 0;
 constexpr int kPowerup2 = 16;
-constexpr int kCoin     = 48;
+constexpr int kCoin     = 80;
 constexpr int kItemsize = 64;
 
 class Item
