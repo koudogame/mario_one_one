@@ -174,7 +174,7 @@ void Powerup::flowerAnimation()
         animation_cnt_ = 0;
         flower_animation_ += 1;
 
-        if( flower_animation_ >= 2 )
+        if( flower_animation_ >= 3 )
             flower_animation_ = 0;
     }
 

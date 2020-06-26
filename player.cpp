@@ -302,13 +302,23 @@ void Player::draw()
             bottom_ = kSize * 2;
         }
 
-        // 右向きマリオの描画
-        DrawRectGraph( pos_x_, pos_y_, left_, top_, right_, bottom_,
-            texture_, TRUE, !direction_ );
+        if( invincible_ )
+            // 右向きマリオの描画
+            DrawRectGraph( pos_x_, pos_y_, left_, top_, right_, bottom_, texture_, TRUE, !direction_ );
+        else
+            SetDrawBlendMode( DX_BLENDMODE_ALPHA, 128 );
+            DrawRectGraph( pos_x_, pos_y_, left_, top_, right_, bottom_, texture_, TRUE, !direction_ );
+            SetDrawBlendMode( DX_BLENDMODE_NOBLEND, 255 );
     }
     else
-        DrawRectGraph( pos_x_, pos_y_, 0, kSize, kSize, kSize, texture_, TRUE, FALSE );
+    {
+        if( invincible_ )
+            DrawRectGraph( pos_x_, pos_y_, 0, kSize, kSize, kSize, texture_, TRUE, FALSE );
+        else
+            DrawRectGraph( pos_x_, pos_y_, 0, kSize, kSize, kSize, texture_, TRUE, FALSE );
+    }
 }
+
 void Player::finalize()
 {
     // テクスチャ開放
