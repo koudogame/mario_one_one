@@ -107,6 +107,17 @@ void Field::finalize()
     }
 }
 
+void Field::downBlock()
+{
+    for( int i = 0; i < height_; i++ )
+    {
+        for( int j = 0; j < width_; j++ )
+        {
+            field_[ 0 ][ i ][ j ]->downBlock();
+        }
+    }
+}
+
 int Field::getId( int PosX, int PosY )
 {
     // ID‚ðŒvŽZ‚µ‚Ä•Ô‚·

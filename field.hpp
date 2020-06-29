@@ -19,6 +19,8 @@ public :
     void draw(int ScreenOver);
     void finalize();
 
+    void downBlock();
+
     // 体のマップIdを返す三次元配列
     int getId( int PosX, int PosY );
 

@@ -3,16 +3,29 @@
 void Mystery::update(int Status)
 {
     // はてなが叩かれたとき
-    if( parts_.Id == 48 || parts_.Id == 49 )
+    if( parts_.Id == kMystery )
     {
-        // はてなボックスを使用済み
-        parts_.Id = 16;
+        base_pos_ = parts_.y;
+        parts_.y -= kSize / 4;
+        upblock_flag_ = false;
 
+        parts_.Id = kUsedBlock;
         RECT rect;
-        rect.top = parts_.Id / 16 * 64;
-        rect.left = parts_.Id % 16 * 64;
-        rect.bottom = 64;
-        rect.right = 64;
+        rect.top = kSize;
+        rect.left = 0;
+        rect.bottom = kSize;
+        rect.right = kSize;
         parts_.rect = rect;
+    }
+}
+
+void Mystery::downBlock()
+{
+    if( !upblock_flag_ )
+    {
+        if( parts_.y < base_pos_ )
+            parts_.y += 2;
+        else
+        upblock_flag_ = true;
     }
 }

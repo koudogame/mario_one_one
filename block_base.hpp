@@ -23,11 +23,21 @@ class BlockBase
 protected:
     //Parts\‘¢‘Ì‚ğŒÄ‚Ño‚·
     Parts parts_;
+    int base_pos_;
+    bool upblock_flag_;          // true : ’@‚©‚ê‚Ä‚È‚¢, false : ’@‚©‚ê‚½
+
 
 public :
+    static const int kUsedBlock = 16;
+    static const int kBrick     = 19;
+    static const int kMystery   = 48;
+    static const int kSize      = 64;
+
     virtual bool initialize(const int Id, const RECT Rect, const int X, const int Y);
     virtual void update(int Status);
     virtual void draw( int Texture, const int ScreenOver );
+    
+    virtual void downBlock();
 
     inline const int getId() {return parts_.Id; }
     inline const int getPositionX() { return parts_.x; }

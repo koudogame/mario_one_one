@@ -1,7 +1,5 @@
 #include "block_base.hpp"
 
-constexpr int kBlockBase = 64;
-
 bool BlockBase::initialize(const int Id, const RECT Rect, const int X, const int Y)
 {
     parts_.Id = Id;
@@ -9,12 +7,12 @@ bool BlockBase::initialize(const int Id, const RECT Rect, const int X, const int
     parts_.x = X;
     parts_.y = Y;
 
+    upblock_flag_ = true;
+
     return true;
 }
 
-void BlockBase::update(int Status)
-{
-}
+void BlockBase::update(int Status){}
 
 void BlockBase::draw( int Texture, const int ScreenOver )
 {
@@ -28,3 +26,5 @@ void BlockBase::draw( int Texture, const int ScreenOver )
         (int&)parts_.rect.right, (int&)parts_.rect.bottom,                      // 切り取り右下
         Texture, TRUE, FALSE );                                                 // テクスチャネーム、透明度、反転
 }
+
+void BlockBase::downBlock(){}
