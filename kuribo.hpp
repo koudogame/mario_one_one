@@ -7,6 +7,7 @@ class Kuribo :
 public :
     static const int kKuribo    = 0;
     static const int kSpeed     = 2;
+    static const int kDown      = 5;
     static const int kDeathTime = 32;
     static const int kDead      = 112;
     static const int kNoBlock   = 119;

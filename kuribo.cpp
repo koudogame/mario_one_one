@@ -123,7 +123,7 @@ void Kuribo::posCollision()
     rect.bottom = kSize;
     rect.right = kSize;
     enemy_parts_.rect = rect;
-    enemy_parts_.y += 5;
+    enemy_parts_.y += kDown;
 
     alive_ = false;
 }

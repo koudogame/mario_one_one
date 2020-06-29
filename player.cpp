@@ -441,17 +441,26 @@ void Player::itemCollision()
 
 void Player::enemyCollision()
 {
-    status_ -= 1;              // マリオ退化
-    invincible_ = false;       // マリオ無敵に変える
 
-    if( past_status_ == kSuperMario )
+    if( past_status_ == kFireMario )
     {
+        status_ -= 2;              // マリオ退化
+        invincible_ = false;       // マリオ無敵に変える
+
         pos_y_ += kSize;
         total_movement_y_ += kSize;
     }
-
-    if( status_ < 0 )
+    else if( past_status_ == kSuperMario )
     {
+        status_ -= 1;              // マリオ退化
+        invincible_ = false;       // マリオ無敵に変える
+
+        pos_y_ += kSize;
+        total_movement_y_ += kSize;
+    }
+    else
+    {
+        status_ -= 1;              // マリオ退化
         gameover_flag_ = false;
         acceleration_ = -kJumpPower;
     }
@@ -467,6 +476,5 @@ void Player::enemyStepon()
     // ジャンプ中にアニメーションを動かさないようにする
     animation_flag_ = false;
 
-    // 踏みつけたときだけのジャンプ
     acceleration_ = -kEnemyJump;
 }

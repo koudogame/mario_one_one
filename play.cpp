@@ -48,15 +48,15 @@ void PlayScene::update()
     player_->update();
 
     field_->downBlock();
-    
-    field_->update(player_->getBreakRightX(), player_->getBreakRightY(),
-        player_->getBreakLeftX(), player_->getBreakLeftY(), player_->getStatus());
-    
-    item_->update( player_->getBreakRightX(), player_->getBreakRightY(),
-        player_->getBreakLeftX(), player_->getBreakLeftY(), player_->getStatus(), player_->getScrollCnt());
 
-    enemy_->update(player_->getScrollCnt());
-    
+    field_->update( player_->getBreakRightX(), player_->getBreakRightY(),
+        player_->getBreakLeftX(), player_->getBreakLeftY(), player_->getStatus() );
+
+    item_->update( player_->getBreakRightX(), player_->getBreakRightY(),
+        player_->getBreakLeftX(), player_->getBreakLeftY(), player_->getStatus(), player_->getScrollCnt() );
+
+    enemy_->update( player_->getScrollCnt() );
+
     // getŠÖ”‚ğŒÄ‚ñ‚Å”’l‚ğ“n‚·iItemj
     for( int i = 0; i < item_->getHeight(); i++ )
     {
@@ -82,8 +82,12 @@ void PlayScene::update()
     {
         for( int j = 0; j < enemy_->getWidth(); j++ )
         {
-            if( pos_col_->getEnemyCollision( player_->getPositionX(), player_->getPositionY(),
-                enemy_->getEnemyPosX( i, j ), enemy_->getEnemyPosY( i, j ), player_->getStatus() ) == 1 )
+            if( pos_col_->getEnemyCollision(
+                player_->getPositionX(),
+                player_->getPositionY(),
+                enemy_->getEnemyPosX( i, j ),
+                enemy_->getEnemyPosY( i, j ),
+                player_->getStatus() ) == 1 )
             {
                 int id = enemy_->getId( i, j );
 
@@ -97,15 +101,45 @@ void PlayScene::update()
                     player_->enemyStepon();
                 }
             }
+            else if( pos_col_->getEnemyCollision(
+                player_->getPositionX(),
+                player_->getPositionY(),
+                enemy_->getEnemyPosX( i, j ),
+                enemy_->getEnemyPosY( i, j ),
+                player_->getStatus() ) == 2 )
+            {
+                int id = enemy_->getId( i, j );
+
+                if( id == kKuribo )
+                {
+                    // –³“GŠÔ’†‚Í“–‚½‚è”»’è‚ğæ‚ç‚È‚¢
+                    if( player_->getInvincible() == true )
+                    {
+                        player_->enemyCollision();
+                    }
+                }
+            }
+            else if( pos_col_->getEnemyCollision(
+                player_->getPositionX(),
+                player_->getPositionY(),
+                enemy_->getEnemyPosX( i, j ),
+                enemy_->getEnemyPosY( i, j ),
+                player_->getStatus() ) == 3 )
+            {
+                int id = enemy_->getId( i, j );
+
+                if( id == kKuribo )
+                {
+                    // –³“GŠÔ’†‚Í“–‚½‚è”»’è‚ğæ‚ç‚È‚¢
+                    if( player_->getInvincible() == true )
+                    {
+                        player_->enemyCollision();
+                    }
+                }
+            }
         }
     }
 }
-                    // –³“GŠÔ’†‚Í“–‚½‚è”»’è‚ğæ‚ç‚È‚¢
-                    //if( player_->getInvincible() == true )
-                    //{
-                    //    player_->enemyCollision();
-                    //    enemy_->posCollision( i, j );
-                    //}
 
 void PlayScene::draw()
 {    

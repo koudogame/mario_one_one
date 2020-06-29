@@ -37,7 +37,8 @@ int PosCollision::getEnemyCollision( int Mario_x, int Mario_y, int Enemy_x, int 
     int enemy_y1 = Enemy_y;
     int enemy_y2 = Enemy_y + kSize;
 
-    // ‰E‘«1, ¶‘«2, ‰Eè3, ¶è4
+
+    // ‘«Œ³‚Ì“o˜^
     body_[ kRight ][ kFoot ][ kX ] = (Mario_x + (kSize - 10));
     body_[ kLeft ][ kFoot ][ kX ] = (Mario_x + 10);
 
@@ -53,12 +54,54 @@ int PosCollision::getEnemyCollision( int Mario_x, int Mario_y, int Enemy_x, int 
         body_[ kLeft ][ kFoot ][ kY ] = (Mario_y + (kSize * 2) + 1);
     }
 
+
+    // ‰E‘Ì‚Ì“o˜^
+    body_[ kRight ][ kShoulder ][ kX ] = (Mario_x + kSize + 1);
+    body_[ kRight ][ kShoulder ][ kY ] = (Mario_y + 10);
+    body_[ kRight ][ kHands ][ kX ] = (Mario_x + kSize + 1);
+
+    // ¬‚³‚¢‚Æ‚«‚©‘å‚«‚¢‚Æ‚«‚©
+    if( Status == 0 )
+        body_[ kRight ][ kHands ][ kY ] = (Mario_y + kSize - 10);
+    else
+        body_[ kRight ][ kHands ][ kY ] = (Mario_y + (kSize * 2) - 10);
+
+
+    // ¶‘Ì‚Ì“o˜^
+    body_[ kLeft ][ kShoulder ][ kX ] = (Mario_x - 1);
+    body_[ kLeft ][ kShoulder ][ kY ] = (Mario_y + 10);
+    body_[ kLeft ][ kHands ][ kX ]    = (Mario_x - 1);
+
+    // ¬‚³‚¢‚Æ‚«‚©‘å‚«‚¢‚Æ‚«‚©
+    if( Status == 0 )
+        body_[ kLeft ][ kHands ][ kY ] = (Mario_y + kSize - 10);
+    else
+        body_[ kLeft ][ kHands ][ kY ] = (Mario_y + (kSize * 2) - 10);
+
+
+
     if( enemy_x1 <= body_[ kRight ][ kFoot ][ kX ] && body_[ kRight ][ kFoot ][ kX ] <= enemy_x2 &&
         enemy_y1 <= body_[ kRight ][ kFoot ][ kY ] && body_[ kRight ][ kFoot ][ kY ] <= enemy_y2 ||
         enemy_x1 <= body_[ kLeft ][ kFoot ][ kX ] && body_[ kLeft ][ kFoot ][ kX ] <= enemy_x2 &&
         enemy_y1 <= body_[ kLeft ][ kFoot ][ kY ] && body_[ kLeft ][ kFoot ][ kY ] <= enemy_y2 )
     {
         return 1;       // ‘«‚ª“G‚Æ“–‚½‚Á‚Ä‚¢‚é
+    }
+    else if(
+        enemy_x1 <= body_[ kRight ][ kShoulder ][ kX ] && body_[ kRight ][ kShoulder ][ kX ] <= enemy_x2 &&
+        enemy_y1 <= body_[ kRight ][ kShoulder ][ kY ] && body_[ kRight ][ kShoulder ][ kY ] <= enemy_y2 ||
+        enemy_x1 <= body_[ kRight ][ kHands ][ kX ] && body_[ kRight ][ kHands ][ kX ] <= enemy_x2 &&
+        enemy_y1 <= body_[ kRight ][ kHands ][ kY ] && body_[ kRight ][ kHands ][ kY ] <= enemy_y2 )
+    {
+        return 2;       // ‰E‘Ì‚ª“G‚Æ“–‚½‚Á‚Ä‚¢‚é
+    }
+    else if(
+        enemy_x1 <= body_[ kLeft ][ kShoulder ][ kX ] && body_[ kLeft ][ kShoulder ][ kX ] <= enemy_x2 &&
+        enemy_y1 <= body_[ kLeft ][ kShoulder ][ kY ] && body_[ kLeft ][ kShoulder ][ kY ] <= enemy_y2 ||
+        enemy_x1 <= body_[ kLeft ][ kHands ][ kX ] && body_[ kLeft ][ kHands ][ kX ] <= enemy_x2 &&
+        enemy_y1 <= body_[ kLeft ][ kHands ][ kY ] && body_[ kLeft ][ kHands ][ kY ] <= enemy_y2 )
+    {
+        return 3;       // ¶‘Ì‚ª“G‚Æ“–‚½‚Á‚Ä‚¢‚é‘åê
     }
 
     return 0;
