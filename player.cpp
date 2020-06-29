@@ -458,3 +458,15 @@ void Player::enemyCollision()
     // 変身後の状態を保存
     past_status_ = status_;
 }
+
+void Player::enemyStepon()
+{
+    // ジャンプRECTに切り替え
+    animation_ = 4;
+
+    // ジャンプ中にアニメーションを動かさないようにする
+    animation_flag_ = false;
+
+    // 踏みつけたときだけのジャンプ
+    acceleration_ = -kEnemyJump;
+}

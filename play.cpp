@@ -82,25 +82,30 @@ void PlayScene::update()
     {
         for( int j = 0; j < enemy_->getWidth(); j++ )
         {
-            if( pos_col_->getCollision( player_->getPositionX(), player_->getPositionY(),
-                enemy_->getEnemyPosX( i, j ), enemy_->getEnemyPosY( i, j ) ) == false )
+            if( pos_col_->getEnemyCollision( player_->getPositionX(), player_->getPositionY(),
+                enemy_->getEnemyPosX( i, j ), enemy_->getEnemyPosY( i, j ), player_->getStatus() ) == 1 )
             {
                 int id = enemy_->getId( i, j );
 
-                // 当たり判定を取りたいIdだけ衝突を確かめる
+                // 上からクリボー踏みつけたとき
                 if( id == kKuribo )
                 {
-                    // 無敵時間中は当たり判定を取らない
-                    if( player_->getInvincible() == true )
-                    {
-                        player_->enemyCollision();
-                        enemy_->posCollision( i, j );
-                    }
+                    // 踏まれた後の演出
+                    enemy_->posCollision( i, j );
+
+                    // 踏みつけジャンプ処理
+                    player_->enemyStepon();
                 }
             }
         }
     }
 }
+                    // 無敵時間中は当たり判定を取らない
+                    //if( player_->getInvincible() == true )
+                    //{
+                    //    player_->enemyCollision();
+                    //    enemy_->posCollision( i, j );
+                    //}
 
 void PlayScene::draw()
 {    

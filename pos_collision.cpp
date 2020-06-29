@@ -28,3 +28,38 @@ bool PosCollision::getCollision( int Mario_x, int Mario_y, int Other_x, int Othe
         return true;
     }
 }
+
+int PosCollision::getEnemyCollision( int Mario_x, int Mario_y, int Enemy_x, int Enemy_y, int Status )
+{
+    int enemy_x1 = Enemy_x;
+    int enemy_x2 = Enemy_x + kSize;
+
+    int enemy_y1 = Enemy_y;
+    int enemy_y2 = Enemy_y + kSize;
+
+    // ‰E‘«1, ¶‘«2, ‰Eè3, ¶è4
+    body_[ kRight ][ kFoot ][ kX ] = (Mario_x + (kSize - 10));
+    body_[ kLeft ][ kFoot ][ kX ] = (Mario_x + 10);
+
+    // ¬‚³‚¢‚Æ‚«‚©‘å‚«‚¢‚Æ‚«‚©
+    if( Status == 0 )
+    {
+        body_[ kRight ][ kFoot ][ kY ] = (Mario_y + kSize + 1);
+        body_[ kLeft ][ kFoot ][ kY ] = (Mario_y + kSize + 1);
+    }
+    else
+    {
+        body_[ kRight ][ kFoot ][ kY ] = (Mario_y + (kSize * 2) + 1);
+        body_[ kLeft ][ kFoot ][ kY ] = (Mario_y + (kSize * 2) + 1);
+    }
+
+    if( enemy_x1 <= body_[ kRight ][ kFoot ][ kX ] && body_[ kRight ][ kFoot ][ kX ] <= enemy_x2 &&
+        enemy_y1 <= body_[ kRight ][ kFoot ][ kY ] && body_[ kRight ][ kFoot ][ kY ] <= enemy_y2 ||
+        enemy_x1 <= body_[ kLeft ][ kFoot ][ kX ] && body_[ kLeft ][ kFoot ][ kX ] <= enemy_x2 &&
+        enemy_y1 <= body_[ kLeft ][ kFoot ][ kY ] && body_[ kLeft ][ kFoot ][ kY ] <= enemy_y2 )
+    {
+        return 1;       // ‘«‚ª“G‚Æ“–‚½‚Á‚Ä‚¢‚é
+    }
+
+    return 0;
+}

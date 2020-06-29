@@ -1,25 +1,30 @@
 #pragma once
 #include "field.hpp"
 
-enum RL
+namespace collision
 {
-    kRight, kLeft, kRL
-};
+    enum RL
+    {
+        kRight, kLeft, kRL
+    };
 
-enum BodyParts
-{
-    kShoulder, kHands, kHead, kFoot, kBodyParts
-};
+    enum BodyParts
+    {
+        kShoulder, kHands, kHead, kFoot, kBodyParts
+    };
 
-enum Position
-{
-    kX, kY, kPosition
-};
+    enum Position
+    {
+        kX, kY, kPosition
+    };
 
-enum JumpFlag
-{
-    kJump, kNoJump, kNoMove
-};
+    enum JumpFlag
+    {
+        kJump, kNoJump, kNoMove
+    };
+}
+
+using namespace collision;
 
 class Collision
 {

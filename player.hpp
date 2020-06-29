@@ -17,6 +17,7 @@ class Player :
 public:
     static constexpr int kSize = 64;
     static constexpr int kSpeed = 6;
+    static constexpr int kEnemyJump = 15;
     static constexpr int kJumpPower = 25;
     static constexpr int kStartX = 256;
     static constexpr int kStartY = 576;
@@ -33,12 +34,13 @@ public:
     void draw();
     void finalize();
 
-    void animation();                                           // マリオのアニメーション
-    void collision();                                           // 足元の衝突判定を行う
-    void landing();                                             // 着地したときの処理を行う
-    void hit();                                                 // 頭をぶつけたときの判定
+    void animation();                                            // マリオのアニメーション
+    void collision();                                            // 足元の衝突判定を行う
+    void landing();                                              // 着地したときの処理を行う
+    void hit();                                                  // 頭をぶつけたときの判定
     void itemCollision();                                        // アイテムに当たったとき
-    void enemyCollision();
+    void enemyCollision();                                       // ぶつかったときの処理
+    void enemyStepon();                                          // 踏みつけたときの処理      
 
     /*背景の描画を流す数値*/
     inline int getScrollCnt() { return scroll_cnt_; }
