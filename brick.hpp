@@ -6,4 +6,5 @@ class Brick :
 {
 public : 
     void update(int Status) override;
+    void downBlock() override;
 };
