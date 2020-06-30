@@ -97,23 +97,37 @@ int Turtle::getPosY()
     return (enemy_parts_.y - 1) + (kSize * 4);
 }
 
-void Turtle::posCollision()
-{   
-    // ‹N‚«‚Ä‚é‚Æ‚«‚É’@‚¢‚½‚ç
-    if( active_ )
+void Turtle::posCollision( int Touch )
+{
+    if( Touch == 1 )
     {
-        enemy_parts_.Id = 113;
-        RECT rect;
-        rect.top = kShell / 16 * kSize;
-        rect.left = kShell % 16 * kSize;
-        rect.bottom = kSize;
-        rect.right = kSize;
-        enemy_parts_.rect = rect;
+        // ‹N‚«‚Ä‚é‚Æ‚«‚É’@‚¢‚½‚ç
+        if( active_ )
+        {
+            enemy_parts_.Id = 113;
+            RECT rect;
+            rect.top = kShell / 16 * kSize;
+            rect.left = kShell % 16 * kSize;
+            rect.bottom = kSize;
+            rect.right = kSize;
+            enemy_parts_.rect = rect;
 
-        active_ = false;          // b—…‚Ì’†‚É“ü‚é
+            active_ = false;          // b—…‚Ì’†‚É“ü‚é
+        }
+    }
+    else if( Touch == 2 )
+    {
+        pushout_    = false;
+        direction_  = 1;
+        action_cnt_ = 1;
+    }
+    else if( Touch == 3 )
+    {
+        pushout_    = false;
+        direction_  = -1;
+        action_cnt_ = 1;
     }
 }
-
 void Turtle::shellCollision()
 {
     ++action_cnt_;

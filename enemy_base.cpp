@@ -35,6 +35,13 @@ void EnemyBase::draw( int Texture, int ScreenOver )
             Texture, TRUE, FALSE );                                                 // テクスチャネーム、透明度、反転
     }
 }
+
+bool EnemyBase::getPushFlag()
+{
+    // Overrideで値を返す
+    return true;
+}
+
 int EnemyBase::getPosX()
 {
     // それぞれでOverrideして値を渡す
@@ -47,6 +54,6 @@ int EnemyBase::getPosY()
     return 0;
 }
 
-void EnemyBase::posCollision(){}
+void EnemyBase::posCollision(int Touch){}
 
 void EnemyBase::shellCollision(){}

@@ -24,4 +24,6 @@ private:
     Player* player_;
     Enemy* enemy_;
     PosCollision* pos_col_;
+
+    int touch_;
 };

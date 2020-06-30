@@ -99,9 +99,9 @@ void Enemy::finalize()
     }
 }
 
-void Enemy::posCollision( int i, int j )
+void Enemy::posCollision( int i, int j, int Touch )
 {
-    enemy_[ 0 ][ i ][ j ]->posCollision();
+    enemy_[ 0 ][ i ][ j ]->posCollision(Touch);
 }
 
 void Enemy::shellCollision( int i, int j )

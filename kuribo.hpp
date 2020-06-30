@@ -15,7 +15,7 @@ public :
     
     int getPosX() override;
     int getPosY() override;
-    void posCollision() override;
+    void posCollision(int Touch) override;
 
     void animation();
 

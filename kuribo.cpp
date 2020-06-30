@@ -111,7 +111,7 @@ int Kuribo::getPosY()
     return (enemy_parts_.y - 1) + (kSize * 4);
 }
 
-void Kuribo::posCollision()
+void Kuribo::posCollision(int Touch)
 {
     // ƒAƒCƒeƒ€‚ğÁ‚·ˆ—‚ğ‘‚­
     jumping_ = kNoMove;

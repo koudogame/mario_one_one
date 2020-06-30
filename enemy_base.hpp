@@ -43,9 +43,10 @@ public :
     virtual void update(int ScreenOver);
     virtual void draw( int Texture, int ScreenOver );
 
+    virtual bool getPushFlag();
     virtual int getPosX();
     virtual int getPosY();
-    virtual void posCollision();
+    virtual void posCollision(int Touch);
     virtual void shellCollision();
 
     inline const int getId() { return enemy_parts_.Id; }

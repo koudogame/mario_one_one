@@ -12,6 +12,7 @@
 const int kKuribo = 0;
 const int kTurtle = 36;
 const int kSize   = 64;
+const int kShell  = 113;
 
 class Enemy
 {
@@ -23,9 +24,10 @@ public :
     void draw( int ScreenOver );
     void finalize();
 
-    void posCollision( int i, int j );
+    void posCollision( int i, int j, int Touch );
     void shellCollision( int i, int j );
 
+    inline bool getPushFlag( int i, int j ) { return enemy_[ 0 ][ i ][ j ]->getPushFlag(); }
     inline int getEnemyPosX( int i, int j ) { return enemy_[ 0 ][ i ][ j ]->getPosX(); }
     inline int getEnemyPosY( int i, int j ) { return enemy_[ 0 ][ i ][ j ]->getPosY(); }
     inline int getWidth() { return width_; }

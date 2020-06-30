@@ -39,6 +39,8 @@ bool PlayScene::initialize()
     enemy_->initalize( enemy );
     field_->initialize( stage );
     player_->initialize();
+
+    touch_ = 0;
  
     return true;
 }
@@ -83,38 +85,36 @@ void PlayScene::update()
         for( int j = 0; j < enemy_->getWidth(); j++ )
         {
             if( pos_col_->getEnemyCollision(
-                player_->getPositionX(),
-                player_->getPositionY(),
-                enemy_->getEnemyPosX( i, j ),
-                enemy_->getEnemyPosY( i, j ),
+                player_->getPositionX(), player_->getPositionY(),
+                enemy_->getEnemyPosX( i, j ), enemy_->getEnemyPosY( i, j ),
                 player_->getStatus() ) == 1 )
             {
                 int id = enemy_->getId( i, j );
+                touch_ = 1;
 
                 // ã‚©‚çƒNƒŠƒ{[“¥‚Ý‚Â‚¯‚½‚Æ‚«
                 if( id == kKuribo )
                 {
                     // “¥‚Ü‚ê‚½Œã‚Ì‰‰o
-                    enemy_->posCollision( i, j );
                     player_->enemyStepon();
-                }              
-                
+                    enemy_->posCollision( i, j, touch_ );
+                }
+
                 // ã‚©‚çƒmƒRƒmƒR“¥‚Ý‚Â‚¯‚½‚Æ‚«
                 if( id == kTurtle )
                 {
                     // “¥‚Ü‚ê‚½Œã‚Ì‰‰o
                     player_->enemyStepon();
-                    enemy_->posCollision( i, j );
+                    enemy_->posCollision( i, j, touch_ );
                 }
 
                 // ã‚©‚çb—…“¥‚Ý‚Â‚¯‚½‚Æ‚«
-                if( id == 113 )
+                if( id == kShell )
                 {
                     // “¥‚Ü‚ê‚½Œã‚Ì‰‰o
                     player_->enemyStepon();
                     enemy_->shellCollision( i, j );
                 }
-
             }
             else if( pos_col_->getEnemyCollision(
                 player_->getPositionX(),
@@ -124,13 +124,28 @@ void PlayScene::update()
                 player_->getStatus() ) == 2 )
             {
                 int id = enemy_->getId( i, j );
+                touch_ = 2;
 
-                if( id == kKuribo )
+                if( id == kKuribo || id == kTurtle )
                 {
                     // –³“GŽžŠÔ’†‚Í“–‚½‚è”»’è‚ðŽæ‚ç‚È‚¢
                     if( player_->getInvincible() == true )
                     {
                         player_->enemyCollision();
+                    }
+                }
+
+                if( id == kShell )
+                {
+                    // b—…‚ª“®‚¢‚Ä‚¢‚é‚©
+                    if( enemy_->getPushFlag( i, j ) == true )
+                        enemy_->posCollision( i, j, touch_ );
+                    else
+                    {// –³“GŽžŠÔ’†‚Í“–‚½‚è”»’è‚ðŽæ‚ç‚È‚¢
+                        if( player_->getInvincible() == true )
+                        {
+                            player_->enemyCollision();
+                        }
                     }
                 }
             }
@@ -142,13 +157,29 @@ void PlayScene::update()
                 player_->getStatus() ) == 3 )
             {
                 int id = enemy_->getId( i, j );
+                touch_ = 3;
 
-                if( id == kKuribo )
+                if( id == kKuribo || id == kTurtle)
                 {
                     // –³“GŽžŠÔ’†‚Í“–‚½‚è”»’è‚ðŽæ‚ç‚È‚¢
                     if( player_->getInvincible() == true )
                     {
                         player_->enemyCollision();
+                    }
+                }
+
+                if( id == kShell )
+                {
+                    // b—…‚ª“®‚¢‚Ä‚¢‚é‚©
+                    if( enemy_->getPushFlag( i, j ) == true )
+                        enemy_->posCollision( i, j, touch_ );
+                    else
+                    {
+                        // –³“GŽžŠÔ’†‚Í“–‚½‚è”»’è‚ðŽæ‚ç‚È‚¢
+                        if( player_->getInvincible() == true )
+                        {
+                            player_->enemyCollision();
+                        }
                     }
                 }
             }

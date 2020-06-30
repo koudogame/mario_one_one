@@ -101,7 +101,7 @@ int PosCollision::getEnemyCollision( int Mario_x, int Mario_y, int Enemy_x, int 
         enemy_x1 <= body_[ kLeft ][ kHands ][ kX ] && body_[ kLeft ][ kHands ][ kX ] <= enemy_x2 &&
         enemy_y1 <= body_[ kLeft ][ kHands ][ kY ] && body_[ kLeft ][ kHands ][ kY ] <= enemy_y2 )
     {
-        return 3;       // ¶‘Ì‚ª“G‚Æ“–‚½‚Á‚Ä‚¢‚é‘åê
+        return 3;       // ¶‘Ì‚ª“G‚Æ“–‚½‚Á‚Ä‚¢‚é
     }
 
     return 0;
