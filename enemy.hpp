@@ -7,9 +7,11 @@
 
 /*New‚·‚éClass*/
 #include "kuribo.hpp"    
+#include "turtle.hpp"
 
 const int kKuribo = 0;
-const int kSize = 64;
+const int kTurtle = 36;
+const int kSize   = 64;
 
 class Enemy
 {
@@ -22,6 +24,7 @@ public :
     void finalize();
 
     void posCollision( int i, int j );
+    void shellCollision( int i, int j );
 
     inline int getEnemyPosX( int i, int j ) { return enemy_[ 0 ][ i ][ j ]->getPosX(); }
     inline int getEnemyPosY( int i, int j ) { return enemy_[ 0 ][ i ][ j ]->getPosY(); }

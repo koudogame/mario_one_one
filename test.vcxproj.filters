@@ -73,6 +73,9 @@
     <Filter Include="EnemyBase\Kuribo">
       <UniqueIdentifier>{73003f2f-fb15-459b-ae6e-543f0f5a1a9e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="EnemyBase\Turtle">
+      <UniqueIdentifier>{0dd2fcaa-3ecf-493c-affa-bfd64c787d17}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -134,6 +137,9 @@
     </ClCompile>
     <ClCompile Include="kuribo.cpp">
       <Filter>EnemyBase\Kuribo</Filter>
+    </ClCompile>
+    <ClCompile Include="turtle.cpp">
+      <Filter>EnemyBase\Turtle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -199,6 +205,9 @@
     </ClInclude>
     <ClInclude Include="kuribo.hpp">
       <Filter>EnemyBase\Kuribo</Filter>
+    </ClInclude>
+    <ClInclude Include="turtle.hpp">
+      <Filter>EnemyBase\Turtle</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

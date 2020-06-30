@@ -24,8 +24,19 @@ class EnemyBase :
 protected :
     EnemyParts enemy_parts_;
 
+    int animation_      = 0;
+    int walk_animation_ = -1;       // -1 : 左足, 　　1 : 右足
+    int direction_      = -1;       // -1 : 左へ進む, 1 : 右へ進む
+
 public :
-    static const int kGravity = 1;
+    static const int kGravity  = 1;
+    static const int kSpeed    = 2;
+    static const int kMaxSpeed = 10;
+    static const int kTurtle   = 36;
+    static const int kNoBlock  = 119;
+    static const int kShell    = 113;
+    static const int kGround   = 575;
+
 
     EnemyBase( Field* field ) : Collision( field ) {};
     virtual void initialize( const int Id, const RECT Rect, const int X, const int Y );
@@ -35,6 +46,7 @@ public :
     virtual int getPosX();
     virtual int getPosY();
     virtual void posCollision();
+    virtual void shellCollision();
 
     inline const int getId() { return enemy_parts_.Id; }
     inline const int getPositionX() { return enemy_parts_.x; }

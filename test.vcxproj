@@ -170,6 +170,7 @@
     <ClCompile Include="result.cpp" />
     <ClCompile Include="scene_manager.cpp" />
     <ClCompile Include="title.cpp" />
+    <ClCompile Include="turtle.cpp" />
     <ClCompile Include="tutorial.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -193,6 +194,7 @@
     <ClInclude Include="result.hpp" />
     <ClInclude Include="scene_manager.hpp" />
     <ClInclude Include="title.hpp" />
+    <ClInclude Include="turtle.hpp" />
     <ClInclude Include="tutorial.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

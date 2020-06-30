@@ -39,7 +39,7 @@ bool PlayScene::initialize()
     enemy_->initalize( enemy );
     field_->initialize( stage );
     player_->initialize();
-
+ 
     return true;
 }
 
@@ -96,10 +96,25 @@ void PlayScene::update()
                 {
                     // 踏まれた後の演出
                     enemy_->posCollision( i, j );
-
-                    // 踏みつけジャンプ処理
                     player_->enemyStepon();
+                }              
+                
+                // 上からノコノコ踏みつけたとき
+                if( id == kTurtle )
+                {
+                    // 踏まれた後の演出
+                    player_->enemyStepon();
+                    enemy_->posCollision( i, j );
                 }
+
+                // 上から甲羅踏みつけたとき
+                if( id == 113 )
+                {
+                    // 踏まれた後の演出
+                    player_->enemyStepon();
+                    enemy_->shellCollision( i, j );
+                }
+
             }
             else if( pos_col_->getEnemyCollision(
                 player_->getPositionX(),

@@ -38,6 +38,8 @@ void Enemy::initalize( std::fstream& FieldEnemy )
 
             if( id == kKuribo )
                 enemy_[ 0 ][ i ][ j ] = new Kuribo( field_ );
+            else if( id == kTurtle )
+                enemy_[ 0 ][ i ][ j ] = new Turtle( field_ );
             else
                 enemy_[ 0 ][ i ][ j ] = new EnemyBase( field_ );
 
@@ -100,4 +102,9 @@ void Enemy::finalize()
 void Enemy::posCollision( int i, int j )
 {
     enemy_[ 0 ][ i ][ j ]->posCollision();
+}
+
+void Enemy::shellCollision( int i, int j )
+{
+    enemy_[ 0 ][ i ][ j ]->shellCollision();
 }
