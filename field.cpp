@@ -20,43 +20,46 @@ bool Field::initialize( std::fstream& stage )
 
     field_.resize( 2 );
 
-    for( int i = 0; i < height_; i++ )
+    for( int layer = 0; layer < 2; layer++ )
     {
-        field_[ 0 ].push_back( std::vector<BlockBase*>( width_ ) );
-
-        for( int j = 0; j < width_; j++ )
+        for( int i = 0; i < height_; i++ )
         {
-            RECT rect;
-            int position_x;
-            int position_y;
-            int id = 0;
+            field_[ layer ].push_back( std::vector<BlockBase*>( width_ ) );
 
-            stage.read( reinterpret_cast<char*>(&id), sizeof( char ) );
-
-            if( id == kBrick )
+            for( int j = 0; j < width_; j++ )
             {
-                field_[ 0 ][ i ][ j ] = new Brick;
-            }
-            else if( id == kMystery )
-            {
-                field_[ 0 ][ i ][ j ] = new Mystery;
-            }
-            else
-            {
-                field_[ 0 ][ i ][ j ] = new BlockBase;
-            }
+                RECT rect;
+                int position_x;
+                int position_y;
+                int id = 0;
 
-            // •`‰æ”ÍˆÍ‚ðÝ’è
-            rect.top = id / 16 * kBlocksize;
-            rect.left = id % 16 * kBlocksize;
-            rect.bottom = 64;
-            rect.right = 64;
+                stage.read( reinterpret_cast<char*>(&id), sizeof( char ) );
 
-            // Œ©‚¦‚È‚¢‹ó‚Ì•”•ª‚Ì•ª‚¾‚¯ (-n*64)
-            position_x = (64 * j);
-            position_y = (64 * i) - 256;
+                if( id == kBrick )
+                {
+                    field_[ layer ][ i ][ j ] = new Brick;
+                }
+                else if( id == kMystery )
+                {
+                    field_[ layer ][ i ][ j ] = new Mystery;
+                }
+                else
+                {
+                    field_[ layer ][ i ][ j ] = new BlockBase;
+                }
 
-            field_[ 0 ][ i ][ j ]->initialize( id, rect, position_x, position_y );
+                // •`‰æ”ÍˆÍ‚ðÝ’è
+                rect.top = id / 16 * kBlocksize;
+                rect.left = id % 16 * kBlocksize;
+                rect.bottom = 64;
+                rect.right = 64;
+
+                // Œ©‚¦‚È‚¢‹ó‚Ì•”•ª‚Ì•ª‚¾‚¯ (-n*64)
+                position_x = (64 * j);
+                position_y = (64 * i) - 256;
+
+                field_[ layer ][ i ][ j ]->initialize( id, rect, position_x, position_y );
+            }
         }
     }
 
@@ -80,16 +83,19 @@ void Field::update(int Brx, int Bry, int Blx, int Bly, int Status)
     }
 }
 
-void Field::draw(int ScreenOver)
+void Field::draw( int ScreenOver )
 {
+    for( int layer = 0; layer < 2; layer++ )
+    {
         for( int i = 0; i < height_; i++ )
         {
             for( int j = 0; j < width_; j++ )
             {
                 // — ”wŒi‚Ì•`‰æAcA‰¡‚ð‰æ‘œ‚ÌØ‚èŽæ‚è‚É‡‚í‚¹‚Ä•`‰æ
-                field_[ 0 ][ i ][ j ]->draw( texture_, ScreenOver );
+                field_[ layer ][ i ][ j ]->draw( texture_, ScreenOver );
             }
         }
+    }
 }
 
 void Field::finalize()
@@ -98,15 +104,17 @@ void Field::finalize()
     DeleteGraph( texture_ );
 
     // ŽOŽŸŒ³”z—ñŠJ•ú
-    for( int i = 0; i < height_; i++ )
+    for( int layer = 0; layer < 2; layer++ )
     {
-        for( int j = 0; j < width_; j++ )
+        for( int i = 0; i < height_; i++ )
         {
-            SAFE_DELETE( field_[ 0 ][ i ][ j ] );
+            for( int j = 0; j < width_; j++ )
+            {
+                SAFE_DELETE( field_[ layer ][ i ][ j ] );
+            }
         }
     }
 }
-
 void Field::downBlock()
 {
     for( int i = 0; i < height_; i++ )

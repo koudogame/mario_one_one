@@ -30,7 +30,7 @@ bool PlayScene::initialize()
     std::fstream enemy;
 
     // “ü—Í‚Ì‚½‚ß‚ÉƒI[ƒvƒ“‚·‚é“üo—Í‚ðƒoƒCƒiƒŠ‚Ås‚¤
-    stage.open( "mario_field.fmf", std::ios_base::in | std::ios_base::binary );
+    stage.open( "mario_field2.fmf", std::ios_base::in | std::ios_base::binary );
     enemy.open( "mario_enemy.fmf", std::ios_base::in | std::ios_base::binary );
     item.open( "mario_item.fmf", std::ios_base::in | std::ios_base::binary );
 
@@ -92,16 +92,8 @@ void PlayScene::update()
                 int id = enemy_->getId( i, j );
                 touch_ = 1;
 
-                // ã‚©‚çƒNƒŠƒ{[“¥‚Ý‚Â‚¯‚½‚Æ‚«
-                if( id == kKuribo )
-                {
-                    // “¥‚Ü‚ê‚½Œã‚Ì‰‰o
-                    player_->enemyStepon();
-                    enemy_->posCollision( i, j, touch_ );
-                }
-
-                // ã‚©‚çƒmƒRƒmƒR“¥‚Ý‚Â‚¯‚½‚Æ‚«
-                if( id == kTurtle )
+                // ã‚©‚ç“¥‚Ý‚Â‚¯‚½‚Æ‚«
+                if( id == kKuribo || id == kTurtle )
                 {
                     // “¥‚Ü‚ê‚½Œã‚Ì‰‰o
                     player_->enemyStepon();
@@ -117,37 +109,33 @@ void PlayScene::update()
                 }
             }
             else if( pos_col_->getEnemyCollision(
-                player_->getPositionX(),
-                player_->getPositionY(),
-                enemy_->getEnemyPosX( i, j ),
-                enemy_->getEnemyPosY( i, j ),
+                player_->getPositionX(), player_->getPositionY(),
+                enemy_->getEnemyPosX( i, j ), enemy_->getEnemyPosY( i, j ),
                 player_->getStatus() ) == 2 )
             {
                 int id = enemy_->getId( i, j );
                 touch_ = 2;
 
+                if( id == kShell )
+                {
+                    // b—…‚ª“®‚¢‚Ä‚¢‚é‚©
+                    if( enemy_->getPushFlag( i, j ) )
+                        enemy_->posCollision( i, j, touch_ );
+                    else
+                    {
+                        // –³“GŽžŠÔ’†‚Í“–‚½‚è”»’è‚ðŽæ‚ç‚È‚¢
+                        if( player_->getInvincible() )
+                            player_->enemyCollision();
+                    }
+                }
+
                 if( id == kKuribo || id == kTurtle )
                 {
                     // –³“GŽžŠÔ’†‚Í“–‚½‚è”»’è‚ðŽæ‚ç‚È‚¢
                     if( player_->getInvincible() == true )
-                    {
                         player_->enemyCollision();
-                    }
                 }
 
-                if( id == kShell )
-                {
-                    // b—…‚ª“®‚¢‚Ä‚¢‚é‚©
-                    if( enemy_->getPushFlag( i, j ) == true )
-                        enemy_->posCollision( i, j, touch_ );
-                    else
-                    {// –³“GŽžŠÔ’†‚Í“–‚½‚è”»’è‚ðŽæ‚ç‚È‚¢
-                        if( player_->getInvincible() == true )
-                        {
-                            player_->enemyCollision();
-                        }
-                    }
-                }
             }
             else if( pos_col_->getEnemyCollision(
                 player_->getPositionX(),
@@ -159,28 +147,24 @@ void PlayScene::update()
                 int id = enemy_->getId( i, j );
                 touch_ = 3;
 
-                if( id == kKuribo || id == kTurtle)
-                {
-                    // –³“GŽžŠÔ’†‚Í“–‚½‚è”»’è‚ðŽæ‚ç‚È‚¢
-                    if( player_->getInvincible() == true )
-                    {
-                        player_->enemyCollision();
-                    }
-                }
-
                 if( id == kShell )
                 {
                     // b—…‚ª“®‚¢‚Ä‚¢‚é‚©
-                    if( enemy_->getPushFlag( i, j ) == true )
+                    if( enemy_->getPushFlag( i, j ) )
                         enemy_->posCollision( i, j, touch_ );
                     else
                     {
                         // –³“GŽžŠÔ’†‚Í“–‚½‚è”»’è‚ðŽæ‚ç‚È‚¢
-                        if( player_->getInvincible() == true )
-                        {
+                        if( player_->getInvincible() )
                             player_->enemyCollision();
-                        }
                     }
+                }
+
+                if( id == kKuribo || id == kTurtle )
+                {
+                    // –³“GŽžŠÔ’†‚Í“–‚½‚è”»’è‚ðŽæ‚ç‚È‚¢
+                    if( player_->getInvincible() )
+                        player_->enemyCollision();
                 }
             }
         }

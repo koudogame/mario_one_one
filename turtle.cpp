@@ -120,12 +120,16 @@ void Turtle::posCollision( int Touch )
         pushout_    = false;
         direction_  = 1;
         action_cnt_ = 1;
+
+        enemy_parts_.x += 5;
     }
     else if( Touch == 3 )
     {
         pushout_    = false;
         direction_  = -1;
         action_cnt_ = 1;
+
+        enemy_parts_.x -= 5;
     }
 }
 void Turtle::shellCollision()
