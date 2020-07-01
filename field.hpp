@@ -11,6 +11,21 @@
 constexpr int kBrick = 19;
 constexpr int kMystery = 48;
 
+namespace breakblock
+{
+    enum BreakParts
+    {
+        kRightUp, kRightDown, kLeftUp, kLeftDown, kBreakParts
+    };
+
+    enum Vector2
+    {
+        kPositionX, kPositionY, kVector2
+    };
+}
+
+using namespace breakblock;
+
 class Field
 {
 public :
@@ -29,6 +44,6 @@ private :
     int height_;               // ‚‚³
     int width_;                // ‰¡•
 
-    // ”š‚ğİ’è‚µ‚È‚­‚Ä‚à‘‚¦‚é”z—ñ
+                               // ”š‚ğİ’è‚µ‚È‚­‚Ä‚à‘‚¦‚é”z—ñ
     std::vector<std::vector<std::vector<BlockBase*>>> field_;
 };

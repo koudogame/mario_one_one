@@ -1,4 +1,5 @@
 #pragma once 
+#include <DxLib.h>
 #include "base_scene.hpp"
 
 class ResultScene :
@@ -11,4 +12,5 @@ public :
     void finalize() override;
 
 private:
+    int texture_;
 };

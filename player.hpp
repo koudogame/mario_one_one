@@ -15,17 +15,18 @@ class Player :
     public Collision
 {
 public:
-    static constexpr int kSize = 64;
-    static constexpr int kSpeed = 6;
-    static constexpr int kEnemyJump = 15;
-    static constexpr int kJumpPower = 25;
-    static constexpr int kStartX = 256;
-    static constexpr int kStartY = 576;
-    static constexpr int kEndLine = 576;
-    static constexpr int kDeadLine = 800;
-    static constexpr int kSkyBlue = 191;
-    static constexpr int kGravity = 1;
-    static constexpr int kInvincible = 120;
+    static const int kSize = 64;
+    static const int kSpeed = 30;
+    static const int kEnemyJump = 15;
+    static const int kJumpPower = 25;
+    static const int kStartX = 256;
+    static const int kStartY = 576;
+    static const int kEndLine = 576;
+    static const int kDeadLine = 800;
+    static const int kSkyBlue = 191;
+    static const int kGravity = 1;
+    static const int kInvincible = 120;
+    static const int kDownSpeed = 7;
 
     Player( Field* field ) : Collision( field ) {};
     ~Player();
@@ -41,6 +42,7 @@ public:
     void itemCollision();                                        // アイテムに当たったとき
     void enemyCollision();                                       // ぶつかったときの処理
     void enemyStepon();                                          // 踏みつけたときの処理      
+    void Ending();                                               // エンディング処理
 
     /*背景の描画を流す数値*/
     inline int getScrollCnt() { return scroll_cnt_; }
@@ -60,6 +62,8 @@ public:
     inline int getBreakLeftY() { return break_left_y_; }        /*左頭の配列y*/
     inline int getBreakRightX() { return break_right_x_; }      /*右頭の配列x*/
     inline int getBreakRightY() { return break_right_y_; }      /*右頭の配列y*/
+
+    inline bool getEnd() { return extinguish_existence_; }      /*存在が消えたら*/
 
 private:
     int texture_;              // テクスチャハンドル
@@ -105,4 +109,8 @@ private:
 
     int invincible_cnt_;       // 無敵時間の計測
     bool invincible_;          // true : ぶつかる, false : 無敵状態
+
+    bool catch_flag_;          // true : 掴まっていない, false : 掴んでいる
+    bool goal_flag_;           // true : ゴールしていない, false : ゴールしている
+    bool extinguish_existence_;// flase : 存在を消す
 };

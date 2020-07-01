@@ -169,6 +169,10 @@ void PlayScene::update()
             }
         }
     }
+
+    // ƒNƒŠƒA‚µ‚½‚çSceneØ‚è‘Ö‚¦
+    if( !player_->getEnd() )
+        SceneManager::ChangeScene( SceneManager::Scene::Result );
 }
 
 void PlayScene::draw()

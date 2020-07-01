@@ -50,6 +50,10 @@ bool Player::initialize()
     invincible_       = true;
     invincible_cnt_   = 0;
 
+    goal_flag_        = true;
+    catch_flag_       = true;
+    extinguish_existence_ = true;
+
     // 始まったときstatus_がkMario以外なら
     if( status_ != kMario )
     {
@@ -62,8 +66,10 @@ bool Player::initialize()
 
 bool Player::update()
 {
+    if( !goal_flag_ ) Ending();
+        
     // GameOver判定
-    if( gameover_flag_ == true )
+    else if( gameover_flag_ )
     {
         // 右入力
         if( !(GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_RIGHT) == 0 )
@@ -236,6 +242,17 @@ bool Player::update()
             // 足元の衝突判定
             collision();
         }
+
+        // ゴール
+        if( total_movement_x_ >= (kSize * 194) + 32 )
+        {
+            animation_flag_   = true;
+            catch_flag_       = false;
+            goal_flag_        = false;
+            animation_        = 6;
+            acceleration_     = 0;
+            total_movement_x_ = (kSize * 194) + 32;
+        }
     }
     // 死んでいるとき
     else
@@ -272,50 +289,53 @@ bool Player::update()
 }
 void Player::draw()
 {
-    // この情報が残ったまま大きくなると、
-    // マリオが大きくなった時ブロックが壊れるので０を入れる
-    break_left_x_ = 0; break_left_y_ = 0;
-    break_right_x_ = 0; break_right_y_ = 0;
-
-    if( status_ >= kMario )
+    if( extinguish_existence_ )
     {
-        // 状態は変わってもwidthは変わらない
-        left_ = animation_ * kSize;
-        right_ = kSize;
+        // この情報が残ったまま大きくなると、
+        // マリオが大きくなった時ブロックが壊れるので０を入れる
+        break_left_x_ = 0; break_left_y_ = 0;
+        break_right_x_ = 0; break_right_y_ = 0;
 
-        // マリオのとき
-        if( status_ == kMario )
+        if( status_ >= kMario )
         {
-            top_ = kMario * kSize;
-            bottom_ = top_ + kSize;
-        }
-        // スーパーマリオのとき
-        else if( status_ == kSuperMario )
-        {
-            top_ = kSize * 4;
-            bottom_ = kSize * 2;
-        }
-        // ファイアマリオのとき
-        else if( status_ == kFireMario )
-        {
-            top_ = kSize * 8;
-            bottom_ = kSize * 2;
-        }
+            // 状態は変わってもwidthは変わらない
+            left_ = animation_ * kSize;
+            right_ = kSize;
 
-        if( invincible_ )
-            // 右向きマリオの描画
-            DrawRectGraph( pos_x_, pos_y_, left_, top_, right_, bottom_, texture_, TRUE, !direction_ );
-        else
-            SetDrawBlendMode( DX_BLENDMODE_ALPHA, 128 );
+            // マリオのとき
+            if( status_ == kMario )
+            {
+                top_ = kMario * kSize;
+                bottom_ = top_ + kSize;
+            }
+            // スーパーマリオのとき
+            else if( status_ == kSuperMario )
+            {
+                top_ = kSize * 4;
+                bottom_ = kSize * 2;
+            }
+            // ファイアマリオのとき
+            else if( status_ == kFireMario )
+            {
+                top_ = kSize * 8;
+                bottom_ = kSize * 2;
+            }
+
+            if( invincible_ )
+                // 右向きマリオの描画
+                DrawRectGraph( pos_x_, pos_y_, left_, top_, right_, bottom_, texture_, TRUE, !direction_ );
+            else
+                SetDrawBlendMode( DX_BLENDMODE_ALPHA, 128 );
             DrawRectGraph( pos_x_, pos_y_, left_, top_, right_, bottom_, texture_, TRUE, !direction_ );
             SetDrawBlendMode( DX_BLENDMODE_NOBLEND, 255 );
-    }
-    else
-    {
-        if( invincible_ )
-            DrawRectGraph( pos_x_, pos_y_, 0, kSize, kSize, kSize, texture_, TRUE, FALSE );
+        }
         else
-            DrawRectGraph( pos_x_, pos_y_, 0, kSize, kSize, kSize, texture_, TRUE, FALSE );
+        {
+            if( invincible_ )
+                DrawRectGraph( pos_x_, pos_y_, 0, kSize, kSize, kSize, texture_, TRUE, FALSE );
+            else
+                DrawRectGraph( pos_x_, pos_y_, 0, kSize, kSize, kSize, texture_, TRUE, FALSE );
+        }
     }
 }
 
@@ -477,4 +497,116 @@ void Player::enemyStepon()
     animation_flag_ = false;
 
     acceleration_ = -kEnemyJump;
+}
+
+void Player::Ending()
+{
+    if( status_ == kMario )
+    {
+        if( total_movement_y_ < kSize * 11 )
+        {
+            pos_y_ += kDownSpeed;
+            total_movement_y_ += kDownSpeed;
+
+            animation_cnt_++;
+
+            if( animation_cnt_ >= 4 )
+            {
+                animation_cnt_ = 0;
+
+                if( animation_ == 6 )
+                    animation_++;
+                else
+                    animation_--;
+            }
+        }
+        else if( !catch_flag_ )
+        {
+            if( !catch_flag_ )
+            {
+                catch_flag_ = true;
+                pos_x_ += kSize;
+                total_movement_x_ += kSize;
+            }
+
+            direction_ = false;
+        }
+        else
+        {
+            if( total_movement_x_ < (kSize * 201) - (kSize / 2 ))
+            {
+                pos_x_ += 3;
+                total_movement_x_ += 3;
+
+                animation();
+
+                if( pos_y_ < kEndLine )
+                {
+                    acceleration_ += kGravity;
+                    pos_y_ += acceleration_;
+                    total_movement_y_ += acceleration_;
+                }
+                else
+                {
+                    direction_ = true;
+                    pos_y_ = kEndLine;
+                }
+            }
+            else
+                extinguish_existence_ = false;
+        }
+    }
+    else
+        if( total_movement_y_ < kSize * 10 )
+        {
+            pos_y_ += kDownSpeed;
+            total_movement_y_ += kDownSpeed;
+
+            animation_cnt_++;
+
+            if( animation_cnt_ >= 4 )
+            {
+                animation_cnt_ = 0;
+
+                if( animation_ == 6 )
+                    animation_++;
+                else
+                    animation_--;
+            }
+        }
+        else if( !catch_flag_ )
+        {
+            if( !catch_flag_ )
+            {
+                catch_flag_ = true;
+                pos_x_ += kSize;
+                total_movement_x_ += kSize;
+            }
+
+            direction_ = false;
+        }
+        else
+        {
+            if( total_movement_x_ < (kSize * 201) - (kSize / 2) )
+            {
+                pos_x_ += 3;
+                total_movement_x_ += 3;
+
+                animation();
+
+                if( pos_y_ < kEndLine - kSize )
+                {
+                    acceleration_ += kGravity;
+                    pos_y_ += acceleration_;
+                    total_movement_y_ += acceleration_;
+                }
+                else
+                {
+                    direction_ = true;
+                    pos_y_ = kEndLine - kSize;
+                }
+            }
+            else
+                extinguish_existence_ = false;
+        }
 }

@@ -1,6 +1,6 @@
 #include "field.hpp"
 
-constexpr int kBlocksize = 64;
+constexpr int kSize = 64;
 
 bool Field::initialize( std::fstream& stage )
 {
@@ -49,8 +49,8 @@ bool Field::initialize( std::fstream& stage )
                 }
 
                 // •`‰æ”ÍˆÍ‚ğİ’è
-                rect.top = id / 16 * kBlocksize;
-                rect.left = id % 16 * kBlocksize;
+                rect.top = id / 16 * kSize;
+                rect.left = id % 16 * kSize;
                 rect.bottom = 64;
                 rect.right = 64;
 
@@ -79,7 +79,7 @@ void Field::update(int Brx, int Bry, int Blx, int Bly, int Status)
     if( Blx != 0 || Bly != 0 )
     {
         // XV‚³‚ê‚½BlockBase->update()‚ğŒÄ‚Ño‚·
-        field_[ 0 ][ Bly ][ Blx ]->update(Status);
+        field_[ 0 ][ Bly ][ Blx ]->update( Status );
     }
 }
 
