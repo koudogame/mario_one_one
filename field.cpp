@@ -85,17 +85,27 @@ void Field::update(int Brx, int Bry, int Blx, int Bly, int Status)
 
 void Field::draw( int ScreenOver )
 {
-    for( int layer = 0; layer < 2; layer++ )
+    for( int i = 0; i < height_; i++ )
     {
-        for( int i = 0; i < height_; i++ )
+        for( int j = 0; j < width_; j++ )
         {
-            for( int j = 0; j < width_; j++ )
-            {
-                // — ”wŒi‚Ì•`‰æAcA‰¡‚ð‰æ‘œ‚ÌØ‚èŽæ‚è‚É‡‚í‚¹‚Ä•`‰æ
-                field_[ layer ][ i ][ j ]->draw( texture_, ScreenOver );
-            }
+            // — ”wŒi‚Ì•`‰æAcA‰¡‚ð‰æ‘œ‚ÌØ‚èŽæ‚è‚É‡‚í‚¹‚Ä•`‰æ
+            field_[ 0 ][ i ][ j ]->draw( texture_, ScreenOver );
         }
     }
+}
+
+void Field::drawFront( int ScreenOver )
+{
+    for( int i = 0; i < height_; i++ )
+    {
+        for( int j = 0; j < width_; j++ )
+        {
+            // — ”wŒi‚Ì•`‰æAcA‰¡‚ð‰æ‘œ‚ÌØ‚èŽæ‚è‚É‡‚í‚¹‚Ä•`‰æ
+            field_[ 1 ][ i ][ j ]->draw( texture_, ScreenOver );
+        }
+    }
+
 }
 
 void Field::finalize()

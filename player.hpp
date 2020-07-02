@@ -16,7 +16,7 @@ class Player :
 {
 public:
     static const int kSize = 64;
-    static const int kSpeed = 30;
+    static const int kSpeed = 6;
     static const int kEnemyJump = 15;
     static const int kJumpPower = 25;
     static const int kStartX = 256;
@@ -26,7 +26,7 @@ public:
     static const int kSkyBlue = 191;
     static const int kGravity = 1;
     static const int kInvincible = 120;
-    static const int kDownSpeed = 7;
+    static const int kDownSpeed = 8;
 
     Player( Field* field ) : Collision( field ) {};
     ~Player();

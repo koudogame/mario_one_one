@@ -13,7 +13,7 @@ public :
     static const int kGround   = 575;
 
     Powerup( Field* field ) : ItemBase( field ) {};
-    void update(int Screenover) override;
+    void update( int Screenover) override;
     void flagChange( int Status )override;
 
     int getPosX() override;

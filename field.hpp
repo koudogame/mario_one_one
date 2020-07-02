@@ -32,6 +32,7 @@ public :
     bool initialize(std::fstream& stage);
     void update( int Brx, int Bry, int Blx, int Bly , int Status);
     void draw(int ScreenOver);
+    void drawFront( int ScreenOver );
     void finalize();
 
     void downBlock();

@@ -170,15 +170,16 @@ void PlayScene::update()
         }
     }
 
-    // クリアしたらScene切り替え
-    if( !player_->getEnd() )
-        SceneManager::ChangeScene( SceneManager::Scene::Result );
+    //// クリアしたらScene切り替え
+    //if( !player_->getEnd() )
+    //    SceneManager::ChangeScene( SceneManager::Scene::Result );
 }
 
 void PlayScene::draw()
-{    
+{       
+    field_->drawFront(player_->getScrollCnt());   
     item_->draw(player_->getScrollCnt());
-    field_->draw(player_->getScrollCnt());
+    field_->draw( player_->getScrollCnt() );
     enemy_->draw(player_->getScrollCnt());
     player_->draw();
 }
