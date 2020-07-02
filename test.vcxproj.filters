@@ -76,6 +76,9 @@
     <Filter Include="EnemyBase\Turtle">
       <UniqueIdentifier>{0dd2fcaa-3ecf-493c-affa-bfd64c787d17}</UniqueIdentifier>
     </Filter>
+    <Filter Include="BreakBlock">
+      <UniqueIdentifier>{f5e541bf-3768-4378-a91e-8780a534846d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -140,6 +143,9 @@
     </ClCompile>
     <ClCompile Include="turtle.cpp">
       <Filter>EnemyBase\Turtle</Filter>
+    </ClCompile>
+    <ClCompile Include="break_block.cpp">
+      <Filter>BreakBlock</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -208,6 +214,9 @@
     </ClInclude>
     <ClInclude Include="turtle.hpp">
       <Filter>EnemyBase\Turtle</Filter>
+    </ClInclude>
+    <ClInclude Include="break_block.hpp">
+      <Filter>BreakBlock</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
