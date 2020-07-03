@@ -25,7 +25,7 @@ protected:
     Parts parts_;
     int base_pos_;
     bool upblock_flag_;          // true : ’@‚©‚ê‚Ä‚È‚¢, false : ’@‚©‚ê‚½
-
+    bool stand_by_;              // true : €”õ’†, false : “®‚«o‚·
 
 public :
     static const int kUsedBlock = 16;
@@ -33,11 +33,12 @@ public :
     static const int kMystery   = 48;
     static const int kSize      = 64;
 
-    virtual bool initialize(const int Id, const RECT Rect, const int X, const int Y);
-    virtual void update(int Status);
+    virtual void initialize(const int Id, const RECT Rect, const int X, const int Y);
+    virtual void update(int);
     virtual void draw( int Texture, const int ScreenOver );
     
     virtual void downBlock();
+    virtual void standby(int,int);     
 
     inline const int getId() {return parts_.Id; }
     inline const int getPositionX() { return parts_.x; }

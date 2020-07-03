@@ -292,8 +292,6 @@ void Player::draw()
 {
     if( extinguish_existence_ )
     {
-        // この情報が残ったまま大きくなると、
-        // マリオが大きくなった時ブロックが壊れるので０を入れる
         break_left_x_ = 0; break_left_y_ = 0;
         break_right_x_ = 0; break_right_y_ = 0;
 

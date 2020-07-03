@@ -9,7 +9,6 @@ PlayScene::PlayScene()
     field_   = nullptr;
     player_  = nullptr;
     pos_col_ = nullptr;
-    block_ = nullptr;
 }
 
 PlayScene::~PlayScene()
@@ -24,7 +23,6 @@ bool PlayScene::initialize()
     enemy_   = new Enemy( field_ );
     player_  = new Player( field_ );
     pos_col_ = new PosCollision();
-    block_ = new BreakBlock();
 
     // ファイルに対する入力ストリーム
     std::fstream stage;
@@ -41,7 +39,6 @@ bool PlayScene::initialize()
     enemy_->initalize( enemy );
     field_->initialize( stage );
     player_->initialize();
-    block_->initialize();
 
     touch_ = 0;
  
@@ -61,9 +58,6 @@ void PlayScene::update()
         player_->getBreakLeftX(), player_->getBreakLeftY(), player_->getStatus(), player_->getScrollCnt() );
 
     enemy_->update( player_->getScrollCnt() );
-
-    block_->update(player_->getBreakRightX(), player_->getBreakRightY(),
-        player_->getBreakLeftX(), player_->getBreakLeftY());
 
     // get関数を呼んで数値を渡す（Item）
     for( int i = 0; i < item_->getHeight(); i++ )
@@ -176,15 +170,14 @@ void PlayScene::update()
         }
     }
 
-    //// クリアしたらScene切り替え
-    //if( !player_->getEnd() )
-    //    SceneManager::ChangeScene( SceneManager::Scene::Result );
+    // クリアしたらScene切り替え
+    if( !player_->getEnd() )
+        SceneManager::ChangeScene( SceneManager::Scene::Result );
 }
 
 void PlayScene::draw()
 {       
     field_->drawFront(player_->getScrollCnt());  
-    block_->draw(player_->getScrollCnt());
     item_->draw(player_->getScrollCnt());
     field_->draw( player_->getScrollCnt() );
     enemy_->draw(player_->getScrollCnt());
@@ -195,14 +188,12 @@ void PlayScene::finalize()
 {
     // DeleteGraphなど
     field_->finalize();
-    block_->finalize();
     item_->finalize();
     enemy_->finalize();
     player_->finalize();
 
     // メモリ開放newした分]
     delete item_;
-    delete block_;
     delete field_;
     delete player_;
     delete pos_col_;

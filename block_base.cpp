@@ -1,15 +1,14 @@
 #include "block_base.hpp"
 
-bool BlockBase::initialize(const int Id, const RECT Rect, const int X, const int Y)
+void BlockBase::initialize(const int Id, const RECT Rect, const int X, const int Y)
 {
     parts_.Id = Id;
     parts_.rect = Rect;
     parts_.x = X;
     parts_.y = Y;
 
+    stand_by_ = true;
     upblock_flag_ = true;
-
-    return true;
 }
 
 void BlockBase::update(int Status){}
@@ -28,3 +27,5 @@ void BlockBase::draw( int Texture, const int ScreenOver )
 }
 
 void BlockBase::downBlock(){}
+
+void BlockBase::standby(int x, int y){}

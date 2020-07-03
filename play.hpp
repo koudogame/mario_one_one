@@ -4,7 +4,6 @@
 #include "player.hpp"
 #include "item.hpp"
 #include "enemy.hpp"
-#include "break_block.hpp"
 #include "pos_collision.hpp"
 
 class PlayScene :
@@ -25,7 +24,6 @@ private:
     Player* player_;
     Enemy* enemy_;
     PosCollision* pos_col_;
-    BreakBlock* block_;
 
     int touch_;
 };

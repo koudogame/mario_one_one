@@ -6,6 +6,9 @@ bool Field::initialize( std::fstream& stage )
 {
     texture_ = LoadGraph( "Texture/mario_field.png" );
 
+    block_rx_, block_ry_ = 0;
+    block_lx_, block_ly_ = 0;
+
     // ファイルポインタを先頭に移動
     stage.seekg( 0 );
 
@@ -66,20 +69,38 @@ bool Field::initialize( std::fstream& stage )
     return true;
 }
 
-void Field::update(int Brx, int Bry, int Blx, int Bly, int Status)
+void Field::update( int Brx, int Bry, int Blx, int Bly, int Status )
 {
-    // 叩かれた右側のupdate()を呼ぶ
+    // 叩かれた右側
     if( Brx != 0 || Bry != 0 )
     {
-        // 更新されたBlockBase->update()を呼び出す
-        field_[ 0 ][ Bry ][ Brx ]->update(Status);
+        // 先に右の頭を登録
+        block_rx_ = Brx;
+        block_ry_ = Bry;
+
+        field_[ 0 ][ Bry ][ Brx ]->standby(Brx, Bry);
     }
 
-    // 叩かれた左側のupdate()を呼ぶ
+    // 叩かれた左側
     if( Blx != 0 || Bly != 0 )
     {
-        // 更新されたBlockBase->update()を呼び出す
-        field_[ 0 ][ Bly ][ Blx ]->update( Status );
+            block_lx_ = Blx;
+            block_ly_ = Bly;
+
+            field_[ 0 ][ Bly ][ Blx ]->standby(Blx, Bly);
+    }
+
+    for( int i = 0; i < height_; i++ )
+    {
+        for( int j = 0; j < width_; j++ )
+        {
+            // 常に動ける準備はさせておく
+            if( field_[ 0 ][ i ][ j ]->getId() == kBrick || field_[ 0 ][ i ][ j ]->getId() == kMystery || field_[ 0 ][ i ][ j ]->getId() == kNoblock )
+            {
+                // 更新されたBlockBase->update()を呼び出す
+                field_[ 0 ][ i ][ j ]->update( Status );
+            }
+        }
     }
 }
 

@@ -144,9 +144,6 @@
     <ClCompile Include="turtle.cpp">
       <Filter>EnemyBase\Turtle</Filter>
     </ClCompile>
-    <ClCompile Include="break_block.cpp">
-      <Filter>BreakBlock</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="result.hpp">
@@ -214,9 +211,6 @@
     </ClInclude>
     <ClInclude Include="turtle.hpp">
       <Filter>EnemyBase\Turtle</Filter>
-    </ClInclude>
-    <ClInclude Include="break_block.hpp">
-      <Filter>BreakBlock</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
