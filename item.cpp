@@ -40,7 +40,9 @@ bool Item::initialize( std::fstream& stage )
             if( id == kPowerup )
                 item_[ 0 ][ i ][ j ] = new Powerup( field_ );
             else if( id == kCoin )
-                item_[ 0 ][ i ][ j ] = new Coin(field_);
+                item_[ 0 ][ i ][ j ] = new Coin( field_ );
+            else if( id == kGoal )
+                item_[ 0 ][ i ][ j ] = new Goal( field_ );
             else
                 item_[ 0 ][ i ][ j ] = new ItemBase(field_);
 
@@ -114,5 +116,17 @@ void Item::finalize()
 void Item::posCollision( int i, int j )
 {
     item_[ 0 ][ i ][ j ]->posCollision();
+}
+
+void Item::getGoal( bool Goal )
+{
+    for( int i = 0; i < height_; i++ )
+    {
+        for( int j = 0; j < width_; j++ )
+        {
+            if( item_[ 0 ][ i ][ j ]->getId() == kGoal )
+            item_[ 0 ][ i ][ j ]->getGoal( Goal );
+        }
+    }
 }
 

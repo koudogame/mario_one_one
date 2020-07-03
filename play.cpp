@@ -57,6 +57,8 @@ void PlayScene::update()
     item_->update( player_->getBreakRightX(), player_->getBreakRightY(),
         player_->getBreakLeftX(), player_->getBreakLeftY(), player_->getStatus(), player_->getScrollCnt() );
 
+    item_->getGoal( player_->getGoal() );
+
     enemy_->update( player_->getScrollCnt() );
 
     // get関数を呼んで数値を渡す（Item）
@@ -171,8 +173,8 @@ void PlayScene::update()
     }
 
     // クリアしたらScene切り替え
-    if( !player_->getEnd() )
-        SceneManager::ChangeScene( SceneManager::Scene::Result );
+    //if( !player_->getEnd() )
+    //    SceneManager::ChangeScene( SceneManager::Scene::Result );
 }
 
 void PlayScene::draw()

@@ -15,10 +15,13 @@ class Player :
     public Collision
 {
 public:
+    static const int kMaxHigh = 352;
     static const int kSize = 64;
-    static const int kSpeed = 6;
+    static const int kSpeed = 8;
     static const int kEnemyJump = 15;
-    static const int kJumpPower = 25;
+    static const int kJumpPower = 24;
+    static const int kDownCnt = 66;
+    static const int kTurnCnt = 90;
     static const int kStartX = 256;
     static const int kStartY = 576;
     static const int kEndLine = 576;
@@ -26,7 +29,7 @@ public:
     static const int kSkyBlue = 191;
     static const int kGravity = 1;
     static const int kInvincible = 120;
-    static const int kDownSpeed = 8;
+    static const int kDownSpeed = 6;
 
     Player( Field* field ) : Collision( field ) {};
     ~Player();
@@ -52,6 +55,9 @@ public:
 
     /*無敵状態か確認*/
     inline bool getInvincible() { return invincible_; }
+
+    /*ゴールしているか*/
+    inline bool getGoal() { return goal_flag_; }
 
     /*マリオのポジションを渡す*/
     inline int getPositionX() { return total_movement_x_; }
@@ -113,4 +119,6 @@ private:
     bool catch_flag_;          // true : 掴まっていない, false : 掴んでいる
     bool goal_flag_;           // true : ゴールしていない, false : ゴールしている
     bool extinguish_existence_;// flase : 存在を消す
+
+    int down_cnt_;             // この値が66になったら向き反転
 };

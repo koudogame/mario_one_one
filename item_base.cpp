@@ -47,3 +47,7 @@ int ItemBase::getPosY()
 void ItemBase::posCollision()
 {
 }
+
+void ItemBase::getGoal( bool Goal )
+{
+}

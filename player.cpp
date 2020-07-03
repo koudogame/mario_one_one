@@ -19,7 +19,7 @@ bool Player::initialize()
     right_            = 0;
     bottom_           = 0;
 
-    status_           = kFireMario;
+    status_           = kMario;
     past_status_      = status_;
 
     scroll_cnt_       = 0;            // 右に抜けた分増やしていく
@@ -53,6 +53,8 @@ bool Player::initialize()
     goal_flag_        = true;
     catch_flag_       = true;
     extinguish_existence_ = true;
+
+    down_cnt_         = 0;
 
     // 始まったときstatus_がkMario以外なら
     if( status_ != kMario )
@@ -244,14 +246,14 @@ bool Player::update()
         }
 
         // ゴール
-        if( total_movement_x_ >= (kSize * 194) + 32 )
+        if( total_movement_x_ >= (kSize * 194) + (kSize / 2) )
         {
             animation_flag_   = true;
             catch_flag_       = false;
             goal_flag_        = false;
             animation_        = 6;
             acceleration_     = 0;
-            total_movement_x_ = (kSize * 194) + 32;
+            total_movement_x_ = (kSize * 194) + (kSize / 2);
         }
     }
     // 死んでいるとき
@@ -499,10 +501,13 @@ void Player::enemyStepon()
 }
 
 void Player::Ending()
-{
+{        
+    // 向き反転までのカウント
+    down_cnt_++;
+
     if( status_ == kMario )
     {
-        if( total_movement_y_ < kSize * 11 )
+        if( total_movement_y_ < (kSize * 11 + (kSize / 2)) )
         {
             pos_y_ += kDownSpeed;
             total_movement_y_ += kDownSpeed;
@@ -519,7 +524,7 @@ void Player::Ending()
                     animation_--;
             }
         }
-        else if( !catch_flag_ )
+        else if( !catch_flag_ && down_cnt_ >= kDownCnt )
         {
             if( !catch_flag_ )
             {
@@ -530,9 +535,9 @@ void Player::Ending()
 
             direction_ = false;
         }
-        else
+        else if( down_cnt_ >= kTurnCnt )
         {
-            if( total_movement_x_ < (kSize * 201) - (kSize / 2 ))
+            if( total_movement_x_ < (kSize * 201) - (kSize / 2) )
             {
                 pos_x_ += 3;
                 total_movement_x_ += 3;
@@ -556,7 +561,7 @@ void Player::Ending()
         }
     }
     else
-        if( total_movement_y_ < kSize * 10 )
+        if( total_movement_y_ < (kSize * 10 + (kSize / 2)) )
         {
             pos_y_ += kDownSpeed;
             total_movement_y_ += kDownSpeed;
@@ -573,7 +578,7 @@ void Player::Ending()
                     animation_--;
             }
         }
-        else if( !catch_flag_ )
+        else if( !catch_flag_ && down_cnt_ >= kDownCnt )
         {
             if( !catch_flag_ )
             {
@@ -584,7 +589,7 @@ void Player::Ending()
 
             direction_ = false;
         }
-        else
+        else if(down_cnt_ >= kTurnCnt)
         {
             if( total_movement_x_ < (kSize * 201) - (kSize / 2) )
             {

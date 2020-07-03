@@ -8,9 +8,11 @@
 /* New‚·‚éClass */
 #include "coin.hpp"
 #include "power_up.hpp"
+#include "goal.hpp"
 
 constexpr int kPowerup  = 0;
 constexpr int kPowerup2 = 16;
+constexpr int kGoal     = 19;
 constexpr int kCoin     = 80;
 constexpr int kItemsize = 64;
 
@@ -24,6 +26,7 @@ public :
     void finalize();
 
     void posCollision( int i, int j );
+    void getGoal( bool );
 
     inline int getItemPosX( int i, int j ) { return item_[ 0 ][ i ][ j ]->getPosX(); }
     inline int getItemPosY( int i, int j ) { return item_[ 0 ][ i ][ j ]->getPosY(); }
