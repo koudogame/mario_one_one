@@ -19,7 +19,7 @@ bool Player::initialize()
     right_            = 0;
     bottom_           = 0;
 
-    status_           = kMario;
+    status_           = kFireMario;
     past_status_      = status_;
 
     scroll_cnt_       = 0;            // 右に抜けた分増やしていく
@@ -320,7 +320,17 @@ void Player::draw()
             {
                 top_ = kSize * 8;
                 bottom_ = kSize * 2;
+
+                // Status FireMario
+                if( !(GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_X) == 0 )
+                {
+                    left_ = (kSize * 4);
+                    right_ = kSize;
+                    top_ = (kSize * 10);
+                    bottom_ = (kSize * 2);
+                }
             }
+            
 
             if( invincible_ )
                 // 右向きマリオの描画
