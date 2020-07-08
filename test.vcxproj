@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ball_management.cpp" />
     <ClCompile Include="block_base.cpp" />
     <ClCompile Include="brick.cpp" />
     <ClCompile Include="coin.cpp" />
@@ -158,7 +159,7 @@
     <ClCompile Include="enemy.cpp" />
     <ClCompile Include="enemy_base.cpp" />
     <ClCompile Include="field.cpp" />
-    <ClCompile Include="fireboll.cpp" />
+    <ClCompile Include="fire_factory.cpp" />
     <ClCompile Include="goal.cpp" />
     <ClCompile Include="item.cpp" />
     <ClCompile Include="item_base.cpp" />
@@ -176,6 +177,7 @@
     <ClCompile Include="tutorial.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ball_management.hpp" />
     <ClInclude Include="base_scene.hpp" />
     <ClInclude Include="block_base.hpp" />
     <ClInclude Include="brick.hpp" />
@@ -184,7 +186,7 @@
     <ClInclude Include="enemy.hpp" />
     <ClInclude Include="enemy_base.hpp" />
     <ClInclude Include="field.hpp" />
-    <ClInclude Include="fireboll.hpp" />
+    <ClInclude Include="fire_factory.hpp" />
     <ClInclude Include="goal.hpp" />
     <ClInclude Include="item.hpp" />
     <ClInclude Include="item_base.hpp" />

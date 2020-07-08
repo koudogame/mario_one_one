@@ -146,6 +146,7 @@ void Field::finalize()
         }
     }
 }
+
 void Field::downBlock()
 {
     for( int i = 0; i < height_; i++ )

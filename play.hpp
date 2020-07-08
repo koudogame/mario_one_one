@@ -4,6 +4,7 @@
 #include "player.hpp"
 #include "item.hpp"
 #include "enemy.hpp"
+#include "ball_management.hpp"
 #include "pos_collision.hpp"
 
 class PlayScene :
@@ -23,6 +24,7 @@ private:
     Field* field_;
     Player* player_;
     Enemy* enemy_;
+    BallManagement* bm_;
     PosCollision* pos_col_;
 
     int touch_;

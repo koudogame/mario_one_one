@@ -4,6 +4,7 @@
 PlayScene::PlayScene()
 {
     // クラスポインタ初期化
+    bm_      = nullptr;
     item_    = nullptr;
     enemy_   = nullptr;
     field_   = nullptr;
@@ -22,7 +23,8 @@ bool PlayScene::initialize()
     item_    = new Item( field_ );
     enemy_   = new Enemy( field_ );
     player_  = new Player( field_ );
-    pos_col_ = new PosCollision();
+    bm_ = new BallManagement( field_ );
+    pos_col_ = new PosCollision(); 
 
     // ファイルに対する入力ストリーム
     std::fstream stage;
@@ -38,6 +40,7 @@ bool PlayScene::initialize()
     item_->initialize( item );
     enemy_->initalize( enemy );
     field_->initialize( stage );
+    bm_->initialize();
     player_->initialize();
 
     touch_ = 0;
@@ -60,6 +63,9 @@ void PlayScene::update()
     item_->getGoal( player_->getGoal() );
 
     enemy_->update( player_->getScrollCnt() );
+
+    bm_->update( player_->getPositionX(), player_->getPositionY(),
+        player_->getStatus(), player_->getDirection() );
 
     // get関数を呼んで数値を渡す（Item）
     for( int i = 0; i < item_->getHeight(); i++ )
@@ -183,6 +189,7 @@ void PlayScene::draw()
     item_->draw(player_->getScrollCnt());
     field_->draw( player_->getScrollCnt() );
     enemy_->draw(player_->getScrollCnt());
+    bm_->draw( player_->getScrollCnt() );
     player_->draw();
 }
 
@@ -192,9 +199,11 @@ void PlayScene::finalize()
     field_->finalize();
     item_->finalize();
     enemy_->finalize();
+    bm_->finalize();
     player_->finalize();
 
-    // メモリ開放newした分]
+    // メモリ開放newした分
+    delete bm_;
     delete item_;
     delete field_;
     delete player_;

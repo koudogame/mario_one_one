@@ -32,7 +32,7 @@ int Collision::footColl()
     int y2 = body_[ kLeft ][ kFoot ][ kY ] / 64;
 
     if( field_->getId( x1, y1 ) <= 64 || field_->getId( x2, y2 ) <= 64 )
-        return 1;       
+         return 1;       
     else if( field_->getId( x1, y1 ) == 191 || field_->getId( x2, y2 ) == 191 || 
              field_->getId( x1, y1 ) == 190 || field_->getId( x2, y2 ) == 190  )
         return 2;

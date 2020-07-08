@@ -59,6 +59,16 @@ public:
     /*ゴールしているか*/
     inline bool getGoal() { return goal_flag_; }
 
+    inline int getDirection() 
+    {
+        if( direction_ ) return 1;
+        else return -1;
+    }
+
+    /*マリオの画面座標を渡す*/
+    inline int getPosX() { return pos_x_; }
+    inline int getPosY() { return pos_y_; }
+
     /*マリオのポジションを渡す*/
     inline int getPositionX() { return total_movement_x_; }
     inline int getPositionY() { return total_movement_y_; }
