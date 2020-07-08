@@ -16,6 +16,9 @@ public :
     void update();
     void draw(int , const int );
 
+    inline int getFirePosX() { return fire_pos_x_; }
+    inline int getFirePosY() { return fire_pos_y_; }
+
 private : 
     void animation();
 

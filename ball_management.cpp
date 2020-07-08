@@ -7,8 +7,7 @@ void BallManagement::initialize()
 
 void BallManagement::update( int PosX, int PosY, int Status, int Direction )
 {
-    // ボタンが押されたとき
-    // かつ、FireMarioの時
+    // ボタンが押されたとき かつ、FireMarioの時
     if( !(GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_X) == 0 )
     {
         if( Status == 2 )
@@ -22,7 +21,7 @@ void BallManagement::update( int PosX, int PosY, int Status, int Direction )
     // 要素数だけFireを動かす
     for( auto itr = fire_.begin(); itr != fire_.end(); itr++ )
     {
-        (*itr)->update();                            // *itrアロー演算子()をつける
+        (*itr)->update();                                 // *itrアロー演算子()をつける
     }
 }
 
@@ -31,11 +30,26 @@ void BallManagement::draw(const int ScreenOver)
     // 要素数だけFireを描画する
     for( auto itr = fire_.begin(); itr != fire_.end(); itr++ )
     {
-        (*itr)->draw( texture_, ScreenOver );        // *itrアロー演算子()をつける
+        (*itr)->draw( texture_, ScreenOver );             // *itrアロー演算子()をつける
     }
 }
 
 void BallManagement::finalize()
 {
     DeleteGraph( texture_ );
+}
+
+int BallManagement::getFirePosX(int Num)
+{
+        return fire_[Num]->getFirePosX();                 // *itrアロー演算子()をつける
+}
+
+int BallManagement::getFirePosY(int Num)
+{
+        return fire_[Num]->getFirePosY();                 // *itrアロー演算子()をつける
+}
+
+int BallManagement::getSize()
+{
+    return fire_.size();                                  // Fireの要素の数を返す
 }

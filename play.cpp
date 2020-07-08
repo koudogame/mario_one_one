@@ -67,6 +67,27 @@ void PlayScene::update()
     bm_->update( player_->getPositionX(), player_->getPositionY(),
         player_->getStatus(), player_->getDirection() );
 
+
+
+    // get関数を呼んで結果を返す(enemy & enemy)
+    for( int i = 0; i < enemy_->getHeight(); i++ )
+    {
+        for( int j = 0; j < enemy_->getWidth(); j++ )
+        {
+            for( int k = 0; k < bm_->getSize(); k++ )
+            {
+                // すべての炎と敵の衝突を確認
+                if( pos_col_->getCollision( bm_->getFirePosX( k ), bm_->getFirePosY( k ),
+                    enemy_->getEnemyPosX( i, j ), enemy_->getEnemyPosY( i, j ) ) == false )
+                {
+                    // 炎、敵用に新たな関数を用意する。
+
+                }
+            }
+        }
+    }
+
+
     // get関数を呼んで数値を渡す（Item）
     for( int i = 0; i < item_->getHeight(); i++ )
     {
@@ -74,7 +95,7 @@ void PlayScene::update()
         {
             if( pos_col_->getCollision( player_->getPositionX(), player_->getPositionY(),
                 item_->getItemPosX( i, j ), item_->getItemPosY( i, j ) ) == false )
-            {
+             {
                 int id = item_->getId( i, j );
 
                 // 当たり判定を取りたいIdだけ衝突を確かめる

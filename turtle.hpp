@@ -4,21 +4,21 @@
 class Turtle :
     public EnemyBase
 {
-public :
+public:
     Turtle( Field* Field ) : EnemyBase( Field ) {};
 
     void update( int ScreenOver )override;
 
     int getPosX()override;
     int getPosY()override;
-    void posCollision(int Touch) override;   // active_ : true‚Å“¥‚ñ‚¾
+    void posCollision( int Touch ) override;   // active_ : true‚Å“¥‚ñ‚¾
     void shellCollision() override;
 
     void animation();
 
     inline bool getPushFlag()override { return pushout_; }
 
-private : 
+private:
     bool active_ = true;                     // true : ‹N‚«‚Ä‚¢‚é, false : b—…‚Ì’†
     bool pushout_ = true;                    // true : ~‚Ü‚Á‚Ä‚¢‚é, false : ‰¡‚É‚‘¬ˆÚ“®
 
