@@ -3,8 +3,8 @@
 void FireFactory::initialize( int PosX, int PosY, int Direction)
 {
     // 投げられた時のマリオの座標をスタート位置とする
-    fire_pos_x_ = PosX;
-    fire_pos_y_ = PosY;
+    fire_pos_x_ = PosX + (kSize / 2);
+    fire_pos_y_ = PosY - (kSize * 4) + (kSize / 2);
 
     // マリオの向きの受け渡し
     direction_ = Direction;
