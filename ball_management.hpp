@@ -27,6 +27,7 @@ private:
     FireFactory ff_;
 
     int texture_;
+    int push_create_fire_;             // 単発生成できるよう時間管理
 
     // 全体ファイア管理用配列
     std::vector<FireFactory*> fire_;

@@ -131,4 +131,7 @@ private:
     bool extinguish_existence_;// flase : ‘¶İ‚ğÁ‚·
 
     int down_cnt_;             // ‚±‚Ì’l‚ª66‚É‚È‚Á‚½‚çŒü‚«”½“]
+
+    int push_time_jump_;       // 1,Pressed,2,Held
+    int push_time_fire_;       // 1,Pressed,2,Held
 };

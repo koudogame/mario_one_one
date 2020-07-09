@@ -56,6 +56,9 @@ bool Player::initialize()
 
     down_cnt_         = 0;
 
+    push_time_jump_ = 0;
+    push_time_fire_ = 0;
+
     // 始まったときstatus_がkMario以外なら
     if( status_ != kMario )
     {
@@ -162,6 +165,12 @@ bool Player::update()
 
         // ジャンプ入力
         if( !(GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_B) == 0 )
+            push_time_jump_++;
+        else
+            push_time_jump_ = 0;
+
+        // 初回限定
+        if( push_time_jump_ == 1 )
         {
             // ジャンプRECTに切り替え
             // kMario状態の時のみ有効
@@ -323,15 +332,21 @@ void Player::draw()
 
                 // Status FireMario
                 if( goal_flag_ )
-                if( !(GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_X) == 0 )
                 {
-                    left_ = (kSize * 4);
-                    right_ = kSize;
-                    top_ = (kSize * 10);
-                    bottom_ = (kSize * 2);
+                    if( !(GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_4) == 0 )
+                        push_time_fire_++;
+                    else
+                        push_time_fire_ = 0;
+
+                    if( push_time_fire_ == 1 )
+                    {
+                        left_ = (kSize * 4);
+                        right_ = kSize;
+                        top_ = (kSize * 10);
+                        bottom_ = (kSize * 2);
+                    }
                 }
             }
-            
 
             if( invincible_ )
                 // 右向きマリオの描画

@@ -3,6 +3,7 @@
 void BallManagement::initialize()
 {
     texture_ = LoadGraph( "Texture/mario_item.png" );
+    push_create_fire_ = 0;
 }
 
 void BallManagement::update( int PosX, int PosY, int Status, int Direction, bool GameOver )
@@ -11,7 +12,12 @@ void BallManagement::update( int PosX, int PosY, int Status, int Direction, bool
     if( GameOver )
     {
         // ƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚½‚Æ‚« ‚©‚ÂAFireMario‚Ì
-        if( !(GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_X) == 0 )
+        if( !(GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_4) == 0 )
+            push_create_fire_++;
+        else
+        push_create_fire_ = 0;
+
+        if( push_create_fire_ == 1 )
         {
             if( Status == 2 )
             {

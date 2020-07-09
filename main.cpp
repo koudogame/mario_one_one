@@ -28,7 +28,7 @@ int WINAPI WinMain( HINSTANCE hI, HINSTANCE hP, LPSTR lpC, int nC )
     // ずっと更新が必要なものをここに記入していく
     while( ProcessMessage() == 0 && CheckHitKey( KEY_INPUT_ESCAPE ) == 0 )
     {        
-        ClearDrawScreen();                                 // 画面消去                       
+        ClearDrawScreen();                                 // 画面消去 
 
         /*update関数*/
         SceneManager::update();
