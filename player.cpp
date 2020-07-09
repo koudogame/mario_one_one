@@ -322,6 +322,7 @@ void Player::draw()
                 bottom_ = kSize * 2;
 
                 // Status FireMario
+                if( goal_flag_ )
                 if( !(GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_X) == 0 )
                 {
                     left_ = (kSize * 4);

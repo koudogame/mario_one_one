@@ -9,9 +9,11 @@ public :
     BallManagement( Field* field ) : ff_( field ) { field_ = field; }
 
     void initialize();
-    void update( int, int, int, int ); // position_x_, position_y_, status_, direction_;
+    void update( int, int, int, int, bool ); // position_x_, position_y_, status_, direction_, gameoverflag;
     void draw(const int);              // ScreenOver
     void finalize();
+
+    void posCheck(const int);                   // ファイアボールの場所をチェックする
 
     int getFirePosX(int);              // fireのX座標を返す
     int getFirePosY(int);              // fireのY座標を返す
@@ -19,6 +21,7 @@ public :
     int getSize();                     // for文用にサイズを返す
 
 private: 
+
     Field* field_;
     FireFactory ff_;
 

@@ -10,14 +10,19 @@ public :
     const int kSpeed = 10;
     const int kJumpPower = 5;
     const int kGround = 575;
+    const int kScreenXSize = 1280;
+    const int kScreenYSize = 720;
 
     FireFactory( Field* field ) : Collision( field ) {};
     void initialize( int, int, int );
     void update();
     void draw(int , const int );
 
+    bool getCheckScreen(const int);
+
     inline int getFirePosX() { return fire_pos_x_; }
     inline int getFirePosY() { return fire_pos_y_; }
+
 
 private : 
     void animation();

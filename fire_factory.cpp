@@ -74,6 +74,32 @@ void FireFactory::draw( int Texture, const int ScreenOver )
         left, top, right, bottom, texture_, TRUE, FALSE );
 }
 
+bool FireFactory::getCheckScreen( const int ScreenOver )
+{        
+    // FireBall‚ÆA‰æ–Ê‚Ì‘å‚«‚³
+    int screen_left   = ScreenOver;
+    int screen_right  = ScreenOver + kScreenXSize;
+
+    int screen_top    = 0;
+    int screen_bottom = kScreenYSize;
+
+    int fire_left     = fire_pos_x_;
+    int fire_right    = fire_pos_x_ + (kSize / 2);
+
+    int fire_top      = fire_pos_y_;
+    int fire_bottom   = fire_pos_y_ + (kSize / 2);
+
+    // ‰æ–Ê“à‚É‚¢‚é‚Æ‚«
+    if( (screen_right > fire_left) && (fire_right > screen_left)
+        && (screen_bottom > fire_top) && (fire_bottom > screen_top) )
+    {
+        return true;
+    }
+    else
+    // ‰æ–ÊŠO
+    return false;
+}
+
 void FireFactory::animation()
 {
     animation_cnt_++;

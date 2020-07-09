@@ -5,16 +5,20 @@ void BallManagement::initialize()
     texture_ = LoadGraph( "Texture/mario_item.png" );
 }
 
-void BallManagement::update( int PosX, int PosY, int Status, int Direction )
+void BallManagement::update( int PosX, int PosY, int Status, int Direction, bool GameOver )
 {
-    // ボタンが押されたとき かつ、FireMarioの時
-    if( !(GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_X) == 0 )
+    // マリオがゴールしていないとき
+    if( GameOver )
     {
-        if( Status == 2 )
+        // ボタンが押されたとき かつ、FireMarioの時
+        if( !(GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_X) == 0 )
         {
-            // 新しく追加して動かす
-            fire_.push_back( new FireFactory( field_ ) );
-            fire_.back()->initialize( PosX, PosY, Direction );
+            if( Status == 2 )
+            {
+                // 新しく追加して動かす
+                fire_.push_back( new FireFactory( field_ ) );
+                fire_.back()->initialize( PosX, PosY, Direction );
+            }
         }
     }
 
@@ -52,4 +56,21 @@ int BallManagement::getFirePosY(int Num)
 int BallManagement::getSize()
 {
     return fire_.size();                                  // Fireの要素の数を返す
+}
+
+void BallManagement::posCheck( const int ScrollCnt)
+{
+    // それぞれ自分で画面内にいるか確認を行う
+    for( auto itr = fire_.begin(); itr != fire_.end();  )
+    {
+        // 画面外にFireballがあるとき
+        if( !(*itr)->getCheckScreen( ScrollCnt ) )
+        {
+            size_t index = std::distance( fire_.begin(), itr );
+            SAFE_DELETE( fire_[ index ] );
+            itr = fire_.erase( itr );                     // 詰めるとき（消すとき）
+        }
+        else
+            itr++;                                        // 詰めないとき（消さないとき）
+    }
 }
