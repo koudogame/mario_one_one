@@ -29,6 +29,34 @@ bool PosCollision::getCollision( int Mario_x, int Mario_y, int Other_x, int Othe
     }
 }
 
+bool PosCollision::getFireEnemyCollision( int Fire_x, int Fire_y, int Enemy_x, int Enemy_y)
+{
+    int fire_left    = Fire_x;
+    int fire_right   = Fire_x + (kSize / 2);
+
+    int fire_top     = Fire_y + (kSize * 4);
+    int fire_bottom  = Fire_y + (kSize / 2) + (kSize * 4);
+
+    int enemy_left   = Enemy_x;
+    int enemy_right  = Enemy_x + kSize;
+
+    int enemy_top    = Enemy_y;
+    int enemy_bottom = Enemy_y + kSize;
+
+    // 4–{‚Ì²‚Ì”»’è
+    if( (fire_right > enemy_left) && (enemy_right > fire_left)
+    && (fire_bottom > enemy_top) && (enemy_bottom > fire_top) )
+    {
+        // Õ“Ë‚µ‚Ä‚¢‚Ü‚·
+        return false;
+    }
+
+    // Õ“Ë‚µ‚Ä‚¢‚Ü‚¹‚ñ
+    return true;
+}
+
+
+
 int PosCollision::getEnemyCollision( int Mario_x, int Mario_y, int Enemy_x, int Enemy_y, int Status )
 {
     int enemy_x1 = Enemy_x;

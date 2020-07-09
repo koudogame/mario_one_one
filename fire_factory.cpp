@@ -33,7 +33,7 @@ void FireFactory::update()
                 jumping_ = kNoMove;
 
                 int block_line = (body_[ kRight ][ kFoot ][ kY ] - 1) / kSize;
-                fire_pos_y_ = ((block_line - 4) * kSize) - 1;
+                fire_pos_y_ = ((block_line - 4) * kSize) + kSize - 1;
 
                 if( block_line >= 14 )
                     fire_pos_y_ = kGround;

@@ -77,10 +77,10 @@ void PlayScene::update()
             for( int k = 0; k < bm_->getSize(); k++ )
             {
                 // すべての炎と敵の衝突を確認
-                if( pos_col_->getCollision( bm_->getFirePosX( k ), bm_->getFirePosY( k ),
+                if( pos_col_->getFireEnemyCollision( bm_->getFirePosX( k ), bm_->getFirePosY( k ),
                     enemy_->getEnemyPosX( i, j ), enemy_->getEnemyPosY( i, j ) ) == false )
                 {
-                    // 炎、敵用に新たな関数を用意する。
+                    // 炎、敵用に新たな関数を用意する
 
                 }
             }
