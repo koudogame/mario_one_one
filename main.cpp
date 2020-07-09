@@ -1,9 +1,19 @@
 #include <DxLib.h>
+#include <crtdbg.h>
 #include "scene_manager.hpp"
 
 // WinMain関数
 int WINAPI WinMain( HINSTANCE hI, HINSTANCE hP, LPSTR lpC, int nC )
 {
+#ifdef _DEBUG
+
+    //メモリリークのチェック
+    //_CrtSetBreakAlloc(  ); //メモリリーク確認用
+    _CrtSetDbgFlag( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
+
+    //int* a = new int[ 5 ]; メモリリーク用
+#endif
+
     ChangeWindowMode( TRUE );                              // ウィンドウモード切り替え
     SetGraphMode( 1280, 720, 32 );                         // ウィンドウサイズ変更
     SetBackgroundColor( 100, 149, 237 );                   // 背景色変更（はる推奨カラー）

@@ -227,6 +227,7 @@ void PlayScene::finalize()
     delete bm_;
     delete item_;
     delete field_;
+    delete enemy_;
     delete player_;
     delete pos_col_;
 }
