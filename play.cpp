@@ -81,7 +81,8 @@ void PlayScene::update()
                     enemy_->getEnemyPosX( i, j ), enemy_->getEnemyPosY( i, j ) ) == false )
                 {
                     // 炎、敵用に新たな関数を用意する
-
+                    bm_->enemyCollision( k );
+                    enemy_->fireCollision( i, j );
                 }
             }
         }

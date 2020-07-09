@@ -9,6 +9,7 @@ public :
     static const int kDown      = 5;
     static const int kDeathTime = 32;
     static const int kDead      = 112;
+    static const int kFieldSize = 720;
 
     Kuribo( Field* Field ) : EnemyBase( Field ) {};
     void update( int ScreenOver )override;

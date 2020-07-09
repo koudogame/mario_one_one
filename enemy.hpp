@@ -26,6 +26,7 @@ public :
 
     void posCollision( int i, int j, int Touch );
     void shellCollision( int i, int j );
+    void fireCollision( int i, int j );
 
     inline bool getPushFlag( int i, int j ) { return enemy_[ 0 ][ i ][ j ]->getPushFlag(); }
     inline int getEnemyPosX( int i, int j ) { return enemy_[ 0 ][ i ][ j ]->getPosX(); }

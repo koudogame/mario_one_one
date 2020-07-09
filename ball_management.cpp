@@ -74,3 +74,10 @@ void BallManagement::posCheck( const int ScrollCnt)
             itr++;                                        // ‹l‚ß‚È‚¢‚Æ‚«iÁ‚³‚È‚¢‚Æ‚«j
     }
 }
+
+void BallManagement::enemyCollision( int Index )
+{
+    // ‰Š‚ª“G‚Æ“–‚½‚Á‚½‚Æ‚«Á‚¦‚éˆ—‚ğÀs
+    SAFE_DELETE( fire_[ Index ] );
+    fire_.erase( fire_.begin() + Index );
+}

@@ -5,6 +5,8 @@ class Turtle :
     public EnemyBase
 {
 public:
+    static const int kFieldSize = 780;
+
     Turtle( Field* Field ) : EnemyBase( Field ) {};
 
     void update( int ScreenOver )override;

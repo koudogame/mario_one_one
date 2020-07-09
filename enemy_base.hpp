@@ -27,10 +27,12 @@ protected :
     int animation_      = 0;
     int walk_animation_ = -1;       // -1 : 左足, 　　1 : 右足
     int direction_      = -1;       // -1 : 左へ進む, 1 : 右へ進む
+    bool burn_ = true;              // true : 焼かれてない, false : 焼死
 
 public :
     static const int kGravity  = 1;
     static const int kSpeed    = 2;
+    static const int kJumpPower = 10;
     static const int kMaxSpeed = 10;
     static const int kTurtle   = 36;
     static const int kNoBlock  = 119;
@@ -42,6 +44,8 @@ public :
     virtual void initialize( const int Id, const RECT Rect, const int X, const int Y );
     virtual void update(int ScreenOver);
     virtual void draw( int Texture, int ScreenOver );
+    
+    void fireCollision();
 
     virtual bool getPushFlag();
     virtual int getPosX();

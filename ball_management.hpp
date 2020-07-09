@@ -14,6 +14,7 @@ public :
     void finalize();
 
     void posCheck(const int);                   // ファイアボールの場所をチェックする
+    void enemyCollision( int );        // 当たったときの火を消す
 
     int getFirePosX(int);              // fireのX座標を返す
     int getFirePosY(int);              // fireのY座標を返す

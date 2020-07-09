@@ -108,3 +108,8 @@ void Enemy::shellCollision( int i, int j )
 {
     enemy_[ 0 ][ i ][ j ]->shellCollision();
 }
+
+void Enemy::fireCollision( int i, int j )
+{
+    enemy_[ 0 ][ i ][ j ]->fireCollision();
+}

@@ -57,3 +57,11 @@ int EnemyBase::getPosY()
 void EnemyBase::posCollision(int Touch){}
 
 void EnemyBase::shellCollision(){}
+
+void EnemyBase::fireCollision()
+{
+        // Ä‚«E‚³‚ê‚½‚Æ‚«
+        burn_ = false;
+        enemy_parts_.Id = kNoBlock;
+        acceleration_ = -kJumpPower;
+}
