@@ -20,6 +20,8 @@ public :
 
     bool getCheckScreen(const int);
 
+    inline bool getSideTouch() { return side_touch_; }
+
     inline int getFirePosX() { return fire_pos_x_; }
     inline int getFirePosY() { return fire_pos_y_; }
 
@@ -27,6 +29,7 @@ public :
 private : 
     void animation();
 
+    bool side_touch_;           // ‰¡‚©‚ç“–‚½‚Á‚½‚©’²‚×‚é
     int texture_;               // ˆø”‚Åó‚¯æ‚Á‚½‰æ‘œ‚ğ•Û‘¶
     int direction_;             // Å‰‚Éó‚¯æ‚Á‚½Œü‚«‚ğ•Û‘¶
 

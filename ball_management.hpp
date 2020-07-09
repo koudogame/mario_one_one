@@ -13,7 +13,8 @@ public :
     void draw(const int);              // ScreenOver
     void finalize();
 
-    void posCheck(const int);                   // ファイアボールの場所をチェックする
+    void sideCheck();
+    void posCheck(const int);          // ファイアボールの場所をチェックする
     void enemyCollision( int );        // 当たったときの火を消す
 
     int getFirePosX(int);              // fireのX座標を返す

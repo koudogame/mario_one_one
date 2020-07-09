@@ -9,6 +9,9 @@ void FireFactory::initialize( int PosX, int PosY, int Direction)
     // マリオの向きの受け渡し
     direction_ = Direction;
 
+    // sideTouch
+    side_touch_ = true;
+
     // アニメ用変数初期化
     animation_ = 0;
     animation_cnt_ = 0;
@@ -27,35 +30,57 @@ void FireFactory::update()
     body_[ kLeft ][ kFoot ][ kX ] = fire_pos_x_ + 5;
     body_[ kLeft ][ kFoot ][ kY ] = fire_pos_y_ + ((kSize / 2) + 1) + (kSize * 4);
 
-            // 足場があるとき
-            if( Collision::footColl() == 1 )
-            {
-                jumping_ = kNoMove;
+    // 足場があるとき
+    if( Collision::footColl() == 1 )
+    {
+        jumping_ = kNoMove;
 
-                int block_line = (body_[ kRight ][ kFoot ][ kY ] - 1) / kSize;
-                fire_pos_y_ = ((block_line - 4) * kSize) + kSize - 1;
+        int block_line = (body_[ kRight ][ kFoot ][ kY ] - 1) / kSize;
+        fire_pos_y_ = ((block_line - 4) * kSize) + kSize - 1;
 
-                if( block_line >= 14 )
-                    fire_pos_y_ = kGround;
+        if( block_line >= 14 )
+            fire_pos_y_ = kGround;
 
-                acceleration_ = 0;  // 落下速度
-                acceleration_ = -kJumpPower;
-            }
-            // 宙に浮いているとき
-            else if( Collision::footColl() == 2 )
-            {
-                jumping_ = kNoJump;
+        acceleration_ = 0;  // 落下速度
+        acceleration_ = -kJumpPower;
+    }
+    // 宙に浮いているとき
+    else if( Collision::footColl() == 2 )
+    {
+        jumping_ = kNoJump;
 
-                if( fire_pos_y_ > 670 )
-                    jumping_ = kNoMove;
+        if( fire_pos_y_ > 670 )
+            jumping_ = kNoMove;
 
-                // 宙に浮いているとき落下
-                if( jumping_ == kNoJump )
-                {
-                    acceleration_ += kGravity;
-                    fire_pos_y_ += acceleration_;
-                }
-            }
+        // 宙に浮いているとき落下
+        if( jumping_ == kNoJump )
+        {
+            acceleration_ += kGravity;
+            fire_pos_y_ += acceleration_;
+        }
+    }
+
+    // 右サイドの登録
+    body_[ kRight ][ kShoulder ][ kX ] = fire_pos_x_ + (kSize / 2) + 1;
+    body_[ kRight ][ kShoulder ][ kY ] = (fire_pos_y_ + 4) + (kSize * 4);
+    body_[ kRight ][ kHands ][ kX ] = fire_pos_x_ + (kSize / 2) + 1;
+    body_[ kRight ][ kHands ][ kY ] = (fire_pos_y_ - 4) + (kSize * 4);
+
+    // 当たり判定があるとき
+    if( Collision::sideColl( kRight ) == false )
+        // 当たり判定処理
+        side_touch_ = false;
+
+    // 左サイドの登録
+    body_[ kLeft ][ kShoulder ][ kX ] = fire_pos_x_ - 1;
+    body_[ kLeft ][ kShoulder ][ kY ] = fire_pos_y_ + 4 + (kSize * 4);
+    body_[ kLeft ][ kHands ][ kX ] = fire_pos_x_ - 1;
+    body_[ kLeft ][ kHands ][ kY ] = fire_pos_y_ - 4 + (kSize * 4);
+
+    // 当たり判定があるとき
+    if( Collision::sideColl( kLeft ) == false )
+        // 当たり判定処理
+        side_touch_ = false;
 }
 
 void FireFactory::draw( int Texture, const int ScreenOver )

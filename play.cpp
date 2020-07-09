@@ -68,6 +68,7 @@ void PlayScene::update()
         player_->getStatus(), player_->getDirection(), player_->getGoal());
 
     bm_->posCheck( player_->getScrollCnt());            // d‚­‚È‚ç‚È‚¢‚æ‚¤‚É‰æ–ÊŠO‚Í”»’è‚µ‚È‚¢ˆ—
+    bm_->sideCheck();                                   // ‰¡‚©‚ç“–‚½‚Á‚½‚çÁ‹
 
     // getŠÖ”‚ğŒÄ‚ñ‚ÅŒ‹‰Ê‚ğ•Ô‚·(enemy & enemy)
     for( int i = 0; i < enemy_->getHeight(); i++ )

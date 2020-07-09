@@ -64,6 +64,23 @@ int BallManagement::getSize()
     return fire_.size();                                  // Fireの要素の数を返す
 }
 
+void BallManagement::sideCheck()
+{
+    // それぞれ自分で画面内にいるか確認を行う
+    for( auto itr = fire_.begin(); itr != fire_.end(); )
+    {
+        // 画面外にFireballがあるとき
+        if( !(*itr)->getSideTouch() )
+        {
+            size_t index = std::distance( fire_.begin(), itr );
+            SAFE_DELETE( fire_[ index ] );
+            itr = fire_.erase( itr );                     // 詰めるとき（消すとき）
+        }
+        else
+            itr++;                                        // 詰めないとき（消さないとき）
+    }
+}
+
 void BallManagement::posCheck( const int ScrollCnt)
 {
     // それぞれ自分で画面内にいるか確認を行う
