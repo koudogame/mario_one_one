@@ -32,8 +32,8 @@ protected :
 public :
     static const int kGravity  = 1;
     static const int kSpeed    = 2;
-    static const int kJumpPower = 10;
-    static const int kMaxSpeed = 10;
+    static const int kJumpPower = 12;
+    static const int kMaxSpeed = 12;
     static const int kTurtle   = 36;
     static const int kNoBlock  = 119;
     static const int kShell    = 113;

@@ -108,7 +108,7 @@ void Kuribo::update( int ScreenOver )
                     // 重力を反映させながら落下
                     acceleration_ += kGravity;
 
-                    enemy_parts_.x++;
+                    enemy_parts_.x += 2;
                     enemy_parts_.y += acceleration_;
                 }
             }
@@ -118,14 +118,19 @@ void Kuribo::update( int ScreenOver )
 
 int Kuribo::getPosX()
 {
+    if(burn_)
     return (enemy_parts_.x - 1);
+
+    return 0;
 }
 
 int Kuribo::getPosY()
 {
-    return (enemy_parts_.y - 1) + (kSize * 4);
+    if( burn_ )
+        return (enemy_parts_.y - 1) + (kSize * 4);
+    
+    return 0;
 }
-
 void Kuribo::posCollision(int Touch)
 {
     // アイテムを消す処理を書く

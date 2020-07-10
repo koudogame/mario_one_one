@@ -49,8 +49,8 @@ void FireFactory::update()
     {
         jumping_ = kNoJump;
 
-        if( fire_pos_y_ > 670 )
-            jumping_ = kNoMove;
+        //if( fire_pos_y_ > 640 )
+        //    jumping_ = kNoMove;
 
         // ’ˆ‚É•‚‚¢‚Ä‚¢‚é‚Æ‚«—Ž‰º
         if( jumping_ == kNoJump )

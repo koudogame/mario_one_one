@@ -17,7 +17,8 @@ class Player :
 public:
     static const int kMaxHigh = 352;
     static const int kSize = 64;
-    static const int kSpeed = 8;
+    static const int kSpeed = 6;
+    static const int kDashSpeed = 10;
     static const int kEnemyJump = 15;
     static const int kJumpPower = 24;
     static const int kDownCnt = 66;
@@ -78,8 +79,10 @@ public:
     inline int getBreakLeftY() { return break_left_y_; }        /*左頭の配列y*/
     inline int getBreakRightX() { return break_right_x_; }      /*右頭の配列x*/
     inline int getBreakRightY() { return break_right_y_; }      /*右頭の配列y*/
-
+    
     inline bool getEnd() { return extinguish_existence_; }      /*存在が消えたら*/
+
+    inline bool getGameover() { return gameover_flag_; }        /*死んでいるか*/
 
 private:
     int texture_;              // テクスチャハンドル
@@ -132,6 +135,8 @@ private:
 
     int down_cnt_;             // この値が66になったら向き反転
 
-    int push_time_jump_;       // 1,Pressed,2,Held
-    int push_time_fire_;       // 1,Pressed,2,Held
+    int push_time_jump_;       // 1 = Pressed,2 <= Held
+    int push_time_fire_;       // 1 = Pressed,2 <= Held
+    int push_time_run_;        // 1 = Pressed,2 <= Held
+    int push_time_squat_;      // 1 = Pressed,2 <= Held
 };

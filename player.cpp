@@ -58,6 +58,8 @@ bool Player::initialize()
 
     push_time_jump_ = 0;
     push_time_fire_ = 0;
+    push_time_run_  = 0;
+    push_time_squat_= 0;
 
     // 始まったときstatus_がkMario以外なら
     if( status_ != kMario )
@@ -76,11 +78,17 @@ bool Player::update()
     // GameOver判定
     else if( gameover_flag_ )
     {
+        // ダッシュボタン判定
+        if( !(GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_4) == 0 )
+            push_time_run_++;
+        else
+            push_time_run_ = 0;
+
         // 右入力
         if( !(GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_RIGHT) == 0 )
         {
             direction_ = true;         // 向きを右向きに変える
-            right_button_ = false;     // 押している(トラッカー)    
+            right_button_ = false;     // 押している(トラッカー) 
 
             body_[ kRight ][ kShoulder ][ kX ] = (total_movement_x_ + kSize + 1);
             body_[ kRight ][ kShoulder ][ kY ] = (total_movement_y_);
@@ -92,18 +100,37 @@ bool Player::update()
             else
                 body_[ kRight ][ kHands ][ kY ] = (total_movement_y_ + (kSize * 2) - 1);
 
+
             // 当たり判定のないブロックのとき
             if( Collision::sideColl( kRight ) == true )
             {
-                // 右への移動
-                pos_x_ += kSpeed;
-                total_movement_x_ += kSpeed;
+                // HELD中のとき
+                if( push_time_run_ >= 2 )
+                {                    
+                    // 右への移動
+                    pos_x_ += kDashSpeed;
+                    total_movement_x_ += kDashSpeed;
 
-                // pos_x_ センターを超えるとき
-                if( pos_x_ > kEndLine )
+                    // pos_x_ センターを超えるとき
+                    if( pos_x_ > kEndLine )
+                    {
+                        scroll_cnt_ += kDashSpeed;
+                        pos_x_ = kEndLine;
+                    }
+                }
+                else
                 {
-                    scroll_cnt_ += kSpeed;
-                    pos_x_ = kEndLine;
+                    // 右への移動
+                    pos_x_ += kSpeed;
+                    total_movement_x_ += kSpeed;
+
+                    // pos_x_ センターを超えるとき
+                    if( pos_x_ > kEndLine )
+                    {
+                        scroll_cnt_ += kSpeed;
+                        pos_x_ = kEndLine;
+                    }
+
                 }
             }
 
@@ -133,16 +160,31 @@ bool Player::update()
             // マリオの左側に衝突するブロックがないとき
             if( Collision::sideColl( kLeft ) == true )
             {
-                // ポジションゼロより左の時
-                if( pos_x_ <= 0 )
+                if( push_time_run_ >= 2 )
                 {
-                    pos_x_ = 0;
+                    // ポジションゼロより左の時
+                    if( pos_x_ <= 0 )
+                    {
+                        pos_x_ = 0;
+                    }
+                    else
+                    {
+                        pos_x_ -= kDashSpeed;
+                        total_movement_x_ -= kDashSpeed;
+                    }
                 }
                 // 左壁以外の時
                 else
-                {
-                    pos_x_ -= kSpeed;
-                    total_movement_x_ -= kSpeed;
+                {                // ポジションゼロより左の時
+                    if( pos_x_ <= 0 )
+                    {
+                        pos_x_ = 0;
+                    }
+                    else
+                    {
+                        pos_x_ -= kSpeed;
+                        total_movement_x_ -= kSpeed;
+                    }
                 }
             }
 
@@ -162,6 +204,12 @@ bool Player::update()
         // 過去に引き継ぐ
         old_left_button_ = left_button_;
         old_right_button_ = right_button_;
+
+        // しゃがむ入力
+        if( !(GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_DOWN) == 0 )
+            push_time_squat_++;
+        else
+            push_time_squat_ = 0;
 
         // ジャンプ入力
         if( !(GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_B) == 0 )
@@ -311,24 +359,38 @@ void Player::draw()
             // 状態は変わってもwidthは変わらない
             left_ = animation_ * kSize;
             right_ = kSize;
-
-            // マリオのとき
-            if( status_ == kMario )
-            {
-                top_ = kMario * kSize;
-                bottom_ = top_ + kSize;
-            }
+            top_ = 0;
+            bottom_ = kSize;
+            
             // スーパーマリオのとき
-            else if( status_ == kSuperMario )
+            if( status_ == kSuperMario )
             {
                 top_ = kSize * 4;
                 bottom_ = kSize * 2;
+
+                //// しゃがみ押されているとき
+                //if( push_time_squat_ >= 2 )
+                //{
+                //    left_ = 0;
+                //    right_ = kSize;
+                //    top_ = (kSize * 6) + (kSize / 2);
+                //    bottom_ = (kSize + (kSize / 2));
+                //}
             }
             // ファイアマリオのとき
             else if( status_ == kFireMario )
             {
                 top_ = kSize * 8;
                 bottom_ = kSize * 2;
+
+                //// しゃがみ押されているとき
+                //if( push_time_squat_ >= 2 )
+                //{
+                //    left_ = 0;
+                //    right_ = kSize;
+                //    top_ = (kSize * 10) + (kSize / 2);
+                //    bottom_ = (kSize + (kSize / 2));
+                //}
 
                 // Status FireMario
                 if( goal_flag_ )

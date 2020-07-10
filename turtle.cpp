@@ -92,7 +92,7 @@ void Turtle::update( int ScreenOver )
                 // d—Í‚ğ”½‰f‚³‚¹‚È‚ª‚ç—‰º
                 acceleration_ += kGravity;
 
-                enemy_parts_.x++;
+                enemy_parts_.x += 2;
                 enemy_parts_.y += acceleration_;
             }
         }
@@ -101,12 +101,18 @@ void Turtle::update( int ScreenOver )
 
 int Turtle::getPosX()
 {
+    if(burn_)
     return (enemy_parts_.x - 1);
+
+    return 0;
 }
 
 int Turtle::getPosY()
 {
+    if(burn_)
     return (enemy_parts_.y - 1) + (kSize * 4);
+
+    return 0;
 }
 
 void Turtle::posCollision( int Touch )
