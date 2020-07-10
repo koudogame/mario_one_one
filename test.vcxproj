@@ -183,6 +183,7 @@
     <ClInclude Include="brick.hpp" />
     <ClInclude Include="coin.hpp" />
     <ClInclude Include="collision.hpp" />
+    <ClInclude Include="data_keeper.hpp" />
     <ClInclude Include="enemy.hpp" />
     <ClInclude Include="enemy_base.hpp" />
     <ClInclude Include="field.hpp" />

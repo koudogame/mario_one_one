@@ -24,6 +24,7 @@ bool PlayScene::initialize()
     enemy_   = new Enemy( field_ );
     player_  = new Player( field_ );
     bm_ = new BallManagement( field_ );
+    data_    = new DataKeeper();
     pos_col_ = new PosCollision(); 
 
     // ファイルに対する入力ストリーム
@@ -206,7 +207,18 @@ void PlayScene::update()
             SceneManager::ChangeScene( SceneManager::Scene::Result );
     }
     else
+    {
+        // 残基数を知る
+        int residue = data_->getResidue();
+
+        // 一基減らす
+        residue -= 1;
+
+        // 減らしたのをセットする
+        data_->setResidue( residue );
+
         SceneManager::ChangeScene( SceneManager::Scene::Result );
+    }
 }
 
 void PlayScene::draw()

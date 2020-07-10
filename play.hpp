@@ -5,6 +5,7 @@
 #include "item.hpp"
 #include "enemy.hpp"
 #include "ball_management.hpp"
+#include "data_keeper.hpp"
 #include "pos_collision.hpp"
 
 class PlayScene :
@@ -24,6 +25,7 @@ private:
     Field* field_;
     Player* player_;
     Enemy* enemy_;
+    DataKeeper* data_;
     BallManagement* bm_;
     PosCollision* pos_col_;
 
