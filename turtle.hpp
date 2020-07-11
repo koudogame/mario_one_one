@@ -15,6 +15,7 @@ public:
     int getPosY()override;
     void posCollision( int Touch ) override;   // active_ : true‚Å“¥‚ñ‚¾Žž
     void shellCollision() override;
+    void fireCollision() override;
 
     void animation();
 
