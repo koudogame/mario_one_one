@@ -2,7 +2,6 @@
 #include "collision.hpp"
 #include "release.hpp"
 
-
 // マリオの状態保存
 enum Status
 {
@@ -94,6 +93,7 @@ private:
     int pos_x_;                // 座標x
     int pos_y_;                // 座標y 
 
+    
     int left_;                 // SrcX
     int top_;                  // SrcY
 

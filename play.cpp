@@ -71,6 +71,7 @@ void PlayScene::update()
     bm_->posCheck( player_->getScrollCnt() );           // 重くならないように画面外は判定しない処理
     bm_->sideCheck();                                   // 横から当たったら消去
 
+
     if( player_->getGameover() )
     {
         // 敵と敵の当たり判定を取る
@@ -82,7 +83,6 @@ void PlayScene::update()
                 if( enemy_->getId( i, j ) != kKuribo && enemy_->getId( i, j ) != kTurtle )
                     continue;
 
-                int a = enemy_->getId( i, j );
 
                 for( int k = 0; k < enemy_->getHeight(); k++ )
                 {
@@ -96,7 +96,6 @@ void PlayScene::update()
                         if( i == k && j == l )
                             continue;
 
-                        int b = enemy_->getId( k, l );
 
                         // 敵Aと敵Bの判定を取る
                         if( pos_col_->getCollision(
@@ -241,22 +240,6 @@ void PlayScene::update()
                 }
             }
         }
-        // クリアしたらScene切り替え
-        if( !player_->getEnd() )
-            SceneManager::ChangeScene( SceneManager::Scene::Result );
-    }
-    else
-    {
-        // 残基数を知る
-        int residue = data_->getResidue();
-
-        // 一基減らす
-        residue -= 1;
-
-        // 減らしたのをセットする
-        data_->setResidue( residue );
-
-        SceneManager::ChangeScene( SceneManager::Scene::Result );
     }
 }
 

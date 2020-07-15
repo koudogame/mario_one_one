@@ -27,6 +27,7 @@ private :
     int direction_  = 1;
     bool up_flag_   = true;
     bool punch_     = true;
+    bool turn_      = true;
 
     int animation_cnt_    = 0;
     int flower_animation_ = 0;

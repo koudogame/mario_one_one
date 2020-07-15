@@ -19,7 +19,7 @@ bool Player::initialize()
     right_            = 0;
     bottom_           = 0;
 
-    status_           = kFireMario;
+    status_           = kMario;
     past_status_      = status_;
 
     scroll_cnt_       = 0;            // 右に抜けた分増やしていく
@@ -113,13 +113,6 @@ bool Player::update()
                     // 右への移動
                     pos_x_ += kDashSpeed;
                     total_movement_x_ += kDashSpeed;
-
-                    // pos_x_ センターを超えるとき
-                    if( pos_x_ > kEndLine )
-                    {
-                        scroll_cnt_ += kDashSpeed;
-                        pos_x_ = kEndLine;
-                    }
                 }
                 else
                 {
@@ -127,13 +120,13 @@ bool Player::update()
                     pos_x_ += kSpeed;
                     total_movement_x_ += kSpeed;
 
-                    // pos_x_ センターを超えるとき
-                    if( pos_x_ > kEndLine )
-                    {
-                        scroll_cnt_ += kSpeed;
-                        pos_x_ = kEndLine;
-                    }
+                }
 
+                // pos_x_ センターを超えるとき
+                if( pos_x_ > kEndLine )
+                {
+                    scroll_cnt_ = total_movement_x_ - kEndLine;
+                    pos_x_ = kEndLine;
                 }
             }
 

@@ -72,10 +72,12 @@ void Powerup::update( int Screenover )
                     acceleration_ = 0;  // —Ž‰º‘¬“x
 
                     int block_line = (body_[ kRight ][ kFoot ][ kY ] - 1) / kSize;
-                    item_.y = ((block_line - 4) * kSize) - 1;
 
-                    if( block_line >= 14 )
-                        item_.y = kGround;
+                    if( block_line >= 13 )
+                        item_.y = kGround;    
+                    else
+                        item_.y = ((block_line - 4) * kSize) - 1;
+
                 }
                 // ’ˆ‚É•‚‚¢‚Ä‚¢‚é‚Æ‚«
                 else if( Collision::footColl() == 2 )
@@ -110,6 +112,7 @@ void Powerup::update( int Screenover )
                 body_[ kRight ][ kHands ][ kX ] = (item_.x + kSize + 1);
                 body_[ kRight ][ kHands ][ kY ] = (item_.y - 10) + (kSize * 4);
 
+                if( turn_ )
                 // “–‚½‚è”»’è‚Ì‚ ‚é‚Æ‚«
                 if( Collision::sideColl( kRight ) == false )
                     direction_ *= -1;
@@ -120,6 +123,7 @@ void Powerup::update( int Screenover )
                 body_[ kLeft ][ kHands ][ kX ] = (item_.x - 1);
                 body_[ kLeft ][ kHands ][ kY ] = (item_.y - 10) + (kSize * 4);
 
+                if( turn_ )
                 // “–‚½‚è”»’è‚Ì‚ ‚é‚Æ‚«
                 if( Collision::sideColl( kLeft ) == false )
                     direction_ *= -1;
