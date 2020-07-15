@@ -51,6 +51,7 @@ public :
     virtual int getPosY();
     virtual void posCollision(int Touch);
     virtual void shellCollision();
+    virtual void changeDirection();
 
     inline const int getId() { return enemy_parts_.Id; }
     inline const int getPositionX() { return enemy_parts_.x; }
