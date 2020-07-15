@@ -89,6 +89,12 @@ void Turtle::update( int ScreenOver )
             else
             if( enemy_parts_.y < kFieldSize )
             {
+                enemy_parts_.rect.left = kSize;
+                enemy_parts_.rect.top = kSize * 7;
+                enemy_parts_.rect.right = kSize;
+                enemy_parts_.rect.bottom = kSize;
+
+
                 // d—Í‚ð”½‰f‚³‚¹‚È‚ª‚ç—Ž‰º
                 acceleration_ += kGravity;
 
@@ -139,7 +145,7 @@ void Turtle::posCollision( int Touch )
         direction_  = 1;
         action_cnt_ = 1;
 
-        enemy_parts_.x += 5;
+        enemy_parts_.x += 6;
     }
     else if( Touch == 3 )
     {
@@ -147,7 +153,7 @@ void Turtle::posCollision( int Touch )
         direction_  = -1;
         action_cnt_ = 1;
 
-        enemy_parts_.x -= 5;
+        enemy_parts_.x -= 6;
     }
 }
 void Turtle::shellCollision()

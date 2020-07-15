@@ -68,11 +68,50 @@ void PlayScene::update()
     bm_->update( player_->getPositionX(), player_->getPositionY(),
         player_->getStatus(), player_->getDirection(), player_->getGoal() );
 
-    bm_->posCheck( player_->getScrollCnt() );            // 重くならないように画面外は判定しない処理
+    bm_->posCheck( player_->getScrollCnt() );           // 重くならないように画面外は判定しない処理
     bm_->sideCheck();                                   // 横から当たったら消去
 
     if( player_->getGameover() )
     {
+        // 敵と敵の当たり判定を取る
+        for( int i = 0; i < enemy_->getHeight(); i++ )
+        {
+            for( int j = 0; j < enemy_->getWidth(); j++ )
+            {
+                // クリボー、ノコノコ以外のときスキップ
+                if( enemy_->getId( i, j ) != kKuribo && enemy_->getId( i, j ) != kTurtle )
+                    continue;
+
+                int a = enemy_->getId( i, j );
+
+                for( int k = 0; k < enemy_->getHeight(); k++ )
+                {
+                    for( int l = 0; l < enemy_->getWidth(); l++ )
+                    {
+                        // クリボー、ノコノコ以外のときスキップ
+                        if( enemy_->getId( k, l ) != kKuribo && enemy_->getId( k, l ) != kTurtle )
+                            continue;
+
+                        // 同じ数値の時は判定しない
+                        if( i == k && j == l )
+                            continue;
+
+                        int b = enemy_->getId( k, l );
+
+                        // 敵Aと敵Bの判定を取る
+                        if( pos_col_->getCollision(
+                            enemy_->getEnemyPosX( i, j ), enemy_->getEnemyPosY( i, j ),
+                            enemy_->getEnemyPosX( k, l ), enemy_->getEnemyPosY( k, l ) ) == false )
+                        {
+                            // 衝突しているとき
+                            // それぞれを反対方向に歩ませる
+                            enemy_->changeDirection( i, j );
+                        }
+                    }
+                }
+            }
+        }
+
         // get関数を呼んで結果を返す(enemy & enemy)
         for( int i = 0; i < enemy_->getHeight(); i++ )
         {

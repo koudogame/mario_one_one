@@ -19,7 +19,7 @@ bool Player::initialize()
     right_            = 0;
     bottom_           = 0;
 
-    status_           = kMario;
+    status_           = kFireMario;
     past_status_      = status_;
 
     scroll_cnt_       = 0;            // ‰E‚É”²‚¯‚½•ª‘‚â‚µ‚Ä‚¢‚­
@@ -53,6 +53,9 @@ bool Player::initialize()
     goal_flag_        = true;
     catch_flag_       = true;
     extinguish_existence_ = true;
+
+    throw_cnt_ = 0;
+    throw_flag_ = true;
 
     down_cnt_         = 0;
 
@@ -395,17 +398,31 @@ void Player::draw()
                 // Status FireMario
                 if( goal_flag_ )
                 {
-                    if( !(GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_4) == 0 )
-                        push_time_fire_++;
-                    else
-                        push_time_fire_ = 0;
+                    if( throw_flag_ )
+                    {
+                        if( !(GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_4) == 0 )
+                            push_time_fire_++;
+                        else
+                            push_time_fire_ = 0;
+                    }
 
                     if( push_time_fire_ == 1 )
-                    {
+                        throw_flag_ = false;
+
+                    if( !throw_flag_ )
+                    {       
+                        throw_cnt_++;
+
                         left_ = (kSize * 4);
                         right_ = kSize;
                         top_ = (kSize * 10);
                         bottom_ = (kSize * 2);
+                    }
+
+                    if( throw_cnt_ >= kStopper )
+                    {
+                        throw_cnt_ = 0;
+                        throw_flag_ = true;
                     }
                 }
             }

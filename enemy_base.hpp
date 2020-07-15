@@ -46,6 +46,7 @@ public :
     virtual void draw( int Texture, int ScreenOver );
     
     void fireCollision();
+    void changeDirection();
 
     virtual bool getPushFlag();
     virtual int getPosX();

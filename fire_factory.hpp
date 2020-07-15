@@ -5,11 +5,13 @@ class FireFactory :
     public Collision
 {
 public :
-    const int kGravity = 1;
-    const int kAnime = 8;
-    const int kSpeed = 10;
-    const int kJumpPower = 5;
-    const int kGround = 575;
+    const int kGravity     = 1;
+    const int kSmall       = 6;
+    const int kBic         = 12;
+    const int kAnime       = 8;
+    const int kSpeed       = 12;
+    const int kJumpPower   = 5;
+    const int kGround      = 575;
     const int kScreenXSize = 1280;
     const int kScreenYSize = 720;
 
@@ -18,17 +20,18 @@ public :
     void update();
     void draw(int , const int );
 
-    bool getCheckScreen(const int);
-
-    inline bool getSideTouch() { return side_touch_; }
+    bool getCheckScreen(const int);    
+    void animation();
+    void burnAnimation();
+    void setFire(bool);
+    
+    inline bool getExplode() { return explode_flag_; }
 
     inline int getFirePosX() { return fire_pos_x_; }
     inline int getFirePosY() { return fire_pos_y_; }
 
 
 private : 
-    void animation();
-
     bool side_touch_;           // ‰¡‚©‚ç“–‚½‚Á‚½‚©’²‚×‚é
     int texture_;               // ˆø”‚Åó‚¯æ‚Á‚½‰æ‘œ‚ğ•Û‘¶
     int direction_;             // Å‰‚Éó‚¯æ‚Á‚½Œü‚«‚ğ•Û‘¶
@@ -37,6 +40,10 @@ private :
     int animation_;             // ”’l‚É‚æ‚Á‚Ä‰ñ“]‚·‚é
     int fire_pos_x_;            // ˆø”‚Åó‚¯æ‚Á‚½PosX‚ğ•Û‘¶
     int fire_pos_y_;            // ˆø”‚Åó‚¯æ‚Á‚½PosY‚ğ•Û‘¶
+
+    int explosion_[ 4 ] = { 0 };// ”š”j‰‰oRect
+    int explode_cnt_;
+    int explode_flag_;
 };
 
 // fire_factory‚Íì‚ç‚ê‚é‘¤‚È‚Ì‚Å‹¤’Ê‚µ‚½ˆ—‚ğ‘‚«‚ŞB

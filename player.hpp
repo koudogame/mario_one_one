@@ -19,6 +19,7 @@ public:
     static const int kSize = 64;
     static const int kSpeed = 6;
     static const int kDashSpeed = 10;
+    static const int kStopper = 16;
     static const int kEnemyJump = 15;
     static const int kJumpPower = 24;
     static const int kDownCnt = 66;
@@ -134,6 +135,8 @@ private:
     bool extinguish_existence_;// flase : 存在を消す
 
     int down_cnt_;             // この値が66になったら向き反転
+    int throw_cnt_;            // 投げるモーションの維持
+    bool throw_flag_;            // 投げるモーションの維持
 
     int push_time_jump_;       // 1 = Pressed,2 <= Held
     int push_time_fire_;       // 1 = Pressed,2 <= Held

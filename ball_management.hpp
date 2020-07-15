@@ -6,6 +6,8 @@
 class BallManagement
 {
 public :
+    static const int  kStopper = 16;
+
     BallManagement( Field* field ) : ff_( field ) { field_ = field; }
 
     void initialize();
@@ -29,6 +31,9 @@ private:
 
     int texture_;
     int push_create_fire_;             // 単発生成できるよう時間管理
+
+    int create_cnt_;                   // 次回生成までの時間計測
+    bool create_flag_;                 // 生成切り替え
 
     // 全体ファイア管理用配列
     std::vector<FireFactory*> fire_;

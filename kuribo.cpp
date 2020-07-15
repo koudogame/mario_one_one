@@ -27,13 +27,16 @@ void Kuribo::update( int ScreenOver )
                     if( Collision::footColl() == 1 )
                     {
                         jumping_ = kNoMove;
-                        acceleration_ = 0;  // —Ž‰º‘¬“x
 
                         int block_line = (body_[ kRight ][ kFoot ][ kY ] - 1) / kSize;
-                        enemy_parts_.y = ((block_line - 4) * kSize) - 1;
 
-                        if( block_line >= 14 )
+                        if( block_line >= 13 )
                             enemy_parts_.y = kGround;
+                        else
+                        enemy_parts_.y = ((block_line - 4) * kSize) - kSize;
+
+
+                        acceleration_ = 0;  // —Ž‰º‘¬“x
                     }
                     // ’ˆ‚É•‚‚¢‚Ä‚¢‚é‚Æ‚«
                     else if( Collision::footColl() == 2 )

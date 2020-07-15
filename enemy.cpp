@@ -113,3 +113,8 @@ void Enemy::fireCollision( int i, int j )
 {
     enemy_[ 0 ][ i ][ j ]->fireCollision();
 }
+
+void Enemy::changeDirection( int i, int j )
+{
+    enemy_[ 0 ][ i ][ j ]->changeDirection();
+}

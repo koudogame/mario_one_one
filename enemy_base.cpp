@@ -82,3 +82,8 @@ void EnemyBase::fireCollision()
         enemy_parts_.Id = kNoBlock;
         acceleration_ = -kJumpPower;
 }
+
+void EnemyBase::changeDirection()
+{
+    direction_ *= -1;
+}

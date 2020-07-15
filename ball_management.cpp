@@ -4,6 +4,9 @@ void BallManagement::initialize()
 {
     texture_ = LoadGraph( "Texture/mario_item.png" );
     push_create_fire_ = 0;
+
+    create_cnt_ = 0;
+    create_flag_ = true;
 }
 
 void BallManagement::update( int PosX, int PosY, int Status, int Direction, bool GameOver )
@@ -17,16 +20,39 @@ void BallManagement::update( int PosX, int PosY, int Status, int Direction, bool
         else
         push_create_fire_ = 0;
 
+        // ボタンが押されたとき
         if( push_create_fire_ == 1 )
         {
-            if( Status == 2 )
+            size_t index = std::distance( fire_.begin(), fire_.end() );
+
+            if( index <= 3 )
+            // まだ生成していなかったら作成
+            if( create_flag_ )
             {
-                // 新しく追加して動かす
-                fire_.push_back( new FireFactory( field_ ) );
-                fire_.back()->initialize( PosX, PosY, Direction );
+                // ファイアマリオのとき
+                if( Status == 2 )
+                {
+                    // 新しく追加して動かす
+                    fire_.push_back( new FireFactory( field_ ) );
+                    fire_.back()->initialize( PosX, PosY, Direction );
+
+                    create_flag_ = false;
+                }
             }
+
+        }        
+
+        if( !create_flag_ )
+            create_cnt_++;
+
+        // 連続で出されないようにするため
+        if( create_cnt_ >= kStopper )
+        {
+            create_cnt_ = 0;
+            create_flag_ = true;
         }
     }
+
 
     // 要素数だけFireを動かす
     for( auto itr = fire_.begin(); itr != fire_.end(); itr++ )
@@ -66,11 +92,9 @@ int BallManagement::getSize()
 
 void BallManagement::sideCheck()
 {
-    // それぞれ自分で画面内にいるか確認を行う
     for( auto itr = fire_.begin(); itr != fire_.end(); )
     {
-        // 画面外にFireballがあるとき
-        if( !(*itr)->getSideTouch() )
+        if( !(*itr)->getExplode() )
         {
             size_t index = std::distance( fire_.begin(), itr );
             SAFE_DELETE( fire_[ index ] );
@@ -101,6 +125,11 @@ void BallManagement::posCheck( const int ScrollCnt)
 void BallManagement::enemyCollision( int Index )
 {
     // 炎が敵と当たったとき消える処理を実行
-    SAFE_DELETE( fire_[ Index ] );
-    fire_.erase( fire_.begin() + Index );
+    fire_[ Index ]->setFire( false );
+
+    if( !fire_[ Index ]->getExplode() )
+    {
+        SAFE_DELETE( fire_[ Index ] );
+        fire_.erase( fire_.begin() + Index );
+    }
 }
