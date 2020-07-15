@@ -44,10 +44,8 @@ public :
     virtual void initialize( const int Id, const RECT Rect, const int X, const int Y );
     virtual void update(int ScreenOver);
     virtual void draw( int Texture, int ScreenOver );
-    
-    void fireCollision();
-    void changeDirection();
 
+    virtual void fireCollision();
     virtual bool getPushFlag();
     virtual int getPosX();
     virtual int getPosY();

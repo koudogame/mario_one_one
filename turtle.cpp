@@ -172,6 +172,16 @@ void Turtle::shellCollision()
     }
 }
 
+void Turtle::fireCollision()
+{
+    EnemyBase::fireCollision();
+
+    enemy_parts_.rect.left = kSize;
+    enemy_parts_.rect.top = kSize * 7;
+    enemy_parts_.rect.right = kSize;
+    enemy_parts_.rect.bottom = kSize;
+}
+
 void Turtle::animation()
 {
     animation_++;
