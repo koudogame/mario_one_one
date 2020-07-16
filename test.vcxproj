@@ -161,6 +161,7 @@
     <ClCompile Include="field.cpp" />
     <ClCompile Include="fire_factory.cpp" />
     <ClCompile Include="goal.cpp" />
+    <ClCompile Include="hata.cpp" />
     <ClCompile Include="item.cpp" />
     <ClCompile Include="item_base.cpp" />
     <ClCompile Include="kuribo.cpp" />
@@ -174,7 +175,6 @@
     <ClCompile Include="scene_manager.cpp" />
     <ClCompile Include="title.cpp" />
     <ClCompile Include="turtle.cpp" />
-    <ClCompile Include="tutorial.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ball_management.hpp" />
@@ -189,6 +189,7 @@
     <ClInclude Include="field.hpp" />
     <ClInclude Include="fire_factory.hpp" />
     <ClInclude Include="goal.hpp" />
+    <ClInclude Include="hata.hpp" />
     <ClInclude Include="item.hpp" />
     <ClInclude Include="item_base.hpp" />
     <ClInclude Include="kuribo.hpp" />
@@ -202,7 +203,6 @@
     <ClInclude Include="scene_manager.hpp" />
     <ClInclude Include="title.hpp" />
     <ClInclude Include="turtle.hpp" />
-    <ClInclude Include="tutorial.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -31,6 +31,7 @@ public:
     static const int kGravity = 1;
     static const int kInvincible = 120;
     static const int kDownSpeed = 6;
+    static const int kGoalPost = 194;
 
     Player( Field* field ) : Collision( field ) {};
     ~Player();

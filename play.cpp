@@ -240,6 +240,9 @@ void PlayScene::update()
                 }
             }
         }
+
+        // ƒS[ƒ‹Œã“§–¾‚©Šm”F
+        item_->getEnd( player_->getEnd() );
     }
 }
 

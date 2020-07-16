@@ -51,3 +51,7 @@ void ItemBase::posCollision()
 void ItemBase::getGoal( bool Goal )
 {
 }
+
+void ItemBase::upHata( bool Hata )
+{
+}

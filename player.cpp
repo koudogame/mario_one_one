@@ -160,9 +160,7 @@ bool Player::update()
                 {
                     // ポジションゼロより左の時
                     if( pos_x_ <= 0 )
-                    {
                         pos_x_ = 0;
-                    }
                     else
                     {
                         pos_x_ -= kDashSpeed;
@@ -173,9 +171,7 @@ bool Player::update()
                 else
                 {                // ポジションゼロより左の時
                     if( pos_x_ <= 0 )
-                    {
                         pos_x_ = 0;
-                    }
                     else
                     {
                         pos_x_ -= kSpeed;
@@ -240,7 +236,7 @@ bool Player::update()
             total_movement_y_ += acceleration_;
         }
 
-        // ２段着地しないようにする魔法の数字
+        // 加速度上限
         if( acceleration_ >= 20 )
         {
             acceleration_ = 20;
@@ -271,21 +267,21 @@ bool Player::update()
         if( acceleration_ < 0 )
         {
             // 右頭にあたるとき
-            if( Collision::collision( kRight, kHead ) <= 64 )
+            if( Collision::collision( kRight, kHead ) <= kSize)
             {
-                break_right_x_ = (total_movement_x_ / 64) + 1;
-                break_right_y_ = total_movement_y_ / 64;
+                break_right_x_ = (total_movement_x_ / kSize) + 1;
+                break_right_y_ = total_movement_y_ / kSize;
             }
 
             // 左頭にあたるとき
-            if( Collision::collision( kLeft, kHead ) <= 64 )
+            if( Collision::collision( kLeft, kHead ) <= kSize )
             {
-                break_left_x_ = (total_movement_x_ / 64);
-                break_left_y_ = total_movement_y_ / 64;
+                break_left_x_ = (total_movement_x_ / kSize);
+                break_left_y_ = total_movement_y_ / kSize;
             }
 
-            if( Collision::collision( kRight, kHead ) <= 64 ||
-                Collision::collision( kLeft, kHead ) <= 64 )
+            if( Collision::collision( kRight, kHead ) <= kSize ||
+                Collision::collision( kLeft, kHead ) <= kSize )
             {
                 // 頭をぶつけたときの判定
                 hit();
@@ -299,14 +295,14 @@ bool Player::update()
         }
 
         // ゴール
-        if( total_movement_x_ >= (kSize * 194) + (kSize / 2) )
+        if( total_movement_x_ >= (kSize * kGoalPost) + (kSize / 2) )
         {
             animation_flag_   = true;
             catch_flag_       = false;
             goal_flag_        = false;
             animation_        = 6;
             acceleration_     = 0;
-            total_movement_x_ = (kSize * 194) + (kSize / 2);
+            total_movement_x_ = (kSize * kGoalPost) + (kSize / 2);
         }
     }
     // 死んでいるとき
@@ -363,30 +359,12 @@ void Player::draw()
             {
                 top_ = kSize * 4;
                 bottom_ = kSize * 2;
-
-                //// しゃがみ押されているとき
-                //if( push_time_squat_ >= 2 )
-                //{
-                //    left_ = 0;
-                //    right_ = kSize;
-                //    top_ = (kSize * 6) + (kSize / 2);
-                //    bottom_ = (kSize + (kSize / 2));
-                //}
             }
             // ファイアマリオのとき
             else if( status_ == kFireMario )
             {
                 top_ = kSize * 8;
                 bottom_ = kSize * 2;
-
-                //// しゃがみ押されているとき
-                //if( push_time_squat_ >= 2 )
-                //{
-                //    left_ = 0;
-                //    right_ = kSize;
-                //    top_ = (kSize * 10) + (kSize / 2);
-                //    bottom_ = (kSize + (kSize / 2));
-                //}
 
                 // Status FireMario
                 if( goal_flag_ )
@@ -506,7 +484,7 @@ void Player::collision()
         else
         {
             // 床より下の時
-            if( pos_y_ > kEndLine - 64 )
+            if( pos_y_ > kEndLine - kSize )
             {
                 landing(); // 着地処理
 
@@ -533,7 +511,7 @@ void Player::hit()
     // 上への加速度を無くす
     acceleration_ = 0;
 
-    int block_line = std::round( static_cast<float>(total_movement_y_) / 64 );
+    int block_line = std::round( static_cast<float>(total_movement_y_) / kSize );
 
     // プレイヤーの立つ場所を上の辺の高さにする
     pos_y_ = (block_line - 4) * kSize;

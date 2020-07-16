@@ -7,7 +7,6 @@ public:
     enum Scene
     {
         Title,
-        Tutorial,
         Play,
         Result
     };

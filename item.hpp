@@ -9,7 +9,9 @@
 #include "coin.hpp"
 #include "power_up.hpp"
 #include "goal.hpp"
+#include "hata.hpp"
 
+constexpr int kHata     = 3;
 constexpr int kPowerup  = 0;
 constexpr int kPowerup2 = 16;
 constexpr int kGoal     = 19;
@@ -27,6 +29,7 @@ public :
 
     void posCollision( int i, int j );
     void getGoal( bool );
+    void getEnd( bool );
 
     inline int getItemPosX( int i, int j ) { return item_[ 0 ][ i ][ j ]->getPosX(); }
     inline int getItemPosY( int i, int j ) { return item_[ 0 ][ i ][ j ]->getPosY(); }

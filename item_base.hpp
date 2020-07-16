@@ -41,7 +41,8 @@ public:
     virtual int getPosY();
 
     virtual void posCollision();
-    virtual void getGoal(bool);
+    virtual void getGoal( bool );
+    virtual void upHata( bool );
     
     inline const int getId() { return item_.Id; }
     inline const int getPositionX() { return item_.x; }

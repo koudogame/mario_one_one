@@ -2,7 +2,6 @@
 
 // êVÇµÇ¢SceneÇâ∫Ç…â¡Ç¶ÇÈ
 #include "title.hpp"
-#include "tutorial.hpp"
 #include "play.hpp"
 #include "result.hpp"
 
@@ -23,10 +22,6 @@ void SceneManager::ChangeScene( Scene scene )
     {
     case Scene::Title:
         scene_ = new TitleScene();
-        break;
-
-    case Scene::Tutorial:
-        scene_ = new TutorialScene();
         break;
 
     case Scene::Play:

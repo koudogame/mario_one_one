@@ -22,9 +22,6 @@
     <Filter Include="Scene\PlayScene">
       <UniqueIdentifier>{7066b894-6a46-4292-ab48-936964053d50}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scene\TutorialScene">
-      <UniqueIdentifier>{ba29dfcd-3874-430b-b56c-c8b3dc45be7b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Scene\ResultScene">
       <UniqueIdentifier>{2f641310-61ee-4bbe-9529-f03362128b29}</UniqueIdentifier>
     </Filter>
@@ -88,6 +85,9 @@
     <Filter Include="DataKeeper">
       <UniqueIdentifier>{1a4ea0d4-133e-4c3c-a379-fa642b94a020}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ItemBase\Hata">
+      <UniqueIdentifier>{5efa799c-0f18-43a7-93b7-27068e7a5dd0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -95,9 +95,6 @@
     </ClCompile>
     <ClCompile Include="result.cpp">
       <Filter>Scene\ResultScene</Filter>
-    </ClCompile>
-    <ClCompile Include="tutorial.cpp">
-      <Filter>Scene\TutorialScene</Filter>
     </ClCompile>
     <ClCompile Include="title.cpp">
       <Filter>Scene\TitleScene</Filter>
@@ -162,13 +159,13 @@
     <ClCompile Include="fire_factory.cpp">
       <Filter>Fireball</Filter>
     </ClCompile>
+    <ClCompile Include="hata.cpp">
+      <Filter>ItemBase\Hata</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="result.hpp">
       <Filter>Scene\ResultScene</Filter>
-    </ClInclude>
-    <ClInclude Include="tutorial.hpp">
-      <Filter>Scene\TutorialScene</Filter>
     </ClInclude>
     <ClInclude Include="title.hpp">
       <Filter>Scene\TitleScene</Filter>
@@ -241,6 +238,9 @@
     </ClInclude>
     <ClInclude Include="data_keeper.hpp">
       <Filter>DataKeeper</Filter>
+    </ClInclude>
+    <ClInclude Include="hata.hpp">
+      <Filter>ItemBase\Hata</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

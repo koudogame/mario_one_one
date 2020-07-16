@@ -39,6 +39,8 @@ bool Item::initialize( std::fstream& stage )
             
             if( id == kPowerup )
                 item_[ 0 ][ i ][ j ] = new Powerup( field_ );
+            else if( id == kHata )
+                item_[ 0 ][ i ][ j ] = new Hata( field_ );
             else if( id == kCoin )
                 item_[ 0 ][ i ][ j ] = new Coin( field_ );
             else if( id == kGoal )
@@ -126,6 +128,18 @@ void Item::getGoal( bool Goal )
         {
             if( item_[ 0 ][ i ][ j ]->getId() == kGoal )
             item_[ 0 ][ i ][ j ]->getGoal( Goal );
+        }
+    }
+}
+
+void Item::getEnd( bool End )
+{
+    for( int i = 0; i < height_; i++ )
+    {
+        for( int j = 0; j < width_; j++ )
+        {
+            if( item_[ 0 ][ i ][ j ]->getId() == kHata )
+                item_[ 0 ][ i ][ j ]->upHata( End );
         }
     }
 }
