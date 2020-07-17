@@ -83,33 +83,39 @@ bool Player::update()
         else
             push_time_run_ = 0;
 
-        // 右入力
-        if( !(GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_RIGHT) == 0 || CheckHitKey( KEY_INPUT_RIGHT ) == 1 )
+        if( left_button_ )
         {
-            direction_ = true;         // 向きを右向きに変える
-            right_button_ = false;     // 押している(トラッカー) 
+            // 右入力
+            if( !(GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_RIGHT) == 0 || CheckHitKey( KEY_INPUT_D ) == 1 )
+            {
+                direction_ = true;         // 向きを右向きに変える
+                right_button_ = false;     // 押している(トラッカー) 
 
-            rightCheck();              // 体の右側を確認する
+                rightCheck();              // 体の右側を確認する
 
 
-            animation();               // 歩いているアニメーション
+                animation();               // 歩いているアニメーション
+            }
+            else
+                right_button_ = true;
         }
-        else
-            right_button_ = true;
 
-        // 左入力
-        if( !(GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_LEFT) == 0 || CheckHitKey( KEY_INPUT_LEFT ) == 1 )
+        if( right_button_ )
         {
-            direction_ = false;        // 向きを左向きに変える
-            left_button_ = false;      // 押している
+            // 左入力
+            if( !(GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_LEFT) == 0 || CheckHitKey( KEY_INPUT_A ) == 1 )
+            {
+                direction_ = false;        // 向きを左向きに変える
+                left_button_ = false;      // 押している
 
-            leftCheck();
+                leftCheck();
 
-            animation();               // 歩いているアニメーション
+                animation();               // 歩いているアニメーション
+            }
+            else
+                left_button_ = true;
         }
-        else
-            left_button_ = true;
-
+        ddddd
         // 入力が終わったときに比較する
         if( old_left_button_ == false && left_button_ == true ||
             old_right_button_ == false && right_button_ == true )
