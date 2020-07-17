@@ -55,14 +55,14 @@ void BallManagement::update( int TotalX, int TotalY, int Status, int Direction, 
                 create_flag_ = true;
             }
         }
-
-
-        // 要素数だけFireを動かす
-        for( auto itr = fire_.begin(); itr != fire_.end(); itr++ )
-        {
-            (*itr)->update();                                 // *itrアロー演算子()をつける
-        }
     }
+
+    // 要素数だけFireを動かす
+    for( auto itr = fire_.begin(); itr != fire_.end(); itr++ )
+    {
+        (*itr)->update();                                 // *itrアロー演算子()をつける
+    }
+
 }
 
 void BallManagement::draw(const int ScreenOver)

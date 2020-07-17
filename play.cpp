@@ -45,6 +45,7 @@ bool PlayScene::initialize()
     player_->initialize();
 
     touch_ = 0;
+    change_timer_ = 0;
  
     return true;
 }
@@ -243,6 +244,21 @@ void PlayScene::update()
 
         // ƒS[ƒ‹Œã“§–¾‚©Šm”F
         item_->getEnd( player_->getEnd() );
+
+        if( !player_->getEnd() )
+        {
+            change_timer_++;
+
+            if( change_timer_ > kChangeTime )
+                SceneManager::ChangeScene( SceneManager::Scene::Result );
+        }
+    }
+    else
+    {
+        change_timer_++;
+
+        if( change_timer_ > kChangeTime )
+            SceneManager::ChangeScene( SceneManager::Scene::Result );
     }
 }
 

@@ -12,6 +12,8 @@ class PlayScene :
     public BaseScene
 {
 public :
+    const int kChangeTime = 120;
+
     PlayScene();
     ~PlayScene();
 
@@ -30,4 +32,5 @@ private:
     PosCollision* pos_col_;
 
     int touch_;
+    int change_timer_;
 };

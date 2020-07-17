@@ -10,7 +10,7 @@ public :
     const int kBic         = 12;
     const int kAnime       = 8;
     const int kSpeed       = 12;
-    const int kJumpPower   = 5;
+    const int kJumpPower   = 4;
     const int kGround      = 575;
     const int kScreenXSize = 1280;
     const int kScreenYSize = 720;
