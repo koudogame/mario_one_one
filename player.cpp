@@ -115,7 +115,6 @@ bool Player::update()
             else
                 left_button_ = true;
         }
-        ddddd
         // “ü—Í‚ªI‚í‚Á‚½‚Æ‚«‚É”äŠr‚·‚é
         if( old_left_button_ == false && left_button_ == true ||
             old_right_button_ == false && right_button_ == true )
