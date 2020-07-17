@@ -78,13 +78,13 @@ bool Player::update()
     else if( gameover_flag_ )
     {
         // ダッシュボタン判定
-        if( !(GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_4) == 0 )
+        if( !(GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_4) == 0 || CheckHitKey( KEY_INPUT_B ) == 1 )
             push_time_run_++;
         else
             push_time_run_ = 0;
 
         // 右入力
-        if( !(GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_RIGHT) == 0 )
+        if( !(GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_RIGHT) == 0 || CheckHitKey( KEY_INPUT_RIGHT ) == 1 )
         {
             direction_ = true;         // 向きを右向きに変える
             right_button_ = false;     // 押している(トラッカー) 
@@ -98,7 +98,7 @@ bool Player::update()
             right_button_ = true;
 
         // 左入力
-        if( !(GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_LEFT) == 0 )
+        if( !(GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_LEFT) == 0 || CheckHitKey( KEY_INPUT_LEFT ) == 1 )
         {
             direction_ = false;        // 向きを左向きに変える
             left_button_ = false;      // 押している
@@ -122,14 +122,14 @@ bool Player::update()
         old_left_button_ = left_button_;
         old_right_button_ = right_button_;
 
-        // しゃがむ入力
-        if( !(GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_DOWN) == 0 )
-            push_time_squat_++;
-        else
-            push_time_squat_ = 0;
+        //// しゃがむ入力
+        //if( !(GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_DOWN) == 0 )
+        //    push_time_squat_++;
+        //else
+        //    push_time_squat_ = 0;
 
         // ジャンプ入力
-        if( !(GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_B) == 0 )
+        if( !(GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_B) == 0 || CheckHitKey( KEY_INPUT_SPACE ) == 1 )
             push_time_jump_++;
         else
             push_time_jump_ = 0;
@@ -296,7 +296,7 @@ void Player::draw()
                 {
                     if( throw_flag_ )
                     {
-                        if( !(GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_4) == 0 )
+                        if( !(GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_4) == 0 || CheckHitKey( KEY_INPUT_B ) == 1 )
                             push_time_fire_++;
                         else
                             push_time_fire_ = 0;

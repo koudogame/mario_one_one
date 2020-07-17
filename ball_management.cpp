@@ -18,7 +18,7 @@ void BallManagement::update( int TotalX, int TotalY, int Status, int Direction, 
         if( PosY <= kEndline )
         {
             // ƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚½‚Æ‚« ‚©‚ÂAFireMario‚ÌŽž
-            if( !(GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_4) == 0 )
+            if( !(GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_4) == 0 || CheckHitKey( KEY_INPUT_B ) == 1 )
                 push_create_fire_++;
             else
                 push_create_fire_ = 0;
