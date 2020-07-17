@@ -113,9 +113,12 @@ void Powerup::update( int Screenover )
                 body_[ kRight ][ kHands ][ kY ] = (item_.y - 10) + (kSize * 4);
 
                 if( turn_ )
-                // ìñÇΩÇËîªíËÇÃÇ†ÇÈÇ∆Ç´
-                if( Collision::sideColl( kRight ) == false )
-                    direction_ *= -1;
+                    // ìñÇΩÇËîªíËÇÃÇ†ÇÈÇ∆Ç´
+                    if( Collision::sideColl( kRight ) == false )
+                    {
+                        turn_ = false;
+                        direction_ *= -1;
+                    }
 
                 // ç∂éËÇÃìoò^
                 body_[ kLeft ][ kShoulder ][ kX ] = (item_.x - 1);
@@ -124,9 +127,12 @@ void Powerup::update( int Screenover )
                 body_[ kLeft ][ kHands ][ kY ] = (item_.y - 10) + (kSize * 4);
 
                 if( turn_ )
-                // ìñÇΩÇËîªíËÇÃÇ†ÇÈÇ∆Ç´
-                if( Collision::sideColl( kLeft ) == false )
-                    direction_ *= -1;
+                    // ìñÇΩÇËîªíËÇÃÇ†ÇÈÇ∆Ç´
+                    if( Collision::sideColl( kLeft ) == false )
+                    {
+                        turn_ = false;
+                        direction_ *= -1;
+                    }
             }
             else if( item_.Id == kFlower )
             {
