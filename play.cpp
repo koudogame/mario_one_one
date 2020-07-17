@@ -66,7 +66,7 @@ void PlayScene::update()
     enemy_->update( player_->getScrollCnt() );
 
     bm_->update( player_->getPositionX(), player_->getPositionY(),
-        player_->getStatus(), player_->getDirection(), player_->getGoal() );
+        player_->getStatus(), player_->getDirection(), player_->getGoal(), player_->getPosY() );
 
     bm_->posCheck( player_->getScrollCnt() );           // d‚­‚È‚ç‚È‚¢‚æ‚¤‚É‰æ–ÊŠO‚Í”»’è‚µ‚È‚¢ˆ—
     bm_->sideCheck();                                   // ‰¡‚©‚ç“–‚½‚Á‚½‚çÁ‹

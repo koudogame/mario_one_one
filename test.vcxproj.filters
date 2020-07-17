@@ -73,9 +73,6 @@
     <Filter Include="EnemyBase\Turtle">
       <UniqueIdentifier>{0dd2fcaa-3ecf-493c-affa-bfd64c787d17}</UniqueIdentifier>
     </Filter>
-    <Filter Include="BreakBlock">
-      <UniqueIdentifier>{f5e541bf-3768-4378-a91e-8780a534846d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ItemBase\Goal">
       <UniqueIdentifier>{3d993224-395a-475b-b984-45a3f22e4a78}</UniqueIdentifier>
     </Filter>

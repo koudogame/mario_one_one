@@ -7,11 +7,12 @@ class BallManagement
 {
 public :
     static const int  kStopper = 16;
+    static const int  kEndline = 640;
 
     BallManagement( Field* field ) : ff_( field ) { field_ = field; }
 
     void initialize();
-    void update( int, int, int, int, bool ); // position_x_, position_y_, status_, direction_, gameoverflag;
+    void update( int, int, int, int, bool ,int); // total_movement_x_, total_movement_y_, status_, direction_, gameoverflag, pos_y_;
     void draw(const int);              // ScreenOver
     void finalize();
 

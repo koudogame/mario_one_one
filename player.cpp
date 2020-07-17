@@ -15,7 +15,7 @@ bool Player::initialize()
     right_            = 0;
     bottom_           = 0;
 
-    status_           = kMario;
+    status_           = kFireMario;
     past_status_      = status_;
 
     scroll_cnt_       = 0;            // ‰E‚É”²‚¯‚½•ª‘‚â‚µ‚Ä‚¢‚­

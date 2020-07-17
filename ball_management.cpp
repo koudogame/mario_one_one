@@ -9,55 +9,59 @@ void BallManagement::initialize()
     create_flag_ = true;
 }
 
-void BallManagement::update( int PosX, int PosY, int Status, int Direction, bool GameOver )
+void BallManagement::update( int TotalX, int TotalY, int Status, int Direction, bool GameOver, int PosY )
 {
     // マリオがゴールしていないとき
     if( GameOver )
     {
-        // ボタンが押されたとき かつ、FireMarioの時
-        if( !(GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_4) == 0 )
-            push_create_fire_++;
-        else
-        push_create_fire_ = 0;
-
-        // ボタンが押されたとき
-        if( push_create_fire_ == 1 )
+        // マリオが生存しているとき発射対象
+        if( PosY <= kEndline )
         {
-            size_t index = std::distance( fire_.begin(), fire_.end() );
+            // ボタンが押されたとき かつ、FireMarioの時
+            if( !(GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_4) == 0 )
+                push_create_fire_++;
+            else
+                push_create_fire_ = 0;
 
-            if( index <= 3 )
-            // まだ生成していなかったら作成
-            if( create_flag_ )
+            // ボタンが押されたとき
+            if( push_create_fire_ == 1 )
             {
-                // ファイアマリオのとき
-                if( Status == 2 )
-                {
-                    // 新しく追加して動かす
-                    fire_.push_back( new FireFactory( field_ ) );
-                    fire_.back()->initialize( PosX, PosY, Direction );
+                size_t index = std::distance( fire_.begin(), fire_.end() );
 
-                    create_flag_ = false;
-                }
+                if( index <= 3 )
+                    // まだ生成していなかったら作成
+                    if( create_flag_ )
+                    {
+                        // ファイアマリオのとき
+                        if( Status == 2 )
+                        {
+                            // 新しく追加して動かす
+                            fire_.push_back( new FireFactory( field_ ) );
+                            fire_.back()->initialize( TotalX, TotalY, Direction );
+
+                            create_flag_ = false;
+                        }
+                    }
+
             }
 
-        }        
+            if( !create_flag_ )
+                create_cnt_++;
 
-        if( !create_flag_ )
-            create_cnt_++;
-
-        // 連続で出されないようにするため
-        if( create_cnt_ >= kStopper )
-        {
-            create_cnt_ = 0;
-            create_flag_ = true;
+            // 連続で出されないようにするため
+            if( create_cnt_ >= kStopper )
+            {
+                create_cnt_ = 0;
+                create_flag_ = true;
+            }
         }
-    }
 
 
-    // 要素数だけFireを動かす
-    for( auto itr = fire_.begin(); itr != fire_.end(); itr++ )
-    {
-        (*itr)->update();                                 // *itrアロー演算子()をつける
+        // 要素数だけFireを動かす
+        for( auto itr = fire_.begin(); itr != fire_.end(); itr++ )
+        {
+            (*itr)->update();                                 // *itrアロー演算子()をつける
+        }
     }
 }
 
