@@ -27,6 +27,29 @@ void FireFactory::update()
         animation();            // ファイアボールアニメーション
         fire_pos_x_ += kSpeed * direction_;
 
+        // 右サイドの登録
+        body_[ kRight ][ kShoulder ][ kX ] = fire_pos_x_ + (kSize / 2) + 1;
+        body_[ kRight ][ kShoulder ][ kY ] = (fire_pos_y_ + 4) + (kSize * 4);
+        body_[ kRight ][ kHands ][ kX ] = fire_pos_x_ + (kSize / 2) + 1;
+        body_[ kRight ][ kHands ][ kY ] = (fire_pos_y_ - 4) + (kSize * 4);
+
+        // 当たり判定があるとき
+        if( !Collision::sideColl( kRight ))
+            // 当たり判定処理
+            side_touch_ = false;
+
+        // 左サイドの登録
+        body_[ kLeft ][ kShoulder ][ kX ] = fire_pos_x_ - 1;
+        body_[ kLeft ][ kShoulder ][ kY ] = fire_pos_y_ + 4 + (kSize * 4);
+        body_[ kLeft ][ kHands ][ kX ] = fire_pos_x_ - 1;
+        body_[ kLeft ][ kHands ][ kY ] = fire_pos_y_ - 4 + (kSize * 4);
+
+        // 当たり判定があるとき
+        if( !Collision::sideColl( kLeft ))
+            // 当たり判定処理
+            side_touch_ = false;
+
+
         // 下の部分の登録(Collision)
         // 右足、左足の登録
         body_[ kRight ][ kFoot ][ kX ] = fire_pos_x_ + ((kSize / 2) - 5);
@@ -36,7 +59,20 @@ void FireFactory::update()
         body_[ kLeft ][ kFoot ][ kY ] = fire_pos_y_ + ((kSize / 2) + 1) + (kSize * 4);
 
         // 足場があるとき
-        if( Collision::footColl() == 1 )
+        if( Collision::fireColl() == 3 )
+        {
+            jumping_ = kNoMove;
+
+            int block_line = (body_[ kRight ][ kFoot ][ kY ] - 1) / kSize;
+            fire_pos_y_ = ((block_line - 4) * kSize) - kSize;
+
+            if( block_line >= 14 )
+                fire_pos_y_ = kGround;
+
+            acceleration_ = 0;  // 落下速度
+            acceleration_ = (-kJumpPower / 2);
+        }
+        else if( Collision::fireColl() == 1 )
         {
             jumping_ = kNoMove;
 
@@ -50,7 +86,7 @@ void FireFactory::update()
             acceleration_ = -kJumpPower;
         }
         // 宙に浮いているとき
-        else if( Collision::footColl() == 2 )
+        else if( Collision::fireColl() == 2 )
         {
             jumping_ = kNoJump;
 
@@ -60,32 +96,6 @@ void FireFactory::update()
                 acceleration_ += kGravity;
                 fire_pos_y_ += acceleration_;
             }
-        }
-
-        // 右サイドの登録
-        body_[ kRight ][ kShoulder ][ kX ] = fire_pos_x_ + (kSize / 2) + 1;
-        body_[ kRight ][ kShoulder ][ kY ] = (fire_pos_y_ + 4) + (kSize * 4);
-        body_[ kRight ][ kHands ][ kX ] = fire_pos_x_ + (kSize / 2) + 1;
-        body_[ kRight ][ kHands ][ kY ] = (fire_pos_y_ - 4) + (kSize * 4);
-
-        // 当たり判定があるとき
-        if( Collision::sideColl( kRight ) == false )
-        {
-            // 当たり判定処理
-            side_touch_ = false;
-        }
-
-        // 左サイドの登録
-        body_[ kLeft ][ kShoulder ][ kX ] = fire_pos_x_ - 1;
-        body_[ kLeft ][ kShoulder ][ kY ] = fire_pos_y_ + 4 + (kSize * 4);
-        body_[ kLeft ][ kHands ][ kX ] = fire_pos_x_ - 1;
-        body_[ kLeft ][ kHands ][ kY ] = fire_pos_y_ - 4 + (kSize * 4);
-
-        // 当たり判定があるとき
-        if( Collision::sideColl( kLeft ) == false )
-        {
-            // 当たり判定処理
-            side_touch_ = false;
         }
     }
     else
