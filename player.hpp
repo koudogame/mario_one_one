@@ -34,7 +34,6 @@ public:
     static const int kGoalPost = 194;
 
     Player( Field* field ) : Collision( field ) {};
-    ~Player();
     bool initialize();
     bool update();
     void draw();
@@ -47,7 +46,9 @@ public:
     void itemCollision();                                        // アイテムに当たったとき
     void enemyCollision();                                       // ぶつかったときの処理
     void enemyStepon();                                          // 踏みつけたときの処理      
-    void Ending();                                               // エンディング処理
+    void ending();                                               // エンディング処理
+    void rightCheck();                                           // 体の右側を登録してチェックする関数
+    void leftCheck();                                            // 体の左側を登録してチェックする関数
 
     /*背景の描画を流す数値*/
     inline int getScrollCnt() { return scroll_cnt_; }
@@ -61,6 +62,7 @@ public:
     /*ゴールしているか*/
     inline bool getGoal() { return goal_flag_; }
 
+    // 向きに応じて渡す
     inline int getDirection() 
     {
         if( direction_ ) return 1;

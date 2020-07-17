@@ -1,9 +1,5 @@
 #include "player.hpp"
 
-Player::~Player()
-{
-}
-
 bool Player::initialize()
 {
     texture_          = LoadGraph( "Texture/mario_anime.png" );
@@ -76,7 +72,7 @@ bool Player::initialize()
 
 bool Player::update()
 {
-    if( !goal_flag_ ) Ending();
+    if( !goal_flag_ ) ending();
         
     // GameOver判定
     else if( gameover_flag_ )
@@ -93,42 +89,8 @@ bool Player::update()
             direction_ = true;         // 向きを右向きに変える
             right_button_ = false;     // 押している(トラッカー) 
 
-            body_[ kRight ][ kShoulder ][ kX ] = (total_movement_x_ + kSize + 1);
-            body_[ kRight ][ kShoulder ][ kY ] = (total_movement_y_);
+            rightCheck();              // 体の右側を確認する
 
-            body_[ kRight ][ kHands ][ kX ] = (total_movement_x_ + kSize + 1);
-            // status_がkMarioの時
-            if( status_ == kMario )
-                body_[ kRight ][ kHands ][ kY ] = (total_movement_y_ + kSize - 1);
-            else
-                body_[ kRight ][ kHands ][ kY ] = (total_movement_y_ + (kSize * 2) - 1);
-
-
-            // 当たり判定のないブロックのとき
-            if( Collision::sideColl( kRight ) == true )
-            {
-                // HELD中のとき
-                if( push_time_run_ >= 2 )
-                {                    
-                    // 右への移動
-                    pos_x_ += kDashSpeed;
-                    total_movement_x_ += kDashSpeed;
-                }
-                else
-                {
-                    // 右への移動
-                    pos_x_ += kSpeed;
-                    total_movement_x_ += kSpeed;
-
-                }
-
-                // pos_x_ センターを超えるとき
-                if( pos_x_ > kEndLine )
-                {
-                    scroll_cnt_ = total_movement_x_ - kEndLine;
-                    pos_x_ = kEndLine;
-                }
-            }
 
             animation();               // 歩いているアニメーション
         }
@@ -141,44 +103,7 @@ bool Player::update()
             direction_ = false;        // 向きを左向きに変える
             left_button_ = false;      // 押している
 
-            // 上と両サイドは変更なし
-            body_[ kLeft ][ kShoulder ][ kX ] = (total_movement_x_ - 1);
-            body_[ kLeft ][ kShoulder ][ kY ] = (total_movement_y_);
-
-            body_[ kLeft ][ kHands ][ kX ] = (total_movement_x_ - 1);
-
-            // 下の位置だけ状態に応じて変更する
-            if( status_ == kMario )
-                body_[ kLeft ][ kHands ][ kY ] = (total_movement_y_ + kSize - 1);
-            else
-                body_[ kLeft ][ kHands ][ kY ] = (total_movement_y_ + (kSize * 2) - 1);
-
-            // マリオの左側に衝突するブロックがないとき
-            if( Collision::sideColl( kLeft ) == true )
-            {
-                if( push_time_run_ >= 2 )
-                {
-                    // ポジションゼロより左の時
-                    if( pos_x_ <= 0 )
-                        pos_x_ = 0;
-                    else
-                    {
-                        pos_x_ -= kDashSpeed;
-                        total_movement_x_ -= kDashSpeed;
-                    }
-                }
-                // 左壁以外の時
-                else
-                {                // ポジションゼロより左の時
-                    if( pos_x_ <= 0 )
-                        pos_x_ = 0;
-                    else
-                    {
-                        pos_x_ -= kSpeed;
-                        total_movement_x_ -= kSpeed;
-                    }
-                }
-            }
+            leftCheck();
 
             animation();               // 歩いているアニメーション
         }
@@ -576,7 +501,7 @@ void Player::enemyStepon()
     acceleration_ = -kEnemyJump;
 }
 
-void Player::Ending()
+void Player::ending()
 {        
     // 向き反転までのカウント
     down_cnt_++;
@@ -689,4 +614,108 @@ void Player::Ending()
             else
                 extinguish_existence_ = false;
         }
+}
+
+void Player::rightCheck()
+{
+    // 体の上下の確認
+    body_[ kRight ][ kShoulder ][ kX ] = (total_movement_x_ + kSize + 1);
+    body_[ kRight ][ kShoulder ][ kY ] = (total_movement_y_);
+
+    body_[ kRight ][ kHands ][ kX ] = (total_movement_x_ + kSize + 1);
+    // status_がkMarioの時
+    if( status_ == kMario )
+        body_[ kRight ][ kHands ][ kY ] = (total_movement_y_ + kSize - 1);
+    else
+        body_[ kRight ][ kHands ][ kY ] = (total_movement_y_ + (kSize * 2) - 1);
+
+
+    // 当たり判定のないブロックのとき
+    if( Collision::sideColl( kRight ) == true )
+    {
+        // kSuperMario以上の時体の真ん中をすり抜けないように確認
+        if( status_ >= kSuperMario )
+        {
+            body_[ kRight ][ kShoulder ][ kX ] = (total_movement_x_ + kSize + 1);
+            body_[ kRight ][ kShoulder ][ kY ] = (total_movement_y_ + kSize);
+        }
+
+        // もう一度当たり判定を確認する
+        if( Collision::sideColl( kRight ) == true )
+        {
+            // HELD中のとき
+            if( push_time_run_ >= 2 )
+            {
+                // 右への移動
+                pos_x_ += kDashSpeed;
+                total_movement_x_ += kDashSpeed;
+            }
+            else
+            {
+                // 右への移動
+                pos_x_ += kSpeed;
+                total_movement_x_ += kSpeed;
+
+            }
+
+            // pos_x_ センターを超えるとき
+            if( pos_x_ > kEndLine )
+            {
+                scroll_cnt_ = total_movement_x_ - kEndLine;
+                pos_x_ = kEndLine;
+            }
+        }
+    }
+}
+
+void Player::leftCheck()
+{
+    // 上と両サイドは変更なし
+    body_[ kLeft ][ kShoulder ][ kX ] = (total_movement_x_ - 1);
+    body_[ kLeft ][ kShoulder ][ kY ] = (total_movement_y_);
+
+    body_[ kLeft ][ kHands ][ kX ] = (total_movement_x_ - 1);
+
+    // 下の位置だけ状態に応じて変更する
+    if( status_ == kMario )
+        body_[ kLeft ][ kHands ][ kY ] = (total_movement_y_ + kSize - 1);
+    else
+        body_[ kLeft ][ kHands ][ kY ] = (total_movement_y_ + (kSize * 2) - 1);
+
+    // マリオの左側に衝突するブロックがないとき
+    if( Collision::sideColl( kLeft ) == true )
+    {
+        if( status_ >= kSuperMario )
+        {
+            body_[ kLeft ][ kShoulder ][ kX ] = (total_movement_x_ - 1);
+            body_[ kLeft ][ kShoulder ][ kY ] = (total_movement_y_ + kSize);
+        }
+
+        // もう一度当たり判定を確認する
+        if( Collision::sideColl( kLeft ) == true )
+        {
+            if( push_time_run_ >= 2 )
+            {
+                // ポジションゼロより左の時
+                if( pos_x_ <= 0 )
+                    pos_x_ = 0;
+                else
+                {
+                    pos_x_ -= kDashSpeed;
+                    total_movement_x_ -= kDashSpeed;
+                }
+            }
+            // 左壁以外の時
+            else
+            {                // ポジションゼロより左の時
+                if( pos_x_ <= 0 )
+                    pos_x_ = 0;
+                else
+                {
+                    pos_x_ -= kSpeed;
+                    total_movement_x_ -= kSpeed;
+                }
+            }
+        }
+    }
 }
