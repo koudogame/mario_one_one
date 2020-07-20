@@ -8,9 +8,10 @@
 #include "mystery.hpp"
 #include "brick.hpp"
 
-constexpr int kBrick = 19;
-constexpr int kMystery = 48;
-constexpr int kNoblock = 190;
+const int kBrick   = 19;
+const int kMystery = 48;
+const int kSize    = 64;
+const int kNoblock = 190;
 
 namespace breakblock
 {
@@ -36,6 +37,7 @@ public :
     void drawFront( int ScreenOver );
     void finalize();
 
+    // 叩かれたブロックを上げ下げする関数
     void downBlock();
 
     // 体のマップIdを返す三次元配列

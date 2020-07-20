@@ -18,9 +18,9 @@ public :
 
     int getPosX() override;
     int getPosY() override;
-    void posCollision() override;
+    void posCollision() override;   // マリオと当たったとき
 
-    void flowerAnimation();
+    void flowerAnimation();         // キラキラさせるアニメーション
 
 private : 
     int up_cnt_     = 0;

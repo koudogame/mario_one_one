@@ -8,6 +8,7 @@ void EnemyBase::initialize( const int Id, const RECT Rect, const int X, const in
     enemy_parts_.y = Y;
 }
 
+// 各それぞれで処理を実行させる
 void EnemyBase::update( int ScreenOver )
 {
 }
@@ -17,6 +18,7 @@ void EnemyBase::draw( int Texture, int ScreenOver )
     int texture_position_x = enemy_parts_.x - ScreenOver;
     int texture_position_y = enemy_parts_.y;
 
+    // 体の大きさが64のサイズの敵の描画処理
     if( enemy_parts_.rect.bottom == kSize )
     {
         if( burn_ )
@@ -36,6 +38,7 @@ void EnemyBase::draw( int Texture, int ScreenOver )
     }
     else
     {
+        // 焼かれていないとき
         if( burn_ )
         {
             if( direction_ == 1 )
@@ -82,10 +85,13 @@ int EnemyBase::getPosY()
     return 0;
 }
 
+// マリオと衝突したとき
 void EnemyBase::posCollision(int Touch){}
 
+// 甲羅状態で衝突したとき
 void EnemyBase::shellCollision(){}
 
+// ファイアと衝突したとき
 void EnemyBase::fireCollision()
 {
         // 焼き殺されたとき
@@ -94,6 +100,7 @@ void EnemyBase::fireCollision()
         acceleration_ = -kJumpPower;
 }
 
+// 向きを変える関数
 void EnemyBase::changeDirection()
 {
     direction_ *= -1;

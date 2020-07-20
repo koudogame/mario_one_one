@@ -13,11 +13,11 @@ public:
 
     int getPosX()override;
     int getPosY()override;
-    void posCollision( int Touch ) override;   // active_ : trueで踏んだ時
-    void shellCollision() override;
-    void fireCollision() override;
+    void posCollision( int Touch ) override; // active_ : trueで踏んだ時
+    void shellCollision() override;          // 甲羅状態で当たったとき
+    void fireCollision() override;           // ファイアと当たったとき
 
-    void animation();
+    void animation();                        // 歩くアニメーション
 
     inline bool getPushFlag()override { return pushout_; }
 

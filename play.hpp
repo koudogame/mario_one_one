@@ -5,7 +5,6 @@
 #include "item.hpp"
 #include "enemy.hpp"
 #include "ball_management.hpp"
-#include "data_keeper.hpp"
 #include "pos_collision.hpp"
 
 class PlayScene :
@@ -23,13 +22,12 @@ public :
     void finalize() override;
 
 private:   
-    Item* item_;
-    Field* field_;
-    Player* player_;
-    Enemy* enemy_;
-    DataKeeper* data_;
-    BallManagement* bm_;
-    PosCollision* pos_col_;
+    Item* item_;            // アイテムクラス
+    Field* field_;          // フィールドクラス
+    Player* player_;        // プレイヤークラス
+    Enemy* enemy_;          // エネミークラス
+    BallManagement* bm_;    // ボールマネージャークラス
+    PosCollision* pos_col_; // ポジション衝突判定クラス
 
     int touch_;
     int change_timer_;

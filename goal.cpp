@@ -2,6 +2,7 @@
 
 void Goal::update( int ScreenOver )
 {
+    // ƒS[ƒ‹‚µ‚½‚Æ‚«‚É‰º‚Ü‚Å‰º‚°‚é
     if( !goal_flag_ )
     {
         down_cnt_++;

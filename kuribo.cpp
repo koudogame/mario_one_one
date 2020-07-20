@@ -8,11 +8,13 @@ void Kuribo::update( int ScreenOver )
         // 動きつづけるのは画面内にいるとき
         if( ScreenOver <= enemy_parts_.x + kSize )
         {
+            // 焼かれていないか
             if( burn_ )
             {
+                // 踏まれていないか
                 if( alive_ )
                 {
-                    animation();
+                    animation();                                // 歩くアニメーション
                     enemy_parts_.x += kSpeed * direction_;      // 常に進む
 
 
@@ -30,6 +32,7 @@ void Kuribo::update( int ScreenOver )
 
                         int block_line = (body_[ kRight ][ kFoot ][ kY ] - 1) / kSize;
 
+                        // 足元が埋まっていないか
                         if( block_line >= 13 )
                             enemy_parts_.y = kGround;
                         else
@@ -43,6 +46,7 @@ void Kuribo::update( int ScreenOver )
                     {
                         jumping_ = kNoJump;
 
+                        // 穴に落下したとき
                         if( enemy_parts_.y > 670 )
                         {
                             // アイテムを消す処理を書く
@@ -104,8 +108,10 @@ void Kuribo::update( int ScreenOver )
                     }
                 }
             }
+            // 焼かれたときの処理
             else
             {
+                // 決められた位置まで落下させる
                 if( enemy_parts_.y < kFieldSize )
                 {
                     // 重力を反映させながら落下
@@ -134,6 +140,8 @@ int Kuribo::getPosY()
     
     return 0;
 }
+
+// マリオとの衝突があったとき
 void Kuribo::posCollision(int Touch)
 {
     // アイテムを消す処理を書く
@@ -151,6 +159,7 @@ void Kuribo::posCollision(int Touch)
     alive_ = false;
 }
 
+// 歩くアニメーション
 void Kuribo::animation()
 {
     animation_++;

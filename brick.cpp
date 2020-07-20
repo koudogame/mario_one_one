@@ -2,17 +2,22 @@
 
 void Brick::initialize( const int Id, const RECT Rect, const int X, const int Y )
 {
+    // ベースの初期化
     BlockBase::initialize( Id, Rect, X, Y );
 
+    // 叩かれていない状態
     punch_ = true;
 }
 
 void Brick::update(int Status)
 {
+    // 叩かれたとき
     if( !stand_by_ )
     {
+        // 一度きりの処理
         if( punch_ )
         {
+            // マリオじゃないとき
             if( Status != 0 )
             {
                 // レンガが叩かれたとき
@@ -64,14 +69,17 @@ void Brick::update(int Status)
                     break_parts_[ i ][ kPositionY ] += acceleration_down_;
             }
 
+            // ジャンプ力を付与
             acceleration_up_ += kGravity;
             acceleration_down_ += kGravity;
         }
     }
 }
 
+// 描画処理
 void Brick::draw( int Texture, int ScreenOver)
 {
+    // ベースの処理も呼ぶ
     BlockBase::draw( Texture, ScreenOver );
 
     if( !stand_by_ )
@@ -88,6 +96,7 @@ void Brick::draw( int Texture, int ScreenOver)
     }
 }
 
+// 叩かれたとき下に下げる
 void Brick::downBlock()
 {
     if( !upblock_flag_ )
@@ -101,6 +110,7 @@ void Brick::downBlock()
     }
 }
 
+// 叩かれたら falseへ変更
 void Brick::standby(int x, int y)
 {
     pos_x_ = x;

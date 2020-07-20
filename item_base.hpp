@@ -40,9 +40,9 @@ public:
     virtual int getPosX();
     virtual int getPosY();
 
-    virtual void posCollision();
+    virtual void posCollision();        // ƒ}ƒŠƒI‚ÆÕ“Ë‚µ‚½‚Æ‚«‚ÌŠÖ”‚ğŒÄ‚Ô
     virtual void getGoal( bool );
-    virtual void upHata( bool );
+    virtual void upHata( bool );        // Šø‚ğŒf‚°‚éŠÖ”‚ğŒÄ‚Ô
     
     inline const int getId() { return item_.Id; }
     inline const int getPositionX() { return item_.x; }

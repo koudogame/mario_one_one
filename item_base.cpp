@@ -11,6 +11,7 @@ void ItemBase::initialize( const int Id, const RECT Rect, const int X, const int
     up_ = true;
 }
 
+// Še‚»‚ê‚¼‚ê‚Éˆ—‚ğ‘‚­
 void ItemBase::update(int Screenover)
 {
 }

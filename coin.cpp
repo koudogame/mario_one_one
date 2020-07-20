@@ -2,8 +2,10 @@
 
 void Coin::update(int Screenover)
 {
+    // 一度きりの処理
     if( !up_ )
     {
+        // 上に上がる力の付与
         if( jumping_ == kJump )
         {
             jumping_ = kNoJump;
@@ -11,6 +13,7 @@ void Coin::update(int Screenover)
             item_.y -= 64;
         }
 
+        // 上にあげられた時の処理
         if( jumping_ == kNoJump )
         {
             acceleration_ += kGravity;
@@ -38,12 +41,14 @@ void Coin::update(int Screenover)
                     coin_animation_ = 0;
             }
 
+            // 足元の登録
             body_[ kRight ][ kFoot ][ kX ] = (item_.x + (kSize - 10));
             body_[ kRight ][ kFoot ][ kY ] = (item_.y + kSize + 1) + (kSize * 4);
 
             body_[ kLeft ][ kFoot ][ kX ] = (item_.x + 10);
             body_[ kLeft ][ kFoot ][ kY ] = (item_.y + kSize + 1) + (kSize * 4);
 
+            // ブロックと当たったとき消える
             if( Collision::footColl() == 1 )
             {
                 item_.Id = kNoBlock;
@@ -60,6 +65,7 @@ void Coin::update(int Screenover)
     }
 }
 
+// 一度しか処理を呼ばないようにするため
 void Coin::flagChange( int Status )
 {
     if( punch_ )

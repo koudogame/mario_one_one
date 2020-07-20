@@ -28,7 +28,8 @@ public :
     void update(int) override;
     void draw( int, int ) override;
     void downBlock() override;
-    void standby(int, int) override;
+
+    void standby(int, int) override;    // ‘Ò‚Á‚Ä‚¢‚é‚Æ‚«‚ÌÀ•W
 
 private:
     int acceleration_up_;

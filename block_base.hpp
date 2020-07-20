@@ -37,8 +37,8 @@ public :
     virtual void update(int);
     virtual void draw( int Texture, const int ScreenOver );
     
-    virtual void downBlock();
-    virtual void standby(int,int);     
+    virtual void downBlock();          // ‘Ì‚ª¬‚³‚¢‚Æ‚«‚ÉƒuƒƒbƒN‚ğã‚°‰º‚°‚·‚éŠÖ”
+    virtual void standby(int,int);     // ’@‚©‚ê‚½‚Æ‚«‚Éfalse‚Ö•Ï‚¦‚éŠÖ”
 
     inline const int getId() {return parts_.Id; }
     inline const int getPositionX() { return parts_.x; }

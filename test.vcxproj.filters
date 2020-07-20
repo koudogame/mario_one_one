@@ -79,9 +79,6 @@
     <Filter Include="Fireball">
       <UniqueIdentifier>{b7b66f19-e099-48f5-95ca-b66a8c9811e1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="DataKeeper">
-      <UniqueIdentifier>{1a4ea0d4-133e-4c3c-a379-fa642b94a020}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ItemBase\Hata">
       <UniqueIdentifier>{5efa799c-0f18-43a7-93b7-27068e7a5dd0}</UniqueIdentifier>
     </Filter>
@@ -232,9 +229,6 @@
     </ClInclude>
     <ClInclude Include="fire_factory.hpp">
       <Filter>Fireball</Filter>
-    </ClInclude>
-    <ClInclude Include="data_keeper.hpp">
-      <Filter>DataKeeper</Filter>
     </ClInclude>
     <ClInclude Include="hata.hpp">
       <Filter>ItemBase\Hata</Filter>

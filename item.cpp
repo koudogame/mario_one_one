@@ -37,14 +37,16 @@ bool Item::initialize( std::fstream& stage )
 
             stage.read( reinterpret_cast<char*>(&id), sizeof( char ) );
             
+            // Idに応じて登録
+
             if( id == kPowerup )
-                item_[ 0 ][ i ][ j ] = new Powerup( field_ );
+                item_[ 0 ][ i ][ j ] = new Powerup( field_ );   // パワーアップアイテム
             else if( id == kHata )
-                item_[ 0 ][ i ][ j ] = new Hata( field_ );
+                item_[ 0 ][ i ][ j ] = new Hata( field_ );      // キャッスルフラッグ
             else if( id == kCoin )
-                item_[ 0 ][ i ][ j ] = new Coin( field_ );
+                item_[ 0 ][ i ][ j ] = new Coin( field_ );      // コイン
             else if( id == kGoal )
-                item_[ 0 ][ i ][ j ] = new Goal( field_ );
+                item_[ 0 ][ i ][ j ] = new Goal( field_ );      // ゴールフラッグ
             else
                 item_[ 0 ][ i ][ j ] = new ItemBase(field_);
 

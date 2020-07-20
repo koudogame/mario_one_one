@@ -24,7 +24,6 @@ bool PlayScene::initialize()
     enemy_   = new Enemy( field_ );
     player_  = new Player( field_ );
     bm_ = new BallManagement( field_ );
-    data_    = new DataKeeper();
     pos_col_ = new PosCollision(); 
 
     // ファイルに対する入力ストリーム
@@ -72,7 +71,7 @@ void PlayScene::update()
     bm_->posCheck( player_->getScrollCnt() );           // 重くならないように画面外は判定しない処理
     bm_->sideCheck();                                   // 横から当たったら消去
 
-
+    // ゲームオーバーではないとき
     if( player_->getGameover() )
     {
         // 敵と敵の当たり判定を取る
@@ -136,6 +135,7 @@ void PlayScene::update()
         {
             for( int j = 0; j < item_->getWidth(); j++ )
             {
+                // アイテムとマリオの衝突判定を調べる
                 if( pos_col_->getCollision( player_->getPositionX(), player_->getPositionY(),
                     item_->getItemPosX( i, j ), item_->getItemPosY( i, j ) ) == false )
                 {
@@ -156,6 +156,7 @@ void PlayScene::update()
         {
             for( int j = 0; j < enemy_->getWidth(); j++ )
             {
+                // 上から踏みつけたとき
                 if( pos_col_->getEnemyCollision(
                     player_->getPositionX(), player_->getPositionY(),
                     enemy_->getEnemyPosX( i, j ), enemy_->getEnemyPosY( i, j ),
@@ -164,7 +165,6 @@ void PlayScene::update()
                     int id = enemy_->getId( i, j );
                     touch_ = 1;
 
-                    // 上から踏みつけたとき
                     if( id == kKuribo || id == kTurtle )
                     {
                         // 踏まれた後の演出
@@ -180,6 +180,7 @@ void PlayScene::update()
                         enemy_->shellCollision( i, j );
                     }
                 }
+                // 体の右と衝突したとき
                 else if( pos_col_->getEnemyCollision(
                     player_->getPositionX(), player_->getPositionY(),
                     enemy_->getEnemyPosX( i, j ), enemy_->getEnemyPosY( i, j ),
@@ -209,6 +210,7 @@ void PlayScene::update()
                     }
 
                 }
+                // 体の左と衝突したとき
                 else if( pos_col_->getEnemyCollision(
                     player_->getPositionX(),
                     player_->getPositionY(),
@@ -245,6 +247,7 @@ void PlayScene::update()
         // ゴール後透明か確認
         item_->getEnd( player_->getEnd() );
 
+        // ゴール後数秒後シーンチェンジ
         if( !player_->getEnd() )
         {
             change_timer_++;
@@ -255,6 +258,7 @@ void PlayScene::update()
     }
     else
     {
+    // ゴール後数秒後シーンチェンジ
         change_timer_++;
 
         if( change_timer_ > kChangeTime )
@@ -264,12 +268,12 @@ void PlayScene::update()
 
 void PlayScene::draw()
 {       
-    field_->drawFront(player_->getScrollCnt());  
-    item_->draw(player_->getScrollCnt());
-    field_->draw( player_->getScrollCnt() );
-    enemy_->draw(player_->getScrollCnt());
-    bm_->draw( player_->getScrollCnt() );
-    player_->draw();
+    field_->drawFront(player_->getScrollCnt());     // フィールド背景
+    item_->draw(player_->getScrollCnt());           // アイテム
+    field_->draw( player_->getScrollCnt() );        // 触れるブロック
+    enemy_->draw(player_->getScrollCnt());          // 敵
+    bm_->draw( player_->getScrollCnt() );           // ファイアボール
+    player_->draw();                                // マリオ
 }
 
 void PlayScene::finalize()

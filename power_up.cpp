@@ -7,7 +7,7 @@ void Powerup::update( int Screenover )
         // 一度だけStatusの確認を行う
         if( punch_ )
         {
-            // Status確認
+            // Status確認し、出すアイテムを選択する
             if( status_ == 0 )
             {
                 item_.Id = kMashroom;
@@ -53,6 +53,7 @@ void Powerup::update( int Screenover )
         }
         else
         {
+            // キノコの時
             if( item_.Id == kMashroom )
             {
                 if( Screenover <= item_.x + kSize )
@@ -136,12 +137,14 @@ void Powerup::update( int Screenover )
             }
             else if( item_.Id == kFlower )
             {
+                // フラワーをきらきらさせる
                 flowerAnimation();
             }
         }
     }
 }
 
+// 一度しか呼ばないようにするため
 void Powerup::flagChange( int Status )
 {
     up_ = false;
@@ -165,6 +168,7 @@ int Powerup::getPosY()
     return 0;
 }
 
+// マリオと当たったとき
 void Powerup::posCollision()
 {
     // アイテムを消す処理を書く
@@ -181,6 +185,7 @@ void Powerup::posCollision()
     item_.rect = rect;
 }
 
+// フラワーのきらきらアニメーション
 void Powerup::flowerAnimation()
 {
     animation_cnt_++;

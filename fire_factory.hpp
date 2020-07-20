@@ -21,9 +21,9 @@ public :
     void draw(int , const int );
 
     bool getCheckScreen(const int);    
-    void animation();
-    void burnAnimation();
-    void setFire(bool);
+    void animation();           // アニメーションする関数
+    void burnAnimation();       // 爆発アニメーション関数
+    void setFire(bool);         
     
     inline bool getExplode() { return explode_flag_; }
 

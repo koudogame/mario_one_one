@@ -8,11 +8,13 @@ void Turtle::update( int ScreenOver )
         // 動きつづけるのは画面内にいるとき
         if( ScreenOver <= enemy_parts_.x + kSize )
         {
+            // 焼かれていないか
             if( burn_ )
             {
+                // 死んでいないか
                 if( active_ )
                 {
-                    animation();
+                    animation();                                // 歩くアニメーション
                     enemy_parts_.x += kSpeed * direction_;      // 常に進む
                 }
                 else if( !pushout_ && !active_ )
@@ -44,6 +46,7 @@ void Turtle::update( int ScreenOver )
                 {
                     jumping_ = kNoJump;
 
+                    // 落下していないか
                     if( enemy_parts_.y > 670 )
                     {
                         // アイテムを消す処理を書く
@@ -86,6 +89,7 @@ void Turtle::update( int ScreenOver )
                 if( Collision::sideColl( kLeft ) == false )
                     direction_ *= -1;
             }
+            // 甲羅状態での落下
             else
             if( enemy_parts_.y < kFieldSize )
             {
@@ -121,6 +125,7 @@ int Turtle::getPosY()
     return 0;
 }
 
+// マリオと衝突したとき
 void Turtle::posCollision( int Touch )
 {
     if( Touch == 1 )
@@ -156,6 +161,8 @@ void Turtle::posCollision( int Touch )
         enemy_parts_.x -= 6;
     }
 }
+
+// 甲羅状態で衝突した時
 void Turtle::shellCollision()
 {
     ++action_cnt_;
@@ -172,6 +179,7 @@ void Turtle::shellCollision()
     }
 }
 
+// ファイアと衝突したとき
 void Turtle::fireCollision()
 {
     EnemyBase::fireCollision();
@@ -182,6 +190,7 @@ void Turtle::fireCollision()
     enemy_parts_.rect.bottom = kSize;
 }
 
+// 歩くアニメーション
 void Turtle::animation()
 {
     animation_++;

@@ -1,7 +1,5 @@
 #include "field.hpp"
 
-constexpr int kSize = 64;
-
 bool Field::initialize( std::fstream& stage )
 {
     texture_ = LoadGraph( "Texture/mario_field.png" );
@@ -38,17 +36,19 @@ bool Field::initialize( std::fstream& stage )
 
                 stage.read( reinterpret_cast<char*>(&id), sizeof( char ) );
 
+                // Idに応じて登録
+
                 if( id == kBrick )
                 {
-                    field_[ layer ][ i ][ j ] = new Brick;
+                    field_[ layer ][ i ][ j ] = new Brick;      // レンガの時
                 }
                 else if( id == kMystery )
                 {
-                    field_[ layer ][ i ][ j ] = new Mystery;
+                    field_[ layer ][ i ][ j ] = new Mystery;    // はてなボックスの時
                 }
                 else
                 {
-                    field_[ layer ][ i ][ j ] = new BlockBase;
+                    field_[ layer ][ i ][ j ] = new BlockBase;  // ベースとなる箱
                 }
 
                 // 描画範囲を設定
@@ -147,6 +147,7 @@ void Field::finalize()
     }
 }
 
+// 小さい体で当たったとき当たったブロックの関数を呼び出す
 void Field::downBlock()
 {
     for( int i = 0; i < height_; i++ )

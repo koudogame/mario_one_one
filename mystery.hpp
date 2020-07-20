@@ -7,10 +7,10 @@ class Mystery :
 public :
     static const int kChangeTime = 8;
 
-    void update(int) override;   // 叩かれたとき
+    void update(int) override;          // 叩かれたときの処理
     void downBlock() override;          // ブロックが高くなったとき
-    void standby(int, int) override;
+    void standby(int, int) override;    // 叩かれたときにfalseへ変更する関数
 
 private : 
-    int animation_cnt_ = 0;         // アニメーション用
+    int animation_cnt_ = 0;             // アニメーション用
 };

@@ -36,12 +36,14 @@ void Enemy::initalize( std::fstream& FieldEnemy )
 
             FieldEnemy.read( reinterpret_cast<char*>(&id), sizeof( char ) );
 
+            // 各配列に情報をnewする
+
             if( id == kKuribo )
-                enemy_[ 0 ][ i ][ j ] = new Kuribo( field_ );
+                enemy_[ 0 ][ i ][ j ] = new Kuribo( field_ );   // クリボー
             else if( id == kTurtle )
-                enemy_[ 0 ][ i ][ j ] = new Turtle( field_ );
+                enemy_[ 0 ][ i ][ j ] = new Turtle( field_ );   // ノコノコ
             else
-                enemy_[ 0 ][ i ][ j ] = new EnemyBase( field_ );
+                enemy_[ 0 ][ i ][ j ] = new EnemyBase( field_ );// ベース
 
 
             // 描画範囲を設定
@@ -99,21 +101,25 @@ void Enemy::finalize()
     }
 }
 
+// ポジション情報がマリオと当たったときに呼ばれる関数
 void Enemy::posCollision( int i, int j, int Touch )
 {
     enemy_[ 0 ][ i ][ j ]->posCollision(Touch);
 }
 
+// 甲羅状態で衝突したときに呼ばれる関数
 void Enemy::shellCollision( int i, int j )
 {
     enemy_[ 0 ][ i ][ j ]->shellCollision();
 }
 
+// ファイアボールと衝突したときに呼ばれる関数
 void Enemy::fireCollision( int i, int j )
 {
     enemy_[ 0 ][ i ][ j ]->fireCollision();
 }
 
+// ポジションがぶつかり向きを変更するときに呼ばれる関数
 void Enemy::changeDirection( int i, int j )
 {
     enemy_[ 0 ][ i ][ j ]->changeDirection();

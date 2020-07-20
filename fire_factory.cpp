@@ -122,6 +122,7 @@ void FireFactory::draw( int Texture, const int ScreenOver )
 
 }
 
+// 画面内にいるか確認する関数
 bool FireFactory::getCheckScreen( const int ScreenOver )
 {        
     // FireBallと、画面の大きさ
@@ -148,6 +149,7 @@ bool FireFactory::getCheckScreen( const int ScreenOver )
     return false;
 }
 
+// ファイアボールのアニメーション制御する関数
 void FireFactory::animation()
 {
     animation_cnt_++;
@@ -162,6 +164,7 @@ void FireFactory::animation()
     }
 }
 
+// どこかしらと当たったとき爆発を起こす関数
 void FireFactory::burnAnimation()
 {
     explode_cnt_++;

@@ -5,6 +5,7 @@ void Mystery::update( int Status )
     // はてなが叩かれたとき
     if( !stand_by_ )
     {
+        // はてなから何もないブロックへ
         if( parts_.Id == kMystery )
         {
             base_pos_ = parts_.y;
@@ -22,6 +23,7 @@ void Mystery::update( int Status )
     }
     else
     {
+        // ハテナブロックのアニメーションの変化
         animation_cnt_++;
 
         if( animation_cnt_ <= kChangeTime * 3 )
@@ -65,6 +67,7 @@ void Mystery::update( int Status )
     }
 }
 
+// ブロックをもとの高さに戻す処理
 void Mystery::downBlock()
 {
     if( !upblock_flag_ )
@@ -76,6 +79,7 @@ void Mystery::downBlock()
     }
 }
 
+// 叩かれたら falseへ変更
 void Mystery::standby(int x, int y)
 {
     stand_by_ = false;

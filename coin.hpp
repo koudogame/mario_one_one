@@ -13,7 +13,7 @@ public :
 
     Coin( Field* field ) : ItemBase( field ) {};
     void update(int Screenover) override;
-    void flagChange(int Status) override;
+    void flagChange(int Status) override;   // ŠÖ”‚Ìˆ—‚ğˆê“x‚É§ŒÀ‚·‚é‚½‚ß
 
 private : 
     bool punch_ = true;

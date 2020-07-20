@@ -16,9 +16,9 @@ public :
     
     int getPosX() override;
     int getPosY() override;
-    void posCollision(int Touch) override;
 
-    void animation();
+    void posCollision(int Touch) override;  // マリオとの衝突があったとき
+    void animation();                       // 歩くアニメーション
 
 private : 
     int death_cnt_       = 0;               // 消えるまでのカウントダウン

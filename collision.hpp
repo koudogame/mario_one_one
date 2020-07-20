@@ -3,21 +3,25 @@
 
 namespace collision
 {
+    // 体の右、左
     enum RL
     {
         kRight, kLeft, kRL
     };
 
+    //　体のパーツ
     enum BodyParts
     {
         kShoulder, kHands, kHead, kFoot, kBodyParts
     };
 
+    //　体のパーツのX,Y
     enum Position
     {
         kX, kY, kPosition
     };
 
+    // 飛び状態を明確にする
     enum JumpFlag
     {
         kJump, kNoJump, kNoMove
@@ -36,7 +40,7 @@ public:
     bool sideColl( RL rl );                           // true  (Id >= 65), flase  (Id <= 64);
     int footColl();                                   // return 1(Id <= 64),return 2(Id == 191), return 0 その他
     int fireColl();                                   // return 1(Id <= 64),return 2(Id == 191),return 3(Id == 32), return 0 その他
-    int collision( RL, BodyParts );
+    int collision( RL, BodyParts );                   // 当たっているブロックIdを返却する関数
 
 protected:
     int acceleration_;                                // ジャンプ力を付与

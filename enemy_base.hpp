@@ -45,13 +45,13 @@ public :
     virtual void update(int ScreenOver);
     virtual void draw( int Texture, int ScreenOver );
 
-    virtual void fireCollision();
-    virtual bool getPushFlag();
+    virtual bool getPushFlag();            
     virtual int getPosX();
     virtual int getPosY();
-    virtual void posCollision(int Touch);
-    virtual void shellCollision();
-    virtual void changeDirection();
+    virtual void fireCollision();           // ファイアと衝突したとき
+    virtual void posCollision(int Touch);   // マリオと衝突したとき
+    virtual void shellCollision();          // 甲羅状態で衝突したとき
+    virtual void changeDirection();         // 方向を変える関数
 
     inline const int getId() { return enemy_parts_.Id; }
     inline const int getPositionX() { return enemy_parts_.x; }
