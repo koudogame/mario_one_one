@@ -11,6 +11,11 @@ class PlayScene :
     public BaseScene
 {
 public :
+    const int kKuribo     = 0;
+    const int kTurtle     = 36;
+    const int kShell      = 113;
+    const int kPowerup    = 0;
+    const int kPowerup2   = 16;
     const int kChangeTime = 120;
 
     PlayScene();
