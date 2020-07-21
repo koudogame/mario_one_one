@@ -154,6 +154,7 @@
     <ClCompile Include="ball_management.cpp" />
     <ClCompile Include="block_base.cpp" />
     <ClCompile Include="brick.cpp" />
+    <ClCompile Include="castle_flag.cpp" />
     <ClCompile Include="coin.cpp" />
     <ClCompile Include="collision.cpp" />
     <ClCompile Include="enemy.cpp" />
@@ -161,7 +162,6 @@
     <ClCompile Include="field.cpp" />
     <ClCompile Include="fire_factory.cpp" />
     <ClCompile Include="goal.cpp" />
-    <ClCompile Include="hata.cpp" />
     <ClCompile Include="item.cpp" />
     <ClCompile Include="item_base.cpp" />
     <ClCompile Include="kuribo.cpp" />
@@ -181,6 +181,7 @@
     <ClInclude Include="base_scene.hpp" />
     <ClInclude Include="block_base.hpp" />
     <ClInclude Include="brick.hpp" />
+    <ClInclude Include="castle_flag.hpp" />
     <ClInclude Include="coin.hpp" />
     <ClInclude Include="collision.hpp" />
     <ClInclude Include="enemy.hpp" />
@@ -188,7 +189,6 @@
     <ClInclude Include="field.hpp" />
     <ClInclude Include="fire_factory.hpp" />
     <ClInclude Include="goal.hpp" />
-    <ClInclude Include="hata.hpp" />
     <ClInclude Include="item.hpp" />
     <ClInclude Include="item_base.hpp" />
     <ClInclude Include="kuribo.hpp" />

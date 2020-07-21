@@ -5,7 +5,7 @@ class Turtle :
     public EnemyBase
 {
 public:
-    static const int kFieldSize = 780;
+    static const int kFieldSize = 780;       // —Ž‚¿‚Ä‚¢‚­‚Æ‚«‚Ì‰º‚ÌŒÀŠE’l
 
     Turtle( Field* Field ) : EnemyBase( Field ) {};
 

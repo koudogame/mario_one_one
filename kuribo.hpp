@@ -5,11 +5,11 @@ class Kuribo :
     public EnemyBase
 {
 public :
-    static const int kKuribo    = 0;
-    static const int kDown      = 5;
-    static const int kDeathTime = 32;
-    static const int kDead      = 112;
-    static const int kFieldSize = 800;
+    static const int kKuribo    = 0;        // クリボーID
+    static const int kDown      = 5;        // 落ちていく
+    static const int kDeathTime = 32;       // 画面から消えるまでのリミット
+    static const int kDead      = 112;      // 死んだとき
+    static const int kFieldSize = 800;      // 下の限界値
 
     Kuribo( Field* Field ) : EnemyBase( Field ) {};
     void update( int ScreenOver )override;

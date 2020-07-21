@@ -79,7 +79,7 @@
     <Filter Include="Fireball">
       <UniqueIdentifier>{b7b66f19-e099-48f5-95ca-b66a8c9811e1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ItemBase\Hata">
+    <Filter Include="ItemBase\CastleFlag">
       <UniqueIdentifier>{5efa799c-0f18-43a7-93b7-27068e7a5dd0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -153,8 +153,8 @@
     <ClCompile Include="fire_factory.cpp">
       <Filter>Fireball</Filter>
     </ClCompile>
-    <ClCompile Include="hata.cpp">
-      <Filter>ItemBase\Hata</Filter>
+    <ClCompile Include="castle_flag.cpp">
+      <Filter>ItemBase\CastleFlag</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -230,8 +230,8 @@
     <ClInclude Include="fire_factory.hpp">
       <Filter>Fireball</Filter>
     </ClInclude>
-    <ClInclude Include="hata.hpp">
-      <Filter>ItemBase\Hata</Filter>
+    <ClInclude Include="castle_flag.hpp">
+      <Filter>ItemBase\CastleFlag</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

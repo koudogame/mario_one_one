@@ -1,6 +1,5 @@
 #include <DxLib.h>
 #include "collision.hpp"
-#include "release.hpp"
 
 // マリオの状態保存
 enum Status
@@ -14,24 +13,23 @@ class Player :
     public Collision
 {
 public:
-    static const int kMaxHigh = 352;
-    static const int kSize = 64;
-    static const int kSpeed = 6;
-    static const int kDashSpeed = 10;
-    static const int kStopper = 16;
-    static const int kEnemyJump = 15;
-    static const int kJumpPower = 24;
-    static const int kDownCnt = 66;
-    static const int kTurnCnt = 90;
-    static const int kStartX = 256;
-    static const int kStartY = 576;
-    static const int kEndLine = 576;
-    static const int kDeadLine = 800;
-    static const int kSkyBlue = 191;
-    static const int kGravity = 1;
-    static const int kInvincible = 120;
-    static const int kDownSpeed = 6;
-    static const int kGoalPost = 194;
+    const int kSize       = 64;     // マリオのサイズ
+    const int kSpeed      = 6;      // 歩いているときの速度
+    const int kDashSpeed  = 10;     // ダッシュしているときの速度
+    const int kStopper    = 16;     // 連射防止ストッパー
+    const int kEnemyJump  = 15;     // 敵を踏んだ時のジャンプ力
+    const int kJumpPower  = 24;     // ジャンプボタン時のジャンプ力
+    const int kDownCnt    = 66;     // 掴んでからの待ち時間
+    const int kTurnCnt    = 90;     // 向き反転させるための時間
+    const int kStartX     = 256;    // 初期座標X
+    const int kStartY     = 576;    // 初期座標Y
+    const int kEndLine    = 576;    // 画面の中心
+    const int kDeadLine   = 800;    // この数値より下は死ぬ
+    const int kSkyBlue    = 191;    // 背景の何もない透明マップチップID
+    const int kGravity    = 1;      // 重力加速度
+    const int kInvincible = 120;    // 無敵制限時間
+    const int kDownSpeed  = 6;      // ゴールしたとき落ちるスピード
+    const int kGoalPost   = 194;    // ゴールポスト
 
     Player( Field* field ) : Collision( field ) {};
     bool initialize();
@@ -39,16 +37,16 @@ public:
     void draw();
     void finalize();
 
-    void animation();                                            // マリオのアニメーション
-    void collision();                                            // 足元の衝突判定を行う
-    void landing();                                              // 着地したときの処理を行う
-    void hit();                                                  // 頭をぶつけたときの判定
-    void itemCollision();                                        // アイテムに当たったとき
-    void enemyCollision();                                       // ぶつかったときの処理
-    void enemyStepon();                                          // 踏みつけたときの処理      
-    void ending();                                               // エンディング処理
-    void rightCheck();                                           // 体の右側を登録してチェックする関数
-    void leftCheck();                                            // 体の左側を登録してチェックする関数
+    void animation();               // マリオのアニメーション
+    void collision();               // 足元の衝突判定を行う
+    void landing();                 // 着地したときの処理を行う
+    void hit();                     // 頭をぶつけたときの判定
+    void itemCollision();           // アイテムに当たったとき
+    void enemyCollision();          // ぶつかったときの処理
+    void enemyStepon();             // 踏みつけたときの処理      
+    void ending();                  // エンディング処理
+    void rightCheck();              // 体の右側を登録してチェックする関数
+    void leftCheck();               // 体の左側を登録してチェックする関数
 
     /*背景の描画を流す数値*/
     inline int getScrollCnt() { return scroll_cnt_; }

@@ -17,12 +17,12 @@ class Brick :
     public BlockBase
 {
 public : 
-    static const int kGravity = 1;
-    static const int kSpeed = 3;
-    static const int kSize = 64;
-    static const int kJumpUp = 20;
-    static const int kJumpDown = 10;
-    static const int kNoBlock = 190;
+    static const int kGravity  = 1;     // 重力
+    static const int kSpeed    = 3;     // 速さ
+    static const int kSize     = 64;    // ブロックサイズ
+    static const int kJumpUp   = 20;    // 壊れるブロック跳ね上
+    static const int kJumpDown = 10;    // 壊れるブロック跳ね下
+    static const int kNoBlock  = 190;   // 何もないブロックID
 
     void initialize( const int Id, const RECT Rect, const int X, const int Y) override;
     void update(int) override;

@@ -5,8 +5,8 @@ class Goal :
     public ItemBase
 {
 public : 
-    static const int kDownSpeed = 6;
-    static const int kDownCnt   = 66;
+    static const int kDownSpeed = 6;    // Šø‚Ì—Ž‚¿‚é‘¬‚³
+    static const int kDownCnt   = 66;   // Šø‚ª—Ž‚¿‚Ä‚à‚¢‚¢—Ê
 
     Goal( Field* field ) : ItemBase( field ) {};
     void update( int ) override;

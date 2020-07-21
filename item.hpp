@@ -9,18 +9,18 @@
 #include "coin.hpp"
 #include "power_up.hpp"
 #include "goal.hpp"
-#include "hata.hpp"
+#include "castle_flag.hpp"
 
 
 class Item
 {
 public:
-    const int kHata = 3;
-    const int kPowerup = 0;
-    const int kPowerup2 = 16;
-    const int kGoal = 19;
-    const int kCoin = 80;
-    const int kItemsize = 64;
+    const int kFlag     = 3;        // 旗ID
+    const int kPowerup  = 0;        // キノコID
+    const int kPowerup2 = 16;       // フラワーID
+    const int kGoal     = 19;       // ゴールID
+    const int kCoin     = 80;       // コインID
+    const int kItemsize = 64;       // アイテムの大きさ
 
     Item( Field* Field );
     bool initialize( std::fstream& stage );

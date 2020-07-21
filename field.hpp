@@ -8,10 +8,10 @@
 #include "mystery.hpp"
 #include "brick.hpp"
 
-const int kBrick   = 19;
-const int kMystery = 48;
-const int kSize    = 64;
-const int kNoblock = 190;
+const int kBrick   = 19;        // レンガブロックID
+const int kMystery = 48;        // はてなボックスID
+const int kSize    = 64;        // 箱の大きさID
+const int kNoblock = 190;       // 何もないブロックID
 
 namespace breakblock
 {

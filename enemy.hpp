@@ -13,10 +13,10 @@
 class Enemy
 {
 public:
-    const int kKuribo = 0;
-    const int kTurtle = 36;
-    const int kSize = 64;
-    const int kShell = 113;
+    const int kKuribo = 0;      // クリボーID
+    const int kTurtle = 36;     // ノコノコID
+    const int kSize   = 64;     // 敵の大きさ
+    const int kShell  = 113;    // こうらのID 
 
     Enemy( Field* Field );
     void initalize( std::fstream& FieldEnemy );

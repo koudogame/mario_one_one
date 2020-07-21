@@ -23,7 +23,7 @@ using namespace posCollision;
 class PosCollision
 {
 public :
-    const int kSize = 64;
+    const int kSize = 64;   // ブロックサイズ
 
     // アイテムとマリオの当たり判定
     bool getCollision( int Mario_x, int Mario_y, int Other_x, int Other_y );

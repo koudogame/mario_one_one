@@ -41,8 +41,8 @@ bool Item::initialize( std::fstream& stage )
 
             if( id == kPowerup )
                 item_[ 0 ][ i ][ j ] = new Powerup( field_ );   // パワーアップアイテム
-            else if( id == kHata )
-                item_[ 0 ][ i ][ j ] = new Hata( field_ );      // キャッスルフラッグ
+            else if( id == kFlag )
+                item_[ 0 ][ i ][ j ] = new CastleFlag( field_ );      // キャッスルフラッグ
             else if( id == kCoin )
                 item_[ 0 ][ i ][ j ] = new Coin( field_ );      // コイン
             else if( id == kGoal )
@@ -140,7 +140,7 @@ void Item::getEnd( bool End )
     {
         for( int j = 0; j < width_; j++ )
         {
-            if( item_[ 0 ][ i ][ j ]->getId() == kHata )
+            if( item_[ 0 ][ i ][ j ]->getId() == kFlag )
                 item_[ 0 ][ i ][ j ]->upHata( End );
         }
     }

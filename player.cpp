@@ -127,11 +127,6 @@ bool Player::update()
         old_left_button_ = left_button_;
         old_right_button_ = right_button_;
 
-        //// ‚µ‚á‚ª‚Þ“ü—Í
-        //if( !(GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_DOWN) == 0 )
-        //    push_time_squat_++;
-        //else
-        //    push_time_squat_ = 0;
 
         // ƒWƒƒƒ“ƒv“ü—Í
         if( !(GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_B) == 0 || CheckHitKey( KEY_INPUT_SPACE ) == 1 )

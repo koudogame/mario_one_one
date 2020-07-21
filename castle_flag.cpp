@@ -1,6 +1,6 @@
-#include "hata.hpp"
+#include "castle_flag.hpp"
 
-void Hata::upHata( bool End )
+void CastleFlag::upHata( bool End )
 {
     // マリオが消えたのを確認してから旗を掲げる
     if( !End )
@@ -10,5 +10,5 @@ void Hata::upHata( bool End )
             item_.y -= 2;
     }
 
-    item_.x = (kHata * kSize);
+    item_.x = (kFlag * kSize);
 }

@@ -5,11 +5,11 @@ class Coin :
     public ItemBase
 {
 public :
-    static const int kChangeSpeed = 3;
-    static const int kJumpPower   = 15;
-    static const int kSize        = 64;
-    static const int kCoin        = 80;
-    static const int kNoBlock     = 115;
+    static const int kChangeSpeed = 3;      // コインアニメーション用
+    static const int kJumpPower   = 15;     // コイン叩いた時のジャンプ量
+    static const int kSize        = 64;     // コインのサイズ
+    static const int kCoin        = 80;     // コインのID
+    static const int kNoBlock     = 115;    // 何もないID
 
     Coin( Field* field ) : ItemBase( field ) {};
     void update(int Screenover) override;

@@ -28,8 +28,8 @@ protected:
     int status_;
 
 public:
-    static const int kGravity  = 1;
-    static const int kItemBase = 64;
+    static const int kGravity  = 1;     // 重力
+    static const int kItemBase = 64;    // アイテムサイズ
 
     ItemBase( Field* field ) : Collision( field ) {};
     virtual void initialize( const int Id, const RECT Rect, const int X, const int Y );

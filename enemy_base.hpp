@@ -25,19 +25,19 @@ protected :
     EnemyParts enemy_parts_;
 
     int animation_      = 0;
-    int walk_animation_ = -1;       // -1 : 左足, 　　1 : 右足
-    int direction_      = -1;       // -1 : 左へ進む, 1 : 右へ進む
-    bool burn_ = true;              // true : 焼かれてない, false : 焼死
+    int walk_animation_ = -1;               // -1 : 左足, 　　1 : 右足
+    int direction_      = -1;               // -1 : 左へ進む, 1 : 右へ進む
+    bool burn_ = true;                      // true : 焼かれてない, false : 焼死
 
 public :
-    static const int kGravity  = 1;
-    static const int kSpeed    = 2;
-    static const int kJumpPower = 12;
-    static const int kMaxSpeed = 12;
-    static const int kTurtle   = 36;
-    static const int kNoBlock  = 119;
-    static const int kShell    = 113;
-    static const int kGround   = 575;
+    static const int kGravity  = 1;         // 重力
+    static const int kSpeed    = 2;         // 速さ
+    static const int kJumpPower = 12;       // ジャンプ力
+    static const int kMaxSpeed = 12;        // 最高スピード
+    static const int kTurtle   = 36;        // のこのこID
+    static const int kNoBlock  = 119;       // 何もないマップID
+    static const int kShell    = 113;       // 甲羅ID
+    static const int kGround   = 575;       // 床最低ライン
 
 
     EnemyBase( Field* field ) : Collision( field ) {};
