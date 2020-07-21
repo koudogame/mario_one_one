@@ -7,7 +7,7 @@ bool Player::initialize()
     pos_y_            = kStartY;
 
     // 数値の中のポジション
-    total_movement_x_ = 256;
+    total_movement_x_ = kStartX;
     total_movement_y_ = 832;
 
     left_             = 0;
@@ -177,11 +177,13 @@ bool Player::update()
         body_[ kRight ][ kFoot ][ kX ] = (total_movement_x_ + (kSize - 10));
         body_[ kLeft ][ kFoot ][ kX ] = (total_movement_x_ + 10);
 
+        // マリオの時
         if( status_ == kMario )
         {
             body_[ kRight ][ kFoot ][ kY ] = (total_movement_y_ + kSize + 1);
             body_[ kLeft ][ kFoot ][ kY ] = (total_movement_y_ + kSize + 1);
         }
+        // マリオ以外の時
         else
         {
             body_[ kRight ][ kFoot ][ kY ] = (total_movement_y_ + (kSize * 2) + 1);
@@ -205,6 +207,7 @@ bool Player::update()
                 break_left_y_ = total_movement_y_ / kSize;
             }
 
+            // 頭の上にあるブロックを調べる
             if( Collision::collision( kRight, kHead ) <= kSize ||
                 Collision::collision( kLeft, kHead ) <= kSize )
             {
@@ -266,11 +269,13 @@ bool Player::update()
 
 void Player::draw()
 {
+    // 体が透明ではないとき
     if( extinguish_existence_ )
     {
         break_left_x_ = 0; break_left_y_ = 0;
         break_right_x_ = 0; break_right_y_ = 0;
 
+        // マリオの時
         if( status_ >= kMario )
         {
             // 状態は変わってもwidthは変わらない
@@ -302,9 +307,11 @@ void Player::draw()
                             push_time_fire_ = 0;
                     }
 
+                    // ファイアボールを投げるボタンの初回入力時
                     if( push_time_fire_ == 1 )
                         throw_flag_ = false;
 
+                    // 投げるが押されたとき
                     if( !throw_flag_ )
                     {       
                         throw_cnt_++;
@@ -315,6 +322,7 @@ void Player::draw()
                         bottom_ = (kSize * 2);
                     }
 
+                    // 連続投射を防止する
                     if( throw_cnt_ >= kStopper )
                     {
                         throw_cnt_ = 0;
@@ -323,6 +331,7 @@ void Player::draw()
                 }
             }
 
+            // 無敵状態ではないとき
             if( invincible_ )
                 // 右向きマリオの描画
                 DrawRectGraph( pos_x_, pos_y_, left_, top_, right_, bottom_, texture_, TRUE, !direction_ );
@@ -333,6 +342,7 @@ void Player::draw()
         }
         else
         {
+            // 無敵状態の時
             if( invincible_ )
                 DrawRectGraph( pos_x_, pos_y_, 0, kSize, kSize, kSize, texture_, TRUE, FALSE );
             else
@@ -501,15 +511,18 @@ void Player::enemyStepon()
     acceleration_ = -kEnemyJump;
 }
 
+// ゴールをした時の処理
 void Player::ending()
 {        
     // 向き反転までのカウント
     down_cnt_++;
 
+    // 状態がマリオの時
     if( status_ == kMario )
     {
         if( total_movement_y_ < (kSize * 11 + (kSize / 2)) )
         {
+            // ゆっくりとポストから降りる
             pos_y_ += kDownSpeed;
             total_movement_y_ += kDownSpeed;
 
@@ -525,6 +538,7 @@ void Player::ending()
                     animation_--;
             }
         }
+        // 降りきった向きを変えポストの向こう側へ行く
         else if( !catch_flag_ && down_cnt_ >= kDownCnt )
         {
             if( !catch_flag_ )
@@ -536,6 +550,7 @@ void Player::ending()
 
             direction_ = false;
         }
+        // 塔へ向かって歩き出す
         else if( down_cnt_ >= kTurnCnt )
         {
             if( total_movement_x_ < (kSize * 201) - (kSize / 2) )
@@ -558,12 +573,15 @@ void Player::ending()
                 }
             }
             else
+                // 透明化
                 extinguish_existence_ = false;
         }
     }
+    // 体がマリオ以外の時
     else
         if( total_movement_y_ < (kSize * 10 + (kSize / 2)) )
         {
+            // ポストから降りる
             pos_y_ += kDownSpeed;
             total_movement_y_ += kDownSpeed;
 
@@ -579,6 +597,7 @@ void Player::ending()
                     animation_--;
             }
         }
+        // 向きを変えポストの向こう側へ
         else if( !catch_flag_ && down_cnt_ >= kDownCnt )
         {
             if( !catch_flag_ )
@@ -590,6 +609,7 @@ void Player::ending()
 
             direction_ = false;
         }
+        // 塔へ向かって歩く
         else if(down_cnt_ >= kTurnCnt)
         {
             if( total_movement_x_ < (kSize * 201) - (kSize / 2) )
@@ -597,6 +617,7 @@ void Player::ending()
                 pos_x_ += 3;
                 total_movement_x_ += 3;
 
+                // 歩くアニメーション
                 animation();
 
                 if( pos_y_ < kEndLine - kSize )
@@ -612,6 +633,7 @@ void Player::ending()
                 }
             }
             else
+                // 体の透明化
                 extinguish_existence_ = false;
         }
 }
@@ -636,6 +658,7 @@ void Player::rightCheck()
         // kSuperMario以上の時体の真ん中をすり抜けないように確認
         if( status_ >= kSuperMario )
         {
+            // 体の右側を登録
             body_[ kRight ][ kShoulder ][ kX ] = (total_movement_x_ + kSize + 1);
             body_[ kRight ][ kShoulder ][ kY ] = (total_movement_y_ + kSize);
         }
@@ -685,8 +708,10 @@ void Player::leftCheck()
     // マリオの左側に衝突するブロックがないとき
     if( Collision::sideColl( kLeft ) == true )
     {
+        // 状態がスーパーマリオより上の時
         if( status_ >= kSuperMario )
         {
+            // 体の左側を登録
             body_[ kLeft ][ kShoulder ][ kX ] = (total_movement_x_ - 1);
             body_[ kLeft ][ kShoulder ][ kY ] = (total_movement_y_ + kSize);
         }
@@ -707,7 +732,8 @@ void Player::leftCheck()
             }
             // 左壁以外の時
             else
-            {                // ポジションゼロより左の時
+            {   
+                // ポジションゼロより左の時
                 if( pos_x_ <= 0 )
                     pos_x_ = 0;
                 else
