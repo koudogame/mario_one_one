@@ -1,7 +1,6 @@
 #include "scene_manager.hpp"
 
 // 新しいSceneを下に加える
-#include "title.hpp"
 #include "play.hpp"
 #include "result.hpp"
 
@@ -20,10 +19,6 @@ void SceneManager::ChangeScene( Scene scene )
     // 帰ってきた引数でシーン切り替え
     switch( scene )
     {
-    case Scene::Title:
-        scene_ = new TitleScene();
-        break;
-
     case Scene::Play:
         scene_ = new PlayScene();
         break;

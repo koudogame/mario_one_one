@@ -364,7 +364,7 @@ void Player::animation()
     {
         animation_cnt_++;
 
-        if( animation_cnt_ >= 5 )
+        if( animation_cnt_ >= 4 )
         {
             animation_cnt_ = 0;
 
@@ -385,7 +385,7 @@ void Player::collision()
 
         acceleration_ = 0;  // —Ž‰º‘¬“x
 
-        int block_line = std::round( static_cast<float>(total_movement_y_) / 64 );
+        int block_line = std::round( static_cast<float>(total_movement_y_) / kSize );
         pos_y_ = (block_line - 4) * kSize;
         total_movement_y_ = block_line * kSize;
     }

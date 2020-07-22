@@ -42,7 +42,7 @@ bool Item::initialize( std::fstream& stage )
             if( id == kPowerup )
                 item_[ 0 ][ i ][ j ] = new Powerup( field_ );   // パワーアップアイテム
             else if( id == kFlag )
-                item_[ 0 ][ i ][ j ] = new CastleFlag( field_ );      // キャッスルフラッグ
+                item_[ 0 ][ i ][ j ] = new CastleFlag( field_ );// キャッスルフラッグ
             else if( id == kCoin )
                 item_[ 0 ][ i ][ j ] = new Coin( field_ );      // コイン
             else if( id == kGoal )
@@ -53,12 +53,12 @@ bool Item::initialize( std::fstream& stage )
             // 描画範囲を設定
             rect.top = id / 16 * kItemsize;
             rect.left = id % 16 * kItemsize;
-            rect.bottom = 64;
-            rect.right = 64;
+            rect.bottom = kSize;
+            rect.right = kSize;
 
-            // 見えない空の部分の分だけ (-n*64)
-            position_x = (64 * j);
-            position_y = (64 * i) - 256;
+            // 見えない空の部分の分だけ (-n*kSize)
+            position_x = (kSize * j);
+            position_y = (kSize * i) - (kSize * 4);
 
             item_[ 0 ][ i ][ j ]->initialize( id, rect, position_x, position_y );
         }

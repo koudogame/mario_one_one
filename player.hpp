@@ -82,7 +82,6 @@ public:
     inline int getBreakRightY() { return break_right_y_; }      /*‰E“ª‚Ì”z—ñy*/
     
     inline bool getEnd() { return extinguish_existence_; }      /*‘¶İ‚ªÁ‚¦‚½‚ç*/
-
     inline bool getGameover() { return gameover_flag_; }        /*€‚ñ‚Å‚¢‚é‚©*/
 
 private:

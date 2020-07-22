@@ -6,7 +6,6 @@ class SceneManager
 public:
     enum Scene
     {
-        Title,
         Play,
         Result
     };

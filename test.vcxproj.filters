@@ -25,9 +25,6 @@
     <Filter Include="Scene\ResultScene">
       <UniqueIdentifier>{2f641310-61ee-4bbe-9529-f03362128b29}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scene\TitleScene">
-      <UniqueIdentifier>{b5a67af7-9987-4bf6-ab53-9913ce521a77}</UniqueIdentifier>
-    </Filter>
     <Filter Include="BlockBase">
       <UniqueIdentifier>{16f10872-073c-4aee-a7aa-824cac0b22e1}</UniqueIdentifier>
     </Filter>
@@ -89,9 +86,6 @@
     </ClCompile>
     <ClCompile Include="result.cpp">
       <Filter>Scene\ResultScene</Filter>
-    </ClCompile>
-    <ClCompile Include="title.cpp">
-      <Filter>Scene\TitleScene</Filter>
     </ClCompile>
     <ClCompile Include="play.cpp">
       <Filter>Scene\PlayScene</Filter>
@@ -160,9 +154,6 @@
   <ItemGroup>
     <ClInclude Include="result.hpp">
       <Filter>Scene\ResultScene</Filter>
-    </ClInclude>
-    <ClInclude Include="title.hpp">
-      <Filter>Scene\TitleScene</Filter>
     </ClInclude>
     <ClInclude Include="play.hpp">
       <Filter>Scene\PlayScene</Filter>

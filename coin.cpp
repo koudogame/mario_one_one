@@ -10,7 +10,7 @@ void Coin::update(int Screenover)
         {
             jumping_ = kNoJump;
             acceleration_ = -kJumpPower;
-            item_.y -= 64;
+            item_.y -= kSize;
         }
 
         // è„Ç…Ç†Ç∞ÇÁÇÍÇΩéûÇÃèàóù
@@ -30,7 +30,7 @@ void Coin::update(int Screenover)
                 animation_cnt_ = 0;
                 RECT rect;
                 rect.top = item_.Id / 16 * kSize;
-                rect.left = (item_.Id % 16 * kSize) + (coin_animation_ * 32);
+                rect.left = (item_.Id % 16 * kSize) + (coin_animation_ * (kSize / 2));
                 rect.bottom = kSize;
                 rect.right = kSize / 2;
 

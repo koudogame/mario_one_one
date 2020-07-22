@@ -25,5 +25,5 @@ private:
     bool active_ = true;                     // true : ‹N‚«‚Ä‚¢‚é, false : b—…‚Ì’†
     bool pushout_ = true;                    // true : ~‚Ü‚Á‚Ä‚¢‚é, false : ‰¡‚É‚‘¬ˆÚ“®
 
-    int action_cnt_ = -1;                    // 2‰ñ‚Æ‚Á‚Ä‚¢‚é‘O’ñ‚Æ‚µ‚Ä
+    int action_cnt_ = 0;                    // 2‰ñ‚Æ‚Á‚Ä‚¢‚é‘O’ñ‚Æ‚µ‚Ä
 };

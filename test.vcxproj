@@ -173,7 +173,6 @@
     <ClCompile Include="power_up.cpp" />
     <ClCompile Include="result.cpp" />
     <ClCompile Include="scene_manager.cpp" />
-    <ClCompile Include="title.cpp" />
     <ClCompile Include="turtle.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -200,7 +199,6 @@
     <ClInclude Include="release.hpp" />
     <ClInclude Include="result.hpp" />
     <ClInclude Include="scene_manager.hpp" />
-    <ClInclude Include="title.hpp" />
     <ClInclude Include="turtle.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
