@@ -28,10 +28,6 @@ protected:
     bool stand_by_;              // true : €”õ’†, false : “®‚«o‚·
 
 public :
-    static const int kUsedBlock = 16;
-    static const int kBrick     = 19;
-    static const int kMystery   = 48;
-
     virtual void initialize(const int Id, const RECT Rect, const int X, const int Y);
     virtual void update(int);
     virtual void draw( int Texture, const int ScreenOver );

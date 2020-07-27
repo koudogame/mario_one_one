@@ -13,10 +13,6 @@
 class Enemy
 {
 public:
-    const int kKuribo = 0;      // クリボーID
-    const int kTurtle = 36;     // ノコノコID
-    const int kShell  = 113;    // こうらのID 
-
     Enemy( Field* Field );
     void initalize( std::fstream& FieldEnemy );
     void update( int ScreenOver );

@@ -15,13 +15,6 @@
 class Item
 {
 public:
-    const int kFlag     = 3;        // 旗ID
-    const int kPowerup  = 0;        // キノコID
-    const int kPowerup2 = 16;       // フラワーID
-    const int kGoal     = 19;       // ゴールID
-    const int kCoin     = 80;       // コインID
-    const int kItemsize = 64;       // アイテムの大きさ
-
     Item( Field* Field );
     bool initialize( std::fstream& stage );
     void update( int Brx, int Bry, int Blx, int Bly, int Status, int Screenover );

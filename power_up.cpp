@@ -8,12 +8,12 @@ void Powerup::update( int Screenover )
         if( punch_ )
         {
             // Status確認し、出すアイテムを選択する
-            if( status_ == 0 )
+            if( status_ == kMario )
             {
                 item_.Id = kMashroom;
                 RECT rect;
-                rect.top = item_.Id / 16 * kSize;
-                rect.left = item_.Id % 16 * kSize;
+                rect.top = item_.Id / kLength * kSize;
+                rect.left = item_.Id % kLength * kSize;
                 rect.bottom = kSize;
                 rect.right = kSize;
                 item_.rect = rect;
@@ -27,8 +27,8 @@ void Powerup::update( int Screenover )
             {
                 item_.Id = kFlower;
                 RECT rect;
-                rect.top = item_.Id / 16 * kSize;
-                rect.left = item_.Id % 16 * kSize;
+                rect.top = item_.Id / kLength * kSize;
+                rect.left = item_.Id % kLength * kSize;
                 rect.bottom = kSize;
                 rect.right = kSize;
                 item_.rect = rect;
@@ -60,11 +60,11 @@ void Powerup::update( int Screenover )
                     item_.x += kSpeed * direction_;      // 常に進む
 
                     // 足の登録
-                body_[ kRight ][ kFoot ][ kX ] = (item_.x + (kSize - 10));
-                body_[ kRight ][ kFoot ][ kY ] = (item_.y + kSize + 1) + (kSize * 4);
+                body_[ kRight ][ kFoot ][ kX ] = (item_.x + (kSize - kGather));
+                body_[ kRight ][ kFoot ][ kY ] = (item_.y + kSize + 1) + kQuadruple;
 
-                body_[ kLeft ][ kFoot ][ kX ] = (item_.x + 10);
-                body_[ kLeft ][ kFoot ][ kY ] = (item_.y + kSize + 1) + (kSize * 4);
+                body_[ kLeft ][ kFoot ][ kX ] = (item_.x + kGather);
+                body_[ kLeft ][ kFoot ][ kY ] = (item_.y + kSize + 1) + kQuadruple;
 
                 // 足場があるとき
                 if( Collision::footColl() == 1 )
@@ -74,10 +74,10 @@ void Powerup::update( int Screenover )
 
                     int block_line = (body_[ kRight ][ kFoot ][ kY ] - 1) / kSize;
 
-                    if( block_line >= 13 )
-                        item_.y = kGround;    
+                    if( block_line >= kGroundArray )
+                        item_.y = kGround;
                     else
-                        item_.y = ((block_line - 4) * kSize) - 1;
+                        item_.y = ((block_line - kControl) * kSize) - 1;
 
                 }
                 // 宙に浮いているとき
@@ -85,15 +85,15 @@ void Powerup::update( int Screenover )
                 {
                     jumping_ = kNoJump;
 
-                    if( item_.y > 670 )
+                    if( item_.y > kFallOut )
                     {
                         // アイテムを消す処理を書く
                         jumping_ = kNoMove;
 
                         item_.Id = kNoBlock;
                         RECT rect;
-                        rect.top = item_.Id / 16 * kSize;
-                        rect.left = item_.Id % 16 * kSize;
+                        rect.top = item_.Id / kLength * kSize;
+                        rect.left = item_.Id % kLength * kSize;
                         rect.bottom = kSize;
                         rect.right = kSize;
                         item_.rect = rect;
@@ -109,9 +109,9 @@ void Powerup::update( int Screenover )
 
                 // 右手の登録
                 body_[ kRight ][ kShoulder ][ kX ] = (item_.x + kSize + 1);
-                body_[ kRight ][ kShoulder ][ kY ] = (item_.y + 10) + (kSize * 4);
+                body_[ kRight ][ kShoulder ][ kY ] = (item_.y + kGather) + kQuadruple;
                 body_[ kRight ][ kHands ][ kX ] = (item_.x + kSize + 1);
-                body_[ kRight ][ kHands ][ kY ] = (item_.y - 10) + (kSize * 4);
+                body_[ kRight ][ kHands ][ kY ] = (item_.y - kGather) + kQuadruple;
 
                 if( turn_ )
                     // 当たり判定のあるとき
@@ -123,9 +123,9 @@ void Powerup::update( int Screenover )
 
                 // 左手の登録
                 body_[ kLeft ][ kShoulder ][ kX ] = (item_.x - 1);
-                body_[ kLeft ][ kShoulder ][ kY ] = (item_.y + 10) + (kSize * 4);
+                body_[ kLeft ][ kShoulder ][ kY ] = (item_.y + kGather) + kQuadruple;
                 body_[ kLeft ][ kHands ][ kX ] = (item_.x - 1);
-                body_[ kLeft ][ kHands ][ kY ] = (item_.y - 10) + (kSize * 4);
+                body_[ kLeft ][ kHands ][ kY ] = (item_.y - kGather) + kQuadruple;
 
                 if( turn_ )
                     // 当たり判定のあるとき
@@ -136,10 +136,8 @@ void Powerup::update( int Screenover )
                     }
             }
             else if( item_.Id == kFlower )
-            {
                 // フラワーをきらきらさせる
                 flowerAnimation();
-            }
         }
     }
 }
@@ -163,7 +161,7 @@ int Powerup::getPosX()
 int Powerup::getPosY()
 {
     if( !up_flag_ )
-    return (item_.y - 1) + (kSize * 4);
+    return (item_.y - 1) + kQuadruple;
 
     return 0;
 }
@@ -174,12 +172,12 @@ void Powerup::posCollision()
     // アイテムを消す処理を書く
     jumping_ = kNoMove;
 
-    item_.y = 670;
+    item_.y = kFallOut;
 
     item_.Id = kNoBlock;
     RECT rect;
-    rect.top = item_.Id / 16 * kSize;
-    rect.left = item_.Id % 16 * kSize;
+    rect.top = item_.Id / kLength * kSize;
+    rect.left = item_.Id % kLength * kSize;
     rect.bottom = kSize;
     rect.right = kSize;
     item_.rect = rect;

@@ -3,7 +3,7 @@
 void Turtle::update( int ScreenOver )
 {
     // “®‚«o‚µ‚Í15ƒ}ƒX•ª‘O‚©‚ç
-    if( ScreenOver > (enemy_parts_.x - (kSize * 20)) )
+    if( ScreenOver > (enemy_parts_.x - (kSize * kMoveStart)) )
     {
         // “®‚«‚Â‚Ã‚¯‚é‚Ì‚Í‰æ–Ê“à‚É‚¢‚é‚Æ‚«
         if( ScreenOver <= enemy_parts_.x + kSize )
@@ -23,11 +23,11 @@ void Turtle::update( int ScreenOver )
                 }
 
                 // ‘«‚Ì“o˜^
-                body_[ kRight ][ kFoot ][ kX ] = (enemy_parts_.x + (kSize - 5));
-                body_[ kRight ][ kFoot ][ kY ] = (enemy_parts_.y + kSize + 1) + (kSize * 4);
+                body_[ kRight ][ kFoot ][ kX ] = (enemy_parts_.x + (kSize - kDisplace));
+                body_[ kRight ][ kFoot ][ kY ] = (enemy_parts_.y + kSize + 1) + kQuadruple;
 
-                body_[ kLeft ][ kFoot ][ kX ] = (enemy_parts_.x + 5);
-                body_[ kLeft ][ kFoot ][ kY ] = (enemy_parts_.y + kSize + 1) + (kSize * 4);
+                body_[ kLeft ][ kFoot ][ kX ] = (enemy_parts_.x + kDisplace);
+                body_[ kLeft ][ kFoot ][ kY ] = (enemy_parts_.y + kSize + 1) + kQuadruple;
 
                 // ‘«ê‚ª‚ ‚é‚Æ‚«
                 if( Collision::footColl() == 1 )
@@ -36,9 +36,9 @@ void Turtle::update( int ScreenOver )
                     acceleration_ = 0;  // —‰º‘¬“x
 
                     int block_line = (body_[ kRight ][ kFoot ][ kY ] - 1) / kSize;
-                    enemy_parts_.y = ((block_line - 4) * kSize) - 1;
+                    enemy_parts_.y = ((block_line - kControl) * kSize) - 1;
 
-                    if( block_line >= 14 )
+                    if( block_line >= kGroundArray )
                         enemy_parts_.y = kGround;
                 }
                 // ’ˆ‚É•‚‚¢‚Ä‚¢‚é‚Æ‚«
@@ -47,15 +47,15 @@ void Turtle::update( int ScreenOver )
                     jumping_ = kNoJump;
 
                     // —‰º‚µ‚Ä‚¢‚È‚¢‚©
-                    if( enemy_parts_.y > 670 )
+                    if( enemy_parts_.y > kFallOut )
                     {
                         // ƒAƒCƒeƒ€‚ğÁ‚·ˆ—‚ğ‘‚­
                         jumping_ = kNoMove;
 
                         enemy_parts_.Id = kNoBlock;
                         RECT rect;
-                        rect.top = enemy_parts_.Id / 16 * kSize;
-                        rect.left = enemy_parts_.Id % 16 * kSize;
+                        rect.top = enemy_parts_.Id / kLength * kSize;
+                        rect.left = enemy_parts_.Id % kLength * kSize;
                         rect.bottom = kSize;
                         rect.right = kSize;
                         enemy_parts_.rect = rect;
@@ -71,9 +71,9 @@ void Turtle::update( int ScreenOver )
 
                 // ‰Eè‚Ì“o˜^
                 body_[ kRight ][ kShoulder ][ kX ] = (enemy_parts_.x + kSize + 1);
-                body_[ kRight ][ kShoulder ][ kY ] = (enemy_parts_.y + 10) + (kSize * 4);
+                body_[ kRight ][ kShoulder ][ kY ] = (enemy_parts_.y + kGather) + kQuadruple;
                 body_[ kRight ][ kHands ][ kX ] = (enemy_parts_.x + kSize + 1);
-                body_[ kRight ][ kHands ][ kY ] = (enemy_parts_.y - 10) + (kSize * 4);
+                body_[ kRight ][ kHands ][ kY ] = (enemy_parts_.y - kGather) + kQuadruple;
 
                 // “–‚½‚è”»’è‚Ì‚ ‚é‚Æ‚«
                 if( Collision::sideColl( kRight ) == false )
@@ -81,9 +81,9 @@ void Turtle::update( int ScreenOver )
 
                 // ¶è‚Ì“o˜^
                 body_[ kLeft ][ kShoulder ][ kX ] = (enemy_parts_.x - 1);
-                body_[ kLeft ][ kShoulder ][ kY ] = (enemy_parts_.y + 10) + (kSize * 4);
+                body_[ kLeft ][ kShoulder ][ kY ] = (enemy_parts_.y + kGather) + kQuadruple;
                 body_[ kLeft ][ kHands ][ kX ] = (enemy_parts_.x - 1);
-                body_[ kLeft ][ kHands ][ kY ] = (enemy_parts_.y - 10) + (kSize * 4);
+                body_[ kLeft ][ kHands ][ kY ] = (enemy_parts_.y - kGather) + kQuadruple;
 
                 // “–‚½‚è”»’è‚Ì‚ ‚é‚Æ‚«
                 if( Collision::sideColl( kLeft ) == false )
@@ -94,7 +94,7 @@ void Turtle::update( int ScreenOver )
             if( enemy_parts_.y < kFieldSize )
             {
                 enemy_parts_.rect.left = kSize;
-                enemy_parts_.rect.top = kSize * 7;
+                enemy_parts_.rect.top = kSeptuple;
                 enemy_parts_.rect.right = kSize;
                 enemy_parts_.rect.bottom = kSize;
 
@@ -120,7 +120,7 @@ int Turtle::getPosX()
 int Turtle::getPosY()
 {
     if(burn_)
-    return (enemy_parts_.y - 1) + (kSize * 4);
+    return (enemy_parts_.y - 1) + kQuadruple;
 
     return 0;
 }
@@ -133,10 +133,10 @@ void Turtle::posCollision( int Touch )
         // ‹N‚«‚Ä‚é‚Æ‚«‚É’@‚¢‚½‚ç
         if( active_ )
         {
-            enemy_parts_.Id = 113;
+            enemy_parts_.Id = kShell;
             RECT rect;
-            rect.top = kShell / 16 * kSize;
-            rect.left = kShell % 16 * kSize;
+            rect.top = kShell / kLength * kSize;
+            rect.left = kShell % kLength * kSize;
             rect.bottom = kSize;
             rect.right = kSize;
             enemy_parts_.rect = rect;
@@ -150,7 +150,7 @@ void Turtle::posCollision( int Touch )
         direction_  = 1;
         action_cnt_ = 1;
 
-        enemy_parts_.x += 6;
+        enemy_parts_.x += kPushSpeed;
     }
     else if( Touch == 3 )
     {
@@ -158,7 +158,7 @@ void Turtle::posCollision( int Touch )
         direction_  = -1;
         action_cnt_ = 1;
 
-        enemy_parts_.x -= 6;
+        enemy_parts_.x -= kPushSpeed;
     }
 }
 
@@ -185,7 +185,7 @@ void Turtle::fireCollision()
     EnemyBase::fireCollision();
 
     enemy_parts_.rect.left = kSize;
-    enemy_parts_.rect.top = kSize * 7;
+    enemy_parts_.rect.top = kSeptuple;
     enemy_parts_.rect.right = kSize;
     enemy_parts_.rect.bottom = kSize;
 }
@@ -195,7 +195,7 @@ void Turtle::animation()
 {
     animation_++;
 
-    if( animation_ > 8 )
+    if( animation_ > kCountup )
     {
         animation_ = 0;
         walk_animation_ *= -1;
@@ -203,15 +203,15 @@ void Turtle::animation()
 
     if( walk_animation_ == -1 )
     {
-        enemy_parts_.rect.left = kSize * 4;
+        enemy_parts_.rect.left = kQuadruple;
         enemy_parts_.rect.right = kSize;
     }
     else
     {
-        enemy_parts_.rect.left = kSize * 5;
+        enemy_parts_.rect.left = Quintuple;
         enemy_parts_.rect.right = kSize;
     }
 
-    enemy_parts_.rect.top = kSize * 2;
+    enemy_parts_.rect.top = kDoubleSize;
     enemy_parts_.rect.bottom = static_cast<int>(kSize * 1.5);
 }

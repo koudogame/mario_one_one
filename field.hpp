@@ -8,10 +8,7 @@
 #include "mystery.hpp"
 #include "brick.hpp"
 
-static const int kLength    = 16;       // 配列の横の長さ
-static const int kBrick     = 19;       // レンガブロックID
-static const int kMystery   = 48;       // はてなボックスID
-static const int kNoblock   = 190;      // 何もないブロックID
+const int kNoblock = 190; // 何もないブロックID
 
 
 namespace breakblock

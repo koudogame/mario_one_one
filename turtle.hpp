@@ -5,7 +5,8 @@ class Turtle :
     public EnemyBase
 {
 public:
-    static const int kFieldSize = 780;       // —Ž‚¿‚Ä‚¢‚­‚Æ‚«‚Ì‰º‚ÌŒÀŠE’l
+    const int kPushSpeed = 6;
+    const int kFieldSize = 780;       // —Ž‚¿‚Ä‚¢‚­‚Æ‚«‚Ì‰º‚ÌŒÀŠE’l
 
     Turtle( Field* Field ) : EnemyBase( Field ) {};
 

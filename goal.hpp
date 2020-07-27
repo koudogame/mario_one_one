@@ -14,6 +14,6 @@ public :
     void getGoal( bool ) override;
 
 private : 
-    int down_cnt_ = 0;
+    int down_cnt_   = 0;
     bool goal_flag_ = true;
 };

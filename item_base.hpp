@@ -28,7 +28,6 @@ protected:
     int status_;
 
 public:
-
     ItemBase( Field* field ) : Collision( field ) {};
     virtual void initialize( const int Id, const RECT Rect, const int X, const int Y );
     virtual void update(int Screenover);

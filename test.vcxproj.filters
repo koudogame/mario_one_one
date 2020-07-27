@@ -79,6 +79,9 @@
     <Filter Include="ItemBase\CastleFlag">
       <UniqueIdentifier>{5efa799c-0f18-43a7-93b7-27068e7a5dd0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Share">
+      <UniqueIdentifier>{2234b63c-9a70-47ae-a334-ccd2eb2f3bbe}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -151,7 +154,7 @@
       <Filter>ItemBase\CastleFlag</Filter>
     </ClCompile>
     <ClCompile Include="share.cpp">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>Share</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -228,7 +231,7 @@
       <Filter>ItemBase\CastleFlag</Filter>
     </ClInclude>
     <ClInclude Include="share.hpp">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>Share</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

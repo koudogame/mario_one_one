@@ -3,7 +3,7 @@
 void Kuribo::update( int ScreenOver )
 {
     // “®‚«o‚µ‚Í15ƒ}ƒX•ª‘O‚©‚ç
-    if( ScreenOver > (enemy_parts_.x - (kSize * 20)) )
+    if( ScreenOver > (enemy_parts_.x - (kSize * kMoveStart)) )
     {
         // “®‚«‚Â‚Ã‚¯‚é‚Ì‚Í‰æ–Ê“à‚É‚¢‚é‚Æ‚«
         if( ScreenOver <= enemy_parts_.x + kSize )
@@ -19,11 +19,11 @@ void Kuribo::update( int ScreenOver )
 
 
                     // ‘«‚Ì“o˜^
-                    body_[ kRight ][ kFoot ][ kX ] = (enemy_parts_.x + (kSize - 5));
-                    body_[ kRight ][ kFoot ][ kY ] = (enemy_parts_.y + kSize + 1) + (kSize * 4);
+                    body_[ kRight ][ kFoot ][ kX ] = (enemy_parts_.x + (kSize - kDisplace));
+                    body_[ kRight ][ kFoot ][ kY ] = (enemy_parts_.y + kSize + 1) + kQuadruple;
 
-                    body_[ kLeft ][ kFoot ][ kX ] = (enemy_parts_.x + 5);
-                    body_[ kLeft ][ kFoot ][ kY ] = (enemy_parts_.y + kSize + 1) + (kSize * 4);
+                    body_[ kLeft ][ kFoot ][ kX ] = (enemy_parts_.x + kDisplace);
+                    body_[ kLeft ][ kFoot ][ kY ] = (enemy_parts_.y + kSize + 1) + kQuadruple;
 
                     // ‘«ê‚ª‚ ‚é‚Æ‚«
                     if( Collision::footColl() == 1 )
@@ -33,10 +33,10 @@ void Kuribo::update( int ScreenOver )
                         int block_line = (body_[ kRight ][ kFoot ][ kY ] - 1) / kSize;
 
                         // ‘«Œ³‚ª–„‚Ü‚Á‚Ä‚¢‚È‚¢‚©
-                        if( block_line >= 13 )
+                        if( block_line >= kGroundArray )
                             enemy_parts_.y = kGround;
                         else
-                        enemy_parts_.y = ((block_line - 4) * kSize) - kSize;
+                        enemy_parts_.y = ((block_line - kControl) * kSize) - kSize;
 
 
                         acceleration_ = 0;  // —Ž‰º‘¬“x
@@ -47,15 +47,15 @@ void Kuribo::update( int ScreenOver )
                         jumping_ = kNoJump;
 
                         // ŒŠ‚É—Ž‰º‚µ‚½‚Æ‚«
-                        if( enemy_parts_.y > 670 )
+                        if( enemy_parts_.y > kFallOut )
                         {
                             // ƒAƒCƒeƒ€‚ðÁ‚·ˆ—‚ð‘‚­
                             jumping_ = kNoMove;
 
                             enemy_parts_.Id = kNoBlock;
                             RECT rect;
-                            rect.top = enemy_parts_.Id / 16 * kSize;
-                            rect.left = enemy_parts_.Id % 16 * kSize;
+                            rect.top = enemy_parts_.Id / kLength * kSize;
+                            rect.left = enemy_parts_.Id % kLength * kSize;
                             rect.bottom = kSize;
                             rect.right = kSize;
                             enemy_parts_.rect = rect;
@@ -71,9 +71,9 @@ void Kuribo::update( int ScreenOver )
 
                     // ‰EŽè‚Ì“o˜^
                     body_[ kRight ][ kShoulder ][ kX ] = (enemy_parts_.x + kSize + 1);
-                    body_[ kRight ][ kShoulder ][ kY ] = (enemy_parts_.y + 10) + (kSize * 4);
+                    body_[ kRight ][ kShoulder ][ kY ] = (enemy_parts_.y + kGather) + kQuadruple;
                     body_[ kRight ][ kHands ][ kX ] = (enemy_parts_.x + kSize + 1);
-                    body_[ kRight ][ kHands ][ kY ] = (enemy_parts_.y - 10) + (kSize * 4);
+                    body_[ kRight ][ kHands ][ kY ] = (enemy_parts_.y - kGather) + kQuadruple;
 
                     // “–‚½‚è”»’è‚Ì‚ ‚é‚Æ‚«
                     if( Collision::sideColl( kRight ) == false )
@@ -81,9 +81,9 @@ void Kuribo::update( int ScreenOver )
 
                     // ¶Žè‚Ì“o˜^
                     body_[ kLeft ][ kShoulder ][ kX ] = (enemy_parts_.x - 1);
-                    body_[ kLeft ][ kShoulder ][ kY ] = (enemy_parts_.y + 10) + (kSize * 4);
+                    body_[ kLeft ][ kShoulder ][ kY ] = (enemy_parts_.y + kGather) + kQuadruple;
                     body_[ kLeft ][ kHands ][ kX ] = (enemy_parts_.x - 1);
-                    body_[ kLeft ][ kHands ][ kY ] = (enemy_parts_.y - 10) + (kSize * 4);
+                    body_[ kLeft ][ kHands ][ kY ] = (enemy_parts_.y - kGather) + kQuadruple;
 
                     // “–‚½‚è”»’è‚Ì‚ ‚é‚Æ‚«
                     if( Collision::sideColl( kLeft ) == false )
@@ -100,8 +100,8 @@ void Kuribo::update( int ScreenOver )
                     {
                         enemy_parts_.Id = kNoBlock;
                         RECT rect;
-                        rect.top = enemy_parts_.Id / 16 * kSize;
-                        rect.left = enemy_parts_.Id % 16 * kSize;
+                        rect.top = enemy_parts_.Id / kLength * kSize;
+                        rect.left = enemy_parts_.Id % kLength * kSize;
                         rect.bottom = kSize;
                         rect.right = kSize;
                         enemy_parts_.rect = rect;
@@ -136,7 +136,7 @@ int Kuribo::getPosX()
 int Kuribo::getPosY()
 {
     if( burn_ )
-        return (enemy_parts_.y - 1) + (kSize * 4);
+        return (enemy_parts_.y - 1) + kQuadruple;
     
     return 0;
 }
@@ -149,8 +149,8 @@ void Kuribo::posCollision(int Touch)
 
     enemy_parts_.Id = kDead;
     RECT rect;
-    rect.top = enemy_parts_.Id / 16 * kSize;
-    rect.left = enemy_parts_.Id % 16 * kSize;
+    rect.top = enemy_parts_.Id / kLength * kSize;
+    rect.left = enemy_parts_.Id % kLength * kSize;
     rect.bottom = kSize;
     rect.right = kSize;
     enemy_parts_.rect = rect;
@@ -164,7 +164,7 @@ void Kuribo::animation()
 {
     animation_++;
 
-    if( animation_ > 8 )
+    if( animation_ > kCountup )
     {
         animation_ = 0;
         walk_animation_ *= -1;

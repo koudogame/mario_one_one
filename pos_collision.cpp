@@ -70,7 +70,7 @@ int PosCollision::getEnemyCollision( int Mario_x, int Mario_y, int Enemy_x, int 
     body_[ kLeft ][ kFoot ][ kX ] = (Mario_x + kGather);
 
     // ¬‚³‚¢‚Æ‚«‚©‘å‚«‚¢‚Æ‚«‚©
-    if( Status == 0 )
+    if( Status == kMario )
     {
         body_[ kRight ][ kFoot ][ kY ] = (Mario_y + kSize + 1);             // ‚Ğ‚Æ‚Âæ‚Ì‘å‚«‚³
         body_[ kLeft ][ kFoot ][ kY ] = (Mario_y + kSize + 1);              // ‚Ğ‚Æ‚Âæ‚Ì‘å‚«‚³
@@ -88,7 +88,7 @@ int PosCollision::getEnemyCollision( int Mario_x, int Mario_y, int Enemy_x, int 
     body_[ kRight ][ kHands ][ kX ] = (Mario_x + kSize + 1);                // ‚Ğ‚Æ‚Âæ‚Ì‘å‚«‚³
 
     // ¬‚³‚¢‚Æ‚«‚©‘å‚«‚¢‚Æ‚«‚©
-    if( Status == 0 )
+    if( Status == kMario )
         body_[ kRight ][ kHands ][ kY ] = (Mario_y + kSize - kGather);
     else
         body_[ kRight ][ kHands ][ kY ] = (Mario_y + kDoubleSize - kGather);
@@ -101,7 +101,7 @@ int PosCollision::getEnemyCollision( int Mario_x, int Mario_y, int Enemy_x, int 
     body_[ kLeft ][ kHands ][ kX ]    = (Mario_x - 1);                      // ‚Ğ‚Æ‚Âæ‚Ì‘å‚«‚³
 
     // ¬‚³‚¢‚Æ‚«‚©‘å‚«‚¢‚Æ‚«‚©
-    if( Status == 0 )
+    if( Status == kMario )
         body_[ kLeft ][ kHands ][ kY ] = (Mario_y + kSize - kGather);
     else
         body_[ kLeft ][ kHands ][ kY ] = (Mario_y + kDoubleSize - kGather);

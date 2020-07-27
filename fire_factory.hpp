@@ -6,16 +6,11 @@ class FireFactory :
 {
 public :
     const int kJumpPower   = 4;     // ジャンプ力
-    const int kDisplace    = 4;     // 内側、外側寄せ
-    const int kControl     = 4;     // 配列描画調整用
     const int kLimit       = 4;     // アニメ切り替え
     const int kSmall       = 6;     // 小爆発
     const int kAnime       = 8;     // アニメーション
     const int kBic         = 12;    // 大爆発
     const int kSpeed       = 12;    // ファイア移動速度
-    const int kGroundArray = 14;    // 地面に値する配列番号
-    const int kSextuple    = 384;   // ブロック6倍の大きさ
-    const int kSeptuple    = 448;   // ブロック7倍の大きさ
     const int kGround      = 575;   // 地面
 
     const int kScreenXSize = 1280;  // X軸上限

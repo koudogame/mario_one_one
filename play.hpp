@@ -11,11 +11,6 @@ class PlayScene :
     public BaseScene
 {
 public :
-    const int kKuribo     = 0;  // クリボーID
-    const int kTurtle     = 36; // ノコノコID
-    const int kShell      = 113;// こうらID
-    const int kPowerup    = 0;  // キノコID
-    const int kPowerup2   = 16; // フラワーID
     const int kChangeTime = 120;// シーンチェンジカウント
 
     PlayScene();

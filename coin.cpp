@@ -29,32 +29,32 @@ void Coin::update(int Screenover)
             {
                 animation_cnt_ = 0;
                 RECT rect;
-                rect.top = item_.Id / 16 * kSize;
-                rect.left = (item_.Id % 16 * kSize) + (coin_animation_ * (kSize / 2));
+                rect.top = item_.Id / kLength * kSize;
+                rect.left = (item_.Id % kLength * kSize) + (coin_animation_ * kHalfSize);
                 rect.bottom = kSize;
-                rect.right = kSize / 2;
+                rect.right = kHalfSize;
 
                 item_.rect = rect;
 
                 coin_animation_ += 1;
-                if( coin_animation_ >= 4 )
+                if( coin_animation_ >= kReset )
                     coin_animation_ = 0;
             }
 
             // ë´å≥ÇÃìoò^
-            body_[ kRight ][ kFoot ][ kX ] = (item_.x + (kSize - 10));
-            body_[ kRight ][ kFoot ][ kY ] = (item_.y + kSize + 1) + (kSize * 4);
+            body_[ kRight ][ kFoot ][ kX ] = (item_.x + (kSize - kGather));
+            body_[ kRight ][ kFoot ][ kY ] = (item_.y + kSize + 1) + kQuadruple;
 
-            body_[ kLeft ][ kFoot ][ kX ] = (item_.x + 10);
-            body_[ kLeft ][ kFoot ][ kY ] = (item_.y + kSize + 1) + (kSize * 4);
+            body_[ kLeft ][ kFoot ][ kX ] = (item_.x + kGather);
+            body_[ kLeft ][ kFoot ][ kY ] = (item_.y + kSize + 1) + kQuadruple;
 
             // ÉuÉçÉbÉNÇ∆ìñÇΩÇ¡ÇΩÇ∆Ç´è¡Ç¶ÇÈ
             if( Collision::footColl() == 1 )
             {
                 item_.Id = kNoBlock;
                 RECT rect;
-                rect.top    = item_.Id / 16 * kSize;
-                rect.left   = item_.Id % 16 * kSize;
+                rect.top    = item_.Id / kLength * kSize;
+                rect.left   = item_.Id % kLength * kSize;
                 rect.bottom = kSize;
                 rect.right  = kSize;
                 item_.rect  = rect;
@@ -76,11 +76,11 @@ void Coin::flagChange( int Status )
         status_  = Status;
 
         RECT rect;
-        rect.top = kCoin / 16 * kSize;
-        rect.left = (item_.Id % 16 * kSize);
+        rect.top    = kCoin / kLength * kSize;
+        rect.left   = (item_.Id % kLength * kSize);
         rect.bottom = kSize;
-        rect.right = kSize / 2;
-        item_.rect = rect;
-        item_.x += 16;
+        rect.right  = kHalfSize;
+        item_.rect  = rect;
+        item_.x += kLength;
     }
 }

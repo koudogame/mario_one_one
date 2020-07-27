@@ -7,10 +7,10 @@ class Brick :
     public BlockBase
 {
 public : 
-    static const int kSpeed    = 3;     // 速さ
-    static const int kJumpUp   = 20;    // 壊れるブロック跳ね上
-    static const int kJumpDown = 10;    // 壊れるブロック跳ね下
-    static const int kNoBlock  = 190;   // 何もないブロックID
+    const int kSpeed    = 3;     // 速さ
+    const int kJumpUp   = 20;    // 壊れるブロック跳ね上
+    const int kJumpDown = 10;    // 壊れるブロック跳ね下
+    const int kNoBlock  = 190;   // 何もないブロックID
 
     void initialize( const int Id, const RECT Rect, const int X, const int Y) override;
     void update(int) override;

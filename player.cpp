@@ -168,14 +168,14 @@ bool Player::update()
         }
 
         // マリオの頭(幅を左右10小さく)
-        body_[ kRight ][ kHead ][ kX ] = (total_movement_x_ + (kSize - 10));
+        body_[ kRight ][ kHead ][ kX ] = (total_movement_x_ + (kSize - kGather));
         body_[ kRight ][ kHead ][ kY ] = (total_movement_y_ - 1);
-        body_[ kLeft ][ kHead ][ kX ] = (total_movement_x_ + 10);
+        body_[ kLeft ][ kHead ][ kX ] = (total_movement_x_ + kGather);
         body_[ kLeft ][ kHead ][ kY ] = (total_movement_y_ - 1);
 
         // マリオの足元
-        body_[ kRight ][ kFoot ][ kX ] = (total_movement_x_ + (kSize - 10));
-        body_[ kLeft ][ kFoot ][ kX ] = (total_movement_x_ + 10);
+        body_[ kRight ][ kFoot ][ kX ] = (total_movement_x_ + (kSize - kGather));
+        body_[ kLeft ][ kFoot ][ kX ] = (total_movement_x_ + kGather);
 
         // マリオの時
         if( status_ == kMario )
@@ -186,8 +186,8 @@ bool Player::update()
         // マリオ以外の時
         else
         {
-            body_[ kRight ][ kFoot ][ kY ] = (total_movement_y_ + (kSize * 2) + 1);
-            body_[ kLeft ][ kFoot ][ kY ] = (total_movement_y_ + (kSize * 2) + 1);
+            body_[ kRight ][ kFoot ][ kY ] = (total_movement_y_ + kDoubleSize + 1);
+            body_[ kLeft ][ kFoot ][ kY ] = (total_movement_y_ + kDoubleSize + 1);
         }
 
         // 上へ飛んでいるときにだけhit()を呼ぶ
@@ -223,14 +223,14 @@ bool Player::update()
         }
 
         // ゴール
-        if( total_movement_x_ >= (kSize * kGoalPost) + (kSize / 2) )
+        if( total_movement_x_ >= (kSize * kGoalPost) + kHalfSize )
         {
             animation_flag_   = true;
             catch_flag_       = false;
             goal_flag_        = false;
             animation_        = 6;
             acceleration_     = 0;
-            total_movement_x_ = (kSize * kGoalPost) + (kSize / 2);
+            total_movement_x_ = (kSize * kGoalPost) + kHalfSize;
         }
     }
     // 死んでいるとき
@@ -316,10 +316,10 @@ void Player::draw()
                     {       
                         throw_cnt_++;
 
-                        left_ = (kSize * 4);
-                        right_ = kSize;
-                        top_ = (kSize * 10);
-                        bottom_ = (kSize * 2);
+                        left_   = kQuadruple;
+                        right_  = kSize;
+                        top_    = kDecuple;
+                        bottom_ = kDoubleSize;
                     }
 
                     // 連続投射を防止する
@@ -386,7 +386,7 @@ void Player::collision()
         acceleration_ = 0;  // 落下速度
 
         int block_line = std::round( static_cast<float>(total_movement_y_) / kSize );
-        pos_y_ = (block_line - 4) * kSize;
+        pos_y_ = (block_line - kControl) * kSize;
         total_movement_y_ = block_line * kSize;
     }
     // 足元に何もなく浮いているとき
@@ -396,7 +396,7 @@ void Player::collision()
         jumping_ = kNoJump;
 
         // マリオが画面外に行ったとき
-        if( pos_y_ > 670 )
+        if( pos_y_ > kFallOut )
         {
             // gameover
             gameover_flag_ = false;
@@ -423,7 +423,7 @@ void Player::collision()
             {
                 landing(); // 着地処理
 
-                pos_y_ = kStartY - 65;
+                pos_y_ = kStartY - kSize - 1;
                 total_movement_y_ = 763;
             }
         }
@@ -520,7 +520,7 @@ void Player::ending()
     // 状態がマリオの時
     if( status_ == kMario )
     {
-        if( total_movement_y_ < (kSize * 11 + (kSize / 2)) )
+        if( total_movement_y_ < (kSize * 11 + kHalfSize) )
         {
             // ゆっくりとポストから降りる
             pos_y_ += kDownSpeed;
@@ -553,7 +553,7 @@ void Player::ending()
         // 塔へ向かって歩き出す
         else if( down_cnt_ >= kTurnCnt )
         {
-            if( total_movement_x_ < (kSize * 201) - (kSize / 2) )
+            if( total_movement_x_ < (kSize * 201) - kHalfSize )
             {
                 pos_x_ += 3;
                 total_movement_x_ += 3;
@@ -579,7 +579,7 @@ void Player::ending()
     }
     // 体がマリオ以外の時
     else
-        if( total_movement_y_ < (kSize * 10 + (kSize / 2)) )
+        if( total_movement_y_ < (kDecuple + kHalfSize) )
         {
             // ポストから降りる
             pos_y_ += kDownSpeed;
@@ -612,7 +612,7 @@ void Player::ending()
         // 塔へ向かって歩く
         else if(down_cnt_ >= kTurnCnt)
         {
-            if( total_movement_x_ < (kSize * 201) - (kSize / 2) )
+            if( total_movement_x_ < (kSize * 201) - kHalfSize )
             {
                 pos_x_ += 3;
                 total_movement_x_ += 3;
@@ -649,7 +649,7 @@ void Player::rightCheck()
     if( status_ == kMario )
         body_[ kRight ][ kHands ][ kY ] = (total_movement_y_ + kSize - 1);
     else
-        body_[ kRight ][ kHands ][ kY ] = (total_movement_y_ + (kSize * 2) - 1);
+        body_[ kRight ][ kHands ][ kY ] = (total_movement_y_ + kDoubleSize - 1);
 
 
     // 当たり判定のないブロックのとき

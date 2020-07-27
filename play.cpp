@@ -142,7 +142,7 @@ void PlayScene::update()
                     int id = item_->getId( i, j );
 
                     // “–‚½‚è”»’è‚ðŽæ‚è‚½‚¢Id‚¾‚¯Õ“Ë‚ðŠm‚©‚ß‚é
-                    if( id == kPowerup || id == kPowerup2 )
+                    if( id == kMashroom || id == kFlower )
                     {
                         player_->itemCollision();
                         item_->posCollision( i, j );

@@ -39,7 +39,7 @@ bool Item::initialize( std::fstream& stage )
             
             // Idに応じて登録
 
-            if( id == kPowerup )
+            if( id == kMashroom )
                 item_[ 0 ][ i ][ j ] = new Powerup( field_ );   // パワーアップアイテム
             else if( id == kFlag )
                 item_[ 0 ][ i ][ j ] = new CastleFlag( field_ );// キャッスルフラッグ
@@ -51,14 +51,14 @@ bool Item::initialize( std::fstream& stage )
                 item_[ 0 ][ i ][ j ] = new ItemBase(field_);
 
             // 描画範囲を設定
-            rect.top = id / 16 * kItemsize;
-            rect.left = id % 16 * kItemsize;
+            rect.top = id / kLength * kSize;
+            rect.left = id % kLength * kSize;
             rect.bottom = kSize;
             rect.right = kSize;
 
             // 見えない空の部分の分だけ (-n*kSize)
             position_x = (kSize * j);
-            position_y = (kSize * i) - (kSize * 4);
+            position_y = (kSize * i) - kQuadruple;
 
             item_[ 0 ][ i ][ j ]->initialize( id, rect, position_x, position_y );
         }

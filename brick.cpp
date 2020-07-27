@@ -23,8 +23,8 @@ void Brick::update(int Status)
                 // ƒŒƒ“ƒK‚ª’@‚©‚ê‚½‚Æ‚«
                 parts_.Id = kNoBlock;
                 RECT rect;
-                rect.top = kNoBlock / 16 * kSize;
-                rect.left = kNoBlock % 16 * kSize;
+                rect.top = kNoBlock / kLength * kSize;
+                rect.left = kNoBlock % kLength * kSize;
                 rect.bottom = kSize;
                 rect.right = kSize;
                 parts_.rect = rect;
@@ -45,7 +45,7 @@ void Brick::update(int Status)
             else
             {
                 base_pos_ = parts_.y;
-                parts_.y -= kSize / 4;
+                parts_.y -= kSize / kControl;
                 upblock_flag_ = false;
                 stand_by_ = true;
             }
@@ -90,8 +90,8 @@ void Brick::draw( int Texture, int ScreenOver)
             int texture_position_y = break_parts_[ i ][ kY ];
 
             DrawRectGraph(
-                (texture_position_x), (texture_position_y - (kSize * 4)),
-                (kSize * 3), kSize, (kSize / 2), (kSize / 2), Texture, TRUE, FALSE );
+                (texture_position_x), (texture_position_y - kQuadruple),
+                kTripleSize, kSize, kHalfSize, kHalfSize, Texture, TRUE, FALSE );
         }
     }
 }

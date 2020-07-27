@@ -10,6 +10,4 @@ public :
     void update() override;
     void draw() override;
     void finalize() override;
-
-private:
 };

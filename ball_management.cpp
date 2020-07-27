@@ -14,7 +14,7 @@ void BallManagement::update( int TotalX, int TotalY, int Status, int Direction, 
     // 発射可能状態
     if( GameOver && PosY <= kEndline )
     {
-        // ボタンが押されたとき かつ、FireMarioの時
+        // ボタンが押されたとき
         if( !(GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_4) == 0 || CheckHitKey( KEY_INPUT_B ) == 1 )
             push_create_fire_++;
         else
@@ -85,7 +85,7 @@ void BallManagement::createFire( int TotalX, int TotalY, int Status, int Directi
         if( create_flag_ )
         {
             // ファイアマリオのとき
-            if( Status == 2 )
+            if( Status == kFireMario )
             {
                 // 新しく追加して動かす
                 fire_.push_back( new FireFactory( field_ ) );

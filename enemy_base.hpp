@@ -30,13 +30,12 @@ protected :
     bool burn_ = true;                      // true : 焼かれてない, false : 焼死
 
 public :
-    static const int kSpeed    = 2;         // 速さ
-    static const int kJumpPower = 12;       // ジャンプ力
-    static const int kMaxSpeed = 12;        // 最高スピード
-    static const int kTurtle   = 36;        // のこのこID
-    static const int kNoBlock  = 119;       // 何もないマップID
-    static const int kShell    = 113;       // 甲羅ID
-    static const int kGround   = 575;       // 床最低ライン
+    const int kSpeed     = 2;               // 速さ
+    const int kCountup   = 8;               // アニメーション
+    const int kJumpPower = 12;              // ジャンプ力
+    const int kMaxSpeed  = 12;              // 最高スピード
+    const int kNoBlock   = 119;             // 何もないマップID
+    const int kGround    = 575;             // 床最低ライン
 
 
     EnemyBase( Field* field ) : Collision( field ) {};

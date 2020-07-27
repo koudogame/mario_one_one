@@ -5,11 +5,9 @@ class Powerup :
     public ItemBase
 {
 public :
-    static const int kMashroom = 0;     // キノコID
-    static const int kSpeed    = 4;     // キノコ進む速さ
-    static const int kFlower   = 16;    // フラワーID
-    static const int kNoBlock  = 115;   // 何もないアイテムのID
-    static const int kGround   = 575;   // 床の最低ライン
+    const int kSpeed    = 4;     // キノコ進む速さ
+    const int kNoBlock  = 115;   // 何もないアイテムのID
+    const int kGround   = 575;   // 床の最低ライン
 
     Powerup( Field* field ) : ItemBase( field ) {};
     void update( int Screenover) override;

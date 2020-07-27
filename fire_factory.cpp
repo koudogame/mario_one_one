@@ -176,9 +176,9 @@ void FireFactory::burnAnimation()
     {
         // RECTの値を変更（小爆発）
         explosion_[ kLeftEdge ]   = 0;
-        explosion_[ kTop ]    = kSeptuple;
+        explosion_[ kTop ]        = kSeptuple;
         explosion_[ kRightEdge ]  = kSize;
-        explosion_[ kBottom ] = kSize;
+        explosion_[ kBottom ]     = kSize;
     }
     else if( explode_cnt_ <= kBic )
         explosion_[ kLeftEdge ] = kSize;
