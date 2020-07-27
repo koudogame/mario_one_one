@@ -1,16 +1,10 @@
 #include <Dxlib.h>
 #include "collision.hpp"
 
-enum Rect
-{
-    kLeft, kTop, kRight, kBottom, kRect
-};
-
 class FireFactory :
     public Collision
 {
 public :
-    const int kGravity     = 1;     // 重力
     const int kJumpPower   = 4;     // ジャンプ力
     const int kDisplace    = 4;     // 内側、外側寄せ
     const int kControl     = 4;     // 配列描画調整用
@@ -19,10 +13,7 @@ public :
     const int kAnime       = 8;     // アニメーション
     const int kBic         = 12;    // 大爆発
     const int kSpeed       = 12;    // ファイア移動速度
-    const int kHalfSize    = 32;    // ブロック半分の大きさ
     const int kGroundArray = 14;    // 地面に値する配列番号
-    const int kSize        = 64;    // ブロックサイズ
-    const int kQuadruple   = 256;   // ブロック4倍の大きさ
     const int kSextuple    = 384;   // ブロック6倍の大きさ
     const int kSeptuple    = 448;   // ブロック7倍の大きさ
     const int kGround      = 575;   // 地面

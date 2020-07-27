@@ -1,40 +1,10 @@
 #pragma once
 #include "field.hpp"
 
-namespace collision
-{
-    // 体の右、左
-    enum RL
-    {
-        kRight, kLeft, kRL
-    };
-
-    //　体のパーツ
-    enum BodyParts
-    {
-        kShoulder, kHands, kHead, kFoot, kBodyParts
-    };
-
-    //　体のパーツのX,Y
-    enum Position
-    {
-        kX, kY, kPosition
-    };
-
-    // 飛び状態を明確にする
-    enum JumpFlag
-    {
-        kJump, kNoJump, kNoMove
-    };
-}
-
-using namespace collision;
-
 class Collision
 {
 public:
     const int kStairs     = 32;                       // 階段のブロックID
-    const int kSize       = 64;                       // ブロックサイズ
     const int kTouchLimit = 64;                       // 衝突判定を持つブロック
     const int kNoBlocka   = 190;                      // 何もないブロックID a
     const int kNoBlockb   = 191;                      // 何もないブロックID b

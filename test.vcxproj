@@ -90,6 +90,9 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>share.hpp</PrecompiledHeaderFile>
+      <ForcedIncludeFiles>share.hpp</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -105,6 +108,9 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>share.hpp</PrecompiledHeaderFile>
+      <ForcedIncludeFiles>share.hpp</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -173,6 +179,10 @@
     <ClCompile Include="power_up.cpp" />
     <ClCompile Include="result.cpp" />
     <ClCompile Include="scene_manager.cpp" />
+    <ClCompile Include="share.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="turtle.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -199,6 +209,7 @@
     <ClInclude Include="release.hpp" />
     <ClInclude Include="result.hpp" />
     <ClInclude Include="scene_manager.hpp" />
+    <ClInclude Include="share.hpp" />
     <ClInclude Include="turtle.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

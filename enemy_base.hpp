@@ -30,7 +30,6 @@ protected :
     bool burn_ = true;                      // true : 焼かれてない, false : 焼死
 
 public :
-    static const int kGravity  = 1;         // 重力
     static const int kSpeed    = 2;         // 速さ
     static const int kJumpPower = 12;       // ジャンプ力
     static const int kMaxSpeed = 12;        // 最高スピード

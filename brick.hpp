@@ -3,23 +3,11 @@
 #include <fstream>
 #include "block_base.hpp"
 
-enum PartsNum
-{
-    kRightUp, kLeftUp, kRightDown, kLeftDown, kPartsNum
-};
-
-enum Position
-{
-    kPositionX, kPositionY, kXYPosition
-};
-
 class Brick :
     public BlockBase
 {
 public : 
-    static const int kGravity  = 1;     // 重力
     static const int kSpeed    = 3;     // 速さ
-    static const int kSize     = 64;    // ブロックサイズ
     static const int kJumpUp   = 20;    // 壊れるブロック跳ね上
     static const int kJumpDown = 10;    // 壊れるブロック跳ね下
     static const int kNoBlock  = 190;   // 何もないブロックID
@@ -39,5 +27,5 @@ private:
 
     bool punch_;
 
-    int break_parts_[ kPartsNum ][ kXYPosition ] = { 0 };
+    int break_parts_[ kBodyParts ][ kPosition ] = { 0 };
 };

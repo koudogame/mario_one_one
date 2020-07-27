@@ -8,7 +8,6 @@ public :
     static const int kMashroom = 0;     // キノコID
     static const int kSpeed    = 4;     // キノコ進む速さ
     static const int kFlower   = 16;    // フラワーID
-    static const int kSize     = 64;    // アイテムサイズ
     static const int kNoBlock  = 115;   // 何もないアイテムのID
     static const int kGround   = 575;   // 床の最低ライン
 

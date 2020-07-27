@@ -28,7 +28,6 @@ protected:
     int status_;
 
 public:
-    static const int kGravity  = 1;     // èdóÕ
 
     ItemBase( Field* field ) : Collision( field ) {};
     virtual void initialize( const int Id, const RECT Rect, const int X, const int Y );

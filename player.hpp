@@ -1,19 +1,10 @@
 #include <DxLib.h>
 #include "collision.hpp"
 
-// マリオの状態保存
-enum Status
-{
-    kMario = 0,
-    kSuperMario,
-    kFireMario
-};
-
 class Player :
     public Collision
 {
 public:
-    const int kSize       = 64;     // マリオのサイズ
     const int kSpeed      = 6;      // 歩いているときの速度
     const int kDashSpeed  = 10;     // ダッシュしているときの速度
     const int kStopper    = 16;     // 連射防止ストッパー
@@ -26,7 +17,6 @@ public:
     const int kEndLine    = 576;    // 画面の中心
     const int kDeadLine   = 800;    // この数値より下は死ぬ
     const int kSkyBlue    = 191;    // 背景の何もない透明マップチップID
-    const int kGravity    = 1;      // 重力加速度
     const int kInvincible = 120;    // 無敵制限時間
     const int kDownSpeed  = 6;      // ゴールしたとき落ちるスピード
     const int kGoalPost   = 194;    // ゴールポスト

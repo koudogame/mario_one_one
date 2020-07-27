@@ -7,7 +7,6 @@ class Coin :
 public :
     static const int kChangeSpeed = 3;      // コインアニメーション用
     static const int kJumpPower   = 15;     // コイン叩いた時のジャンプ量
-    static const int kSize        = 64;     // コインのサイズ
     static const int kCoin        = 80;     // コインのID
     static const int kNoBlock     = 115;    // 何もないID
 

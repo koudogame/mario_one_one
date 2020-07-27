@@ -32,42 +32,42 @@ void FireFactory::update()
         fire_pos_x_ += kSpeed * direction_;
 
         // ‰EƒTƒCƒh‚Ì“o˜^
-        body_[ RL::kRight ][ kShoulder ][ kX ] = fire_pos_x_ + kHalfSize + 1;
-        body_[ RL::kRight ][ kShoulder ][ kY ] = (fire_pos_y_ + kDisplace) + kQuadruple;
-        body_[ RL::kRight ][ kHands ][ kX ] = fire_pos_x_ + kHalfSize + 1;
-        body_[ RL::kRight ][ kHands ][ kY ] = (fire_pos_y_ - kDisplace) + kQuadruple;
+        body_[ kRight ][ kShoulder ][ kX ] = fire_pos_x_ + kHalfSize + 1;
+        body_[ kRight ][ kShoulder ][ kY ] = (fire_pos_y_ + kDisplace) + kQuadruple;
+        body_[ kRight ][ kHands ][ kX ] = fire_pos_x_ + kHalfSize + 1;
+        body_[ kRight ][ kHands ][ kY ] = (fire_pos_y_ - kDisplace) + kQuadruple;
 
         // “–‚½‚è”»’è‚ª‚ ‚é‚Æ‚«
-        if( !Collision::sideColl( RL::kRight ))
+        if( !Collision::sideColl( kRight ))
             // “–‚½‚è”»’èˆ—
             side_touch_ = false;
 
         // ¶ƒTƒCƒh‚Ì“o˜^
-        body_[ RL::kLeft ][ kShoulder ][ kX ] = fire_pos_x_ - 1;
-        body_[ RL::kLeft ][ kShoulder ][ kY ] = fire_pos_y_ + kQuadruple + kDisplace;
-        body_[ RL::kLeft ][ kHands ][ kX ] = fire_pos_x_ - 1;
-        body_[ RL::kLeft ][ kHands ][ kY ] = fire_pos_y_ + kQuadruple - kDisplace;
+        body_[ kLeft ][ kShoulder ][ kX ] = fire_pos_x_ - 1;
+        body_[ kLeft ][ kShoulder ][ kY ] = fire_pos_y_ + kQuadruple + kDisplace;
+        body_[ kLeft ][ kHands ][ kX ] = fire_pos_x_ - 1;
+        body_[ kLeft ][ kHands ][ kY ] = fire_pos_y_ + kQuadruple - kDisplace;
 
         // “–‚½‚è”»’è‚ª‚ ‚é‚Æ‚«
-        if( !Collision::sideColl( RL::kLeft ))
+        if( !Collision::sideColl( kLeft ))
             // “–‚½‚è”»’èˆ—
             side_touch_ = false;
 
 
         // ‰º‚Ì•”•ª‚Ì“o˜^(Collision)
         // ‰E‘«A¶‘«‚Ì“o˜^
-        body_[ RL::kRight ][ kFoot ][ kX ] = fire_pos_x_ + (kHalfSize - kDisplace);
-        body_[ RL::kRight ][ kFoot ][ kY ] = fire_pos_y_ + (kHalfSize + 1) + kQuadruple;
+        body_[ kRight ][ kFoot ][ kX ] = fire_pos_x_ + (kHalfSize - kDisplace);
+        body_[ kRight ][ kFoot ][ kY ] = fire_pos_y_ + (kHalfSize + 1) + kQuadruple;
 
-        body_[ RL::kLeft ][ kFoot ][ kX ] = fire_pos_x_ + kDisplace;
-        body_[ RL::kLeft ][ kFoot ][ kY ] = fire_pos_y_ + (kHalfSize + 1) + kQuadruple;
+        body_[ kLeft ][ kFoot ][ kX ] = fire_pos_x_ + kDisplace;
+        body_[ kLeft ][ kFoot ][ kY ] = fire_pos_y_ + (kHalfSize + 1) + kQuadruple;
 
         // ‘«ê‚ª‚ ‚é‚Æ‚«
         if( Collision::fireColl() == 3 )
         {
             jumping_ = kNoMove;
 
-            int block_line = (body_[ RL::kRight ][ kFoot ][ kY ] - 1) / kSize;
+            int block_line = (body_[ kRight ][ kFoot ][ kY ] - 1) / kSize;
             fire_pos_y_ = ((block_line - kControl) * kSize) - kSize;
 
             if( block_line >= kGroundArray )
@@ -80,7 +80,7 @@ void FireFactory::update()
         {
             jumping_ = kNoMove;
 
-            int block_line = (body_[ RL::kRight ][ kFoot ][ kY ] - 1) / kSize;
+            int block_line = (body_[ kRight ][ kFoot ][ kY ] - 1) / kSize;
             fire_pos_y_ = ((block_line - kControl) * kSize) - kSize;
 
             if( block_line >= kGroundArray )
@@ -123,7 +123,7 @@ void FireFactory::draw( int Texture, const int ScreenOver )
     DrawRectGraph( x, fire_pos_y_,
         left, top, right, bottom, texture_, TRUE, FALSE );    
     DrawRectGraph( x, fire_pos_y_,
-        explosion_[ Rect::kLeft ], explosion_[ Rect::kTop ], explosion_[ Rect::kRight ], explosion_[ Rect::kBottom ],
+        explosion_[ kLeftEdge ], explosion_[ kTop ], explosion_[ kRightEdge ], explosion_[ kBottom ],
         texture_, TRUE, FALSE );
 }
 
@@ -175,13 +175,13 @@ void FireFactory::burnAnimation()
     if( explode_cnt_ <= kSmall )
     {
         // RECT‚Ì’l‚ð•ÏXi¬”š”­j
-        explosion_[ Rect::kLeft ]   = 0;
-        explosion_[ Rect::kTop ]    = kSeptuple;
-        explosion_[ Rect::kRight ]  = kSize;
-        explosion_[ Rect::kBottom ] = kSize;
+        explosion_[ kLeftEdge ]   = 0;
+        explosion_[ kTop ]    = kSeptuple;
+        explosion_[ kRightEdge ]  = kSize;
+        explosion_[ kBottom ] = kSize;
     }
     else if( explode_cnt_ <= kBic )
-        explosion_[ Rect::kLeft ] = kSize;
+        explosion_[ kLeftEdge ] = kSize;
     else
         // ˆê’Ê‚è‚µ‚½‚çÁ‚·(erase)
         explode_flag_ = false;

@@ -11,9 +11,7 @@
 static const int kLength    = 16;       // 配列の横の長さ
 static const int kBrick     = 19;       // レンガブロックID
 static const int kMystery   = 48;       // はてなボックスID
-static const int kSize      = 64;       // 箱の大きさID
 static const int kNoblock   = 190;      // 何もないブロックID
-static const int kQuadruple = 256;      // ブロック4倍の大きさ
 
 
 namespace breakblock

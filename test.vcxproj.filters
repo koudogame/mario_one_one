@@ -150,6 +150,9 @@
     <ClCompile Include="castle_flag.cpp">
       <Filter>ItemBase\CastleFlag</Filter>
     </ClCompile>
+    <ClCompile Include="share.cpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="result.hpp">
@@ -223,6 +226,9 @@
     </ClInclude>
     <ClInclude Include="castle_flag.hpp">
       <Filter>ItemBase\CastleFlag</Filter>
+    </ClInclude>
+    <ClInclude Include="share.hpp">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -18,7 +18,7 @@ void Brick::update(int Status)
         if( punch_ )
         {
             // マリオじゃないとき
-            if( Status != 0 )
+            if( Status != kMario )
             {
                 // レンガが叩かれたとき
                 parts_.Id = kNoBlock;
@@ -30,10 +30,10 @@ void Brick::update(int Status)
                 parts_.rect = rect;
 
                 // 右頭、初期座標を登録する
-                for( int i = 0; i < kPartsNum; i++ )
+                for( int i = 0; i < kBodyParts; i++ )
                 {
-                    break_parts_[ i ][ kPositionX ] = (pos_x_ * kSize);
-                    break_parts_[ i ][ kPositionY ] = (pos_y_ * kSize);
+                    break_parts_[ i ][ kX ] = (pos_x_ * kSize);
+                    break_parts_[ i ][ kY ] = (pos_y_ * kSize);
                 }
 
                 // ジャンプ力の設定
@@ -54,19 +54,19 @@ void Brick::update(int Status)
         // ここからブロックを落下させる処理を組む
         if( !stand_by_ )
         {
-            for( int i = 0; i < kPartsNum; i++ )
+            for( int i = 0; i < kBodyParts; i++ )
             {
                 // X座標の移動
                 if( (i % 2) == 0 )
-                    break_parts_[ i ][ kPositionX ] += kSpeed;
+                    break_parts_[ i ][ kX ] += kSpeed;
                 else
-                    break_parts_[ i ][ kPositionX ] -= kSpeed;
+                    break_parts_[ i ][ kX ] -= kSpeed;
 
                 // Y座標の移動
                 if( i < 2 )
-                    break_parts_[ i ][ kPositionY ] += acceleration_up_;
+                    break_parts_[ i ][ kY ] += acceleration_up_;
                 else
-                    break_parts_[ i ][ kPositionY ] += acceleration_down_;
+                    break_parts_[ i ][ kY ] += acceleration_down_;
             }
 
             // ジャンプ力を付与
@@ -84,10 +84,10 @@ void Brick::draw( int Texture, int ScreenOver)
 
     if( !stand_by_ )
     {
-        for( int i = 0; i < kPartsNum; i++ )
+        for( int i = 0; i < kBodyParts; i++ )
         {
-            int texture_position_x = break_parts_[ i ][ kPositionX ] - ScreenOver;
-            int texture_position_y = break_parts_[ i ][ kPositionY ];
+            int texture_position_x = break_parts_[ i ][ kX ] - ScreenOver;
+            int texture_position_y = break_parts_[ i ][ kY ];
 
             DrawRectGraph(
                 (texture_position_x), (texture_position_y - (kSize * 4)),
