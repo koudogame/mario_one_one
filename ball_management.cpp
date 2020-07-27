@@ -11,54 +11,29 @@ void BallManagement::initialize()
 
 void BallManagement::update( int TotalX, int TotalY, int Status, int Direction, bool GameOver, int PosY )
 {
-    // マリオがゴールしていないとき
-    if( GameOver )
+    // 発射可能状態
+    if( GameOver && PosY <= kEndline )
     {
-        // マリオが生存しているとき発射対象
-        if( PosY <= kEndline )
+        // ボタンが押されたとき かつ、FireMarioの時
+        if( !(GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_4) == 0 || CheckHitKey( KEY_INPUT_B ) == 1 )
+            push_create_fire_++;
+        else
+            push_create_fire_ = 0; // 押されていない間初期化
+
+
+        // ボタンが押された瞬間
+        if( push_create_fire_ == 1 )
+            createFire( TotalX, TotalY, Status, Direction );
+
+        // 時間管理
+        if( !create_flag_ )
+            create_cnt_++;
+
+        // 連投を一定間隔に制御
+        if( create_cnt_ >= kStopper )
         {
-            // ボタンが押されたとき かつ、FireMarioの時
-            if( !(GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_4) == 0 || CheckHitKey( KEY_INPUT_B ) == 1 )
-                push_create_fire_++;
-
-            // 押されていない間初期化
-            else
-                push_create_fire_ = 0;
-
-            // ボタンが押された瞬間
-            if( push_create_fire_ == 1 )
-            {
-                size_t index = std::distance( fire_.begin(), fire_.end() );
-
-                // ４個まで同時投射可能
-                if( index < kBallLimit )
-                {
-                    // まだ生成していなかったら作成
-                    if( create_flag_ )
-                    {
-                        // ファイアマリオのとき
-                        if( Status == 2 )
-                        {
-                            // 新しく追加して動かす
-                            fire_.push_back( new FireFactory( field_ ) );
-                            fire_.back()->initialize( TotalX, TotalY, Direction );
-
-                            create_flag_ = false;
-                        }
-                    }
-                }
-            }
-
-            // 時間管理
-            if( !create_flag_ )
-                create_cnt_++;
-
-            // 連投を一定間隔に制御
-            if( create_cnt_ >= kStopper )
-            {
-                create_cnt_ = 0;
-                create_flag_ = true;
-            }
+            create_cnt_ = 0;
+            create_flag_ = true;
         }
     }
 
@@ -67,7 +42,6 @@ void BallManagement::update( int TotalX, int TotalY, int Status, int Direction, 
     {
         (*itr)->update();
     }
-
 }
 
 void BallManagement::draw(const int ScreenOver)
@@ -98,6 +72,31 @@ int BallManagement::getSize()
 {
     return fire_.size();                // Fireの要素の数を返す
 }
+
+// 新しく生成する処理
+void BallManagement::createFire( int TotalX, int TotalY, int Status, int Direction )
+{
+    size_t index = std::distance( fire_.begin(), fire_.end() );
+
+    // ４個まで同時投射可能
+    if( index < kBallLimit )
+    {
+        // まだ生成していなかったら作成
+        if( create_flag_ )
+        {
+            // ファイアマリオのとき
+            if( Status == 2 )
+            {
+                // 新しく追加して動かす
+                fire_.push_back( new FireFactory( field_ ) );
+                fire_.back()->initialize( TotalX, TotalY, Direction );
+
+                create_flag_ = false;
+            }
+        }
+    }
+}
+
 
 void BallManagement::sideCheck()
 {

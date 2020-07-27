@@ -52,14 +52,14 @@ bool Field::initialize( std::fstream& stage )
                 }
 
                 // •`‰æ”ÍˆÍ‚ðÝ’è
-                rect.top = id / 16 * kSize;
-                rect.left = id % 16 * kSize;
+                rect.top = id / kLength * kSize;
+                rect.left = id % kLength * kSize;
                 rect.bottom = kSize;
                 rect.right = kSize;
 
                 // Œ©‚¦‚È‚¢‹ó‚Ì•”•ª‚Ì•ª‚¾‚¯ (-n*kSize)
                 position_x = (kSize * j);
-                position_y = (kSize * i) - (kSize * 4);
+                position_y = (kSize * i) - kQuadruple;
 
                 field_[ layer ][ i ][ j ]->initialize( id, rect, position_x, position_y );
             }

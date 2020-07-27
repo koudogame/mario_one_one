@@ -8,10 +8,13 @@
 #include "mystery.hpp"
 #include "brick.hpp"
 
-const int kBrick   = 19;        // レンガブロックID
-const int kMystery = 48;        // はてなボックスID
-const int kSize    = 64;        // 箱の大きさID
-const int kNoblock = 190;       // 何もないブロックID
+static const int kLength    = 16;       // 配列の横の長さ
+static const int kBrick     = 19;       // レンガブロックID
+static const int kMystery   = 48;       // はてなボックスID
+static const int kSize      = 64;       // 箱の大きさID
+static const int kNoblock   = 190;      // 何もないブロックID
+static const int kQuadruple = 256;      // ブロック4倍の大きさ
+
 
 namespace breakblock
 {
@@ -47,10 +50,10 @@ private :
     int texture_;              // テクスチャハンドル保存用
     int height_;               // 高さ
     int width_;                // 横幅
-    int block_rx_;              // 多重updateを防ぐため
-    int block_ry_;              // 多重updateを防ぐため
-    int block_lx_;              // 多重updateを防ぐため
-    int block_ly_;              // 多重updateを防ぐため
+    int block_rx_;             // 多重updateを防ぐため
+    int block_ry_;             // 多重updateを防ぐため
+    int block_lx_;             // 多重updateを防ぐため
+    int block_ly_;             // 多重updateを防ぐため
 
                                // 数字を設定しなくても増える配列
     std::vector<std::vector<std::vector<BlockBase*>>> field_;
