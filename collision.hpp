@@ -33,9 +33,13 @@ using namespace collision;
 class Collision
 {
 public:
-    const int kStairs = 32;
-    const int kSize = 64;
-    Collision( Field* Field );
+    const int kStairs     = 32;                       // 階段のブロックID
+    const int kSize       = 64;                       // ブロックサイズ
+    const int kTouchLimit = 64;                       // 衝突判定を持つブロック
+    const int kNoBlocka   = 190;                      // 何もないブロックID a
+    const int kNoBlockb   = 191;                      // 何もないブロックID b
+
+    Collision( Field* Field );                        // 衝突判定のIDを得るためFieldを持つ
 
     bool sideColl( RL rl );                           // true  (Id >= 65), flase  (Id <= 64);
     int footColl();                                   // return 1(Id <= 64),return 2(Id == 191), return 0 その他

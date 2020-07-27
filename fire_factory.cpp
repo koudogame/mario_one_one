@@ -3,70 +3,74 @@
 void FireFactory::initialize( int PosX, int PosY, int Direction)
 {
     // 投げられた時のマリオの座標をスタート位置とする
-    fire_pos_x_ = PosX + (kSize / 2);
-    fire_pos_y_ = PosY - (kSize * 4) + (kSize / 2);
+    fire_pos_x_    = PosX + kHalfSize;
+    fire_pos_y_    = PosY + kHalfSize - kQuadruple;
 
     // マリオの向きの受け渡し
-    direction_ = Direction;
+    direction_     = Direction;
 
     // sideTouch
-    side_touch_ = true;
+    side_touch_    = true;
 
     // アニメ用変数初期化
-    animation_ = 0;
+    animation_     = 0;
     animation_cnt_ = 0;
 
-    explode_cnt_ = 0;
-    explode_flag_ = true;
+    explode_cnt_   = 0;
+    explode_flag_  = true;
 }
 
 void FireFactory::update()
 {
+    // どこかにぶつかるまで
     if( side_touch_ )
     {
-        animation();            // ファイアボールアニメーション
+        // ファイアアニメーション
+        animation();            
+        
+        // 常に横移動
         fire_pos_x_ += kSpeed * direction_;
 
         // 右サイドの登録
-        body_[ kRight ][ kShoulder ][ kX ] = fire_pos_x_ + (kSize / 2) + 1;
-        body_[ kRight ][ kShoulder ][ kY ] = (fire_pos_y_ + 4) + (kSize * 4);
-        body_[ kRight ][ kHands ][ kX ] = fire_pos_x_ + (kSize / 2) + 1;
-        body_[ kRight ][ kHands ][ kY ] = (fire_pos_y_ - 4) + (kSize * 4);
+        body_[ RL::kRight ][ kShoulder ][ kX ] = fire_pos_x_ + kHalfSize + 1;
+        body_[ RL::kRight ][ kShoulder ][ kY ] = (fire_pos_y_ + kDisplace) + kQuadruple;
+        body_[ RL::kRight ][ kHands ][ kX ] = fire_pos_x_ + kHalfSize + 1;
+        body_[ RL::kRight ][ kHands ][ kY ] = (fire_pos_y_ - kDisplace) + kQuadruple;
 
         // 当たり判定があるとき
-        if( !Collision::sideColl( kRight ))
+        if( !Collision::sideColl( RL::kRight ))
             // 当たり判定処理
             side_touch_ = false;
 
         // 左サイドの登録
-        body_[ kLeft ][ kShoulder ][ kX ] = fire_pos_x_ - 1;
-        body_[ kLeft ][ kShoulder ][ kY ] = fire_pos_y_ + 4 + (kSize * 4);
-        body_[ kLeft ][ kHands ][ kX ] = fire_pos_x_ - 1;
-        body_[ kLeft ][ kHands ][ kY ] = fire_pos_y_ - 4 + (kSize * 4);
+        body_[ RL::kLeft ][ kShoulder ][ kX ] = fire_pos_x_ - 1;
+        body_[ RL::kLeft ][ kShoulder ][ kY ] = fire_pos_y_ + kQuadruple + kDisplace;
+        body_[ RL::kLeft ][ kHands ][ kX ] = fire_pos_x_ - 1;
+        body_[ RL::kLeft ][ kHands ][ kY ] = fire_pos_y_ + kQuadruple - kDisplace;
 
         // 当たり判定があるとき
-        if( !Collision::sideColl( kLeft ))
+        if( !Collision::sideColl( RL::kLeft ))
             // 当たり判定処理
             side_touch_ = false;
 
 
         // 下の部分の登録(Collision)
         // 右足、左足の登録
-        body_[ kRight ][ kFoot ][ kX ] = fire_pos_x_ + ((kSize / 2) - 5);
-        body_[ kRight ][ kFoot ][ kY ] = fire_pos_y_ + ((kSize / 2) + 1) + (kSize * 4);
+        body_[ RL::kRight ][ kFoot ][ kX ] = fire_pos_x_ + (kHalfSize - kDisplace);
+        body_[ RL::kRight ][ kFoot ][ kY ] = fire_pos_y_ + (kHalfSize + 1) + kQuadruple;
 
-        body_[ kLeft ][ kFoot ][ kX ] = fire_pos_x_ + 5;
-        body_[ kLeft ][ kFoot ][ kY ] = fire_pos_y_ + ((kSize / 2) + 1) + (kSize * 4);
+        body_[ RL::kLeft ][ kFoot ][ kX ] = fire_pos_x_ + kDisplace;
+        body_[ RL::kLeft ][ kFoot ][ kY ] = fire_pos_y_ + (kHalfSize + 1) + kQuadruple;
 
         // 足場があるとき
         if( Collision::fireColl() == 3 )
         {
             jumping_ = kNoMove;
 
-            int block_line = (body_[ kRight ][ kFoot ][ kY ] - 1) / kSize;
-            fire_pos_y_ = ((block_line - 4) * kSize) - kSize;
+            int block_line = (body_[ RL::kRight ][ kFoot ][ kY ] - 1) / kSize;
+            fire_pos_y_ = ((block_line - kControl) * kSize) - kSize;
 
-            if( block_line >= 14 )
+            if( block_line >= kGroundArray )
                 fire_pos_y_ = kGround;
 
             acceleration_ = 0;  // 落下速度
@@ -76,10 +80,10 @@ void FireFactory::update()
         {
             jumping_ = kNoMove;
 
-            int block_line = (body_[ kRight ][ kFoot ][ kY ] - 1) / kSize;
-            fire_pos_y_ = ((block_line - 4) * kSize) - kSize;
+            int block_line = (body_[ RL::kRight ][ kFoot ][ kY ] - 1) / kSize;
+            fire_pos_y_ = ((block_line - kControl) * kSize) - kSize;
 
-            if( block_line >= 14 )
+            if( block_line >= kGroundArray )
                 fire_pos_y_ = kGround;
 
             acceleration_ = 0;  // 落下速度
@@ -99,6 +103,7 @@ void FireFactory::update()
         }
     }
     else
+        // ぶつかったとき
         burnAnimation();
 }
 
@@ -106,11 +111,11 @@ void FireFactory::draw( int Texture, const int ScreenOver )
 {
     texture_ = Texture;
 
-    int top    = kSize * 6;
-    int bottom = kSize / 2;
+    int top    = kSextuple;
+    int bottom = kHalfSize;
 
-    int left   = (animation_ * (kSize / 2));
-    int right  = kSize / 2;
+    int left   = (animation_ * kHalfSize);
+    int right  = kHalfSize;
 
     int x = fire_pos_x_ - ScreenOver;
 
@@ -118,8 +123,8 @@ void FireFactory::draw( int Texture, const int ScreenOver )
     DrawRectGraph( x, fire_pos_y_,
         left, top, right, bottom, texture_, TRUE, FALSE );    
     DrawRectGraph( x, fire_pos_y_,
-        explosion_[ 0 ], explosion_[ 1 ], explosion_[ 2 ], explosion_[ 3 ], texture_, TRUE, FALSE );
-
+        explosion_[ Rect::kLeft ], explosion_[ Rect::kTop ], explosion_[ Rect::kRight ], explosion_[ Rect::kBottom ],
+        texture_, TRUE, FALSE );
 }
 
 // 画面内にいるか確認する関数
@@ -133,17 +138,15 @@ bool FireFactory::getCheckScreen( const int ScreenOver )
     int screen_bottom = kScreenYSize;
 
     int fire_left     = fire_pos_x_;
-    int fire_right    = fire_pos_x_ + (kSize / 2);
+    int fire_right    = fire_pos_x_ + kHalfSize;
 
     int fire_top      = fire_pos_y_;
-    int fire_bottom   = fire_pos_y_ + (kSize / 2);
+    int fire_bottom   = fire_pos_y_ + kHalfSize;
 
     // 画面内にいるとき
     if( (screen_right > fire_left) && (fire_right > screen_left)
         && (screen_bottom > fire_top) && (fire_bottom > screen_top) )
-    {
         return true;
-    }
     else
     // 画面外
     return false;
@@ -159,7 +162,7 @@ void FireFactory::animation()
         animation_cnt_ = 0;
         animation_++;
 
-        if( animation_ >= 4 )
+        if( animation_ >= kLimit )
             animation_ = 0;
     }
 }
@@ -172,13 +175,13 @@ void FireFactory::burnAnimation()
     if( explode_cnt_ <= kSmall )
     {
         // RECTの値を変更（小爆発）
-        explosion_[ 0 ] = 0;
-        explosion_[ 1 ] = kSize * 7;
-        explosion_[ 2 ] = kSize;
-        explosion_[ 3 ] = kSize;
+        explosion_[ Rect::kLeft ]   = 0;
+        explosion_[ Rect::kTop ]    = kSeptuple;
+        explosion_[ Rect::kRight ]  = kSize;
+        explosion_[ Rect::kBottom ] = kSize;
     }
     else if( explode_cnt_ <= kBic )
-        explosion_[ 0 ] = kSize;
+        explosion_[ Rect::kLeft ] = kSize;
     else
         // 一通りしたら消す(erase)
         explode_flag_ = false;

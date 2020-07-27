@@ -2,11 +2,11 @@
 
 void BallManagement::initialize()
 {
-    texture_ = LoadGraph( "Texture/mario_item.png" );
+    texture_          = LoadGraph( "Texture/mario_item.png" );
     push_create_fire_ = 0;
 
-    create_cnt_ = 0;
-    create_flag_ = true;
+    create_cnt_       = 0;
+    create_flag_      = true;
 }
 
 void BallManagement::update( int TotalX, int TotalY, int Status, int Direction, bool GameOver, int PosY )
@@ -20,15 +20,19 @@ void BallManagement::update( int TotalX, int TotalY, int Status, int Direction, 
             // ボタンが押されたとき かつ、FireMarioの時
             if( !(GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_4) == 0 || CheckHitKey( KEY_INPUT_B ) == 1 )
                 push_create_fire_++;
+
+            // 押されていない間初期化
             else
                 push_create_fire_ = 0;
 
-            // ボタンが押されたとき
+            // ボタンが押された瞬間
             if( push_create_fire_ == 1 )
             {
                 size_t index = std::distance( fire_.begin(), fire_.end() );
 
-                if( index <= 3 )
+                // ４個まで同時投射可能
+                if( index < kBallLimit )
+                {
                     // まだ生成していなかったら作成
                     if( create_flag_ )
                     {
@@ -42,13 +46,14 @@ void BallManagement::update( int TotalX, int TotalY, int Status, int Direction, 
                             create_flag_ = false;
                         }
                     }
-
+                }
             }
 
+            // 時間管理
             if( !create_flag_ )
                 create_cnt_++;
 
-            // 連続で出されないようにするため
+            // 連投を一定間隔に制御
             if( create_cnt_ >= kStopper )
             {
                 create_cnt_ = 0;
@@ -57,20 +62,20 @@ void BallManagement::update( int TotalX, int TotalY, int Status, int Direction, 
         }
     }
 
-    // 要素数だけFireを動かす
+    // 要素数だけFireBallのupdate()を呼び出す
     for( auto itr = fire_.begin(); itr != fire_.end(); itr++ )
     {
-        (*itr)->update();                                 // *itrアロー演算子()をつける
+        (*itr)->update();
     }
 
 }
 
 void BallManagement::draw(const int ScreenOver)
 {
-    // 要素数だけFireを描画する
+    // 要素数だけFireBallのdraw()を呼び出す
     for( auto itr = fire_.begin(); itr != fire_.end(); itr++ )
     {
-        (*itr)->draw( texture_, ScreenOver );             // *itrアロー演算子()をつける
+        (*itr)->draw( texture_, ScreenOver );
     }
 }
 
@@ -81,17 +86,17 @@ void BallManagement::finalize()
 
 int BallManagement::getFirePosX(int Num)
 {
-        return fire_[Num]->getFirePosX();                 // *itrアロー演算子()をつける
+        return fire_[Num]->getFirePosX();
 }
 
 int BallManagement::getFirePosY(int Num)
 {
-        return fire_[Num]->getFirePosY();                 // *itrアロー演算子()をつける
+        return fire_[Num]->getFirePosY();
 }
 
 int BallManagement::getSize()
 {
-    return fire_.size();                                  // Fireの要素の数を返す
+    return fire_.size();                // Fireの要素の数を返す
 }
 
 void BallManagement::sideCheck()
@@ -102,10 +107,10 @@ void BallManagement::sideCheck()
         {
             size_t index = std::distance( fire_.begin(), itr );
             SAFE_DELETE( fire_[ index ] );
-            itr = fire_.erase( itr );                     // 詰めるとき（消すとき）
+            itr = fire_.erase( itr );   // 詰めるとき（消すとき）
         }
         else
-            itr++;                                        // 詰めないとき（消さないとき）
+            itr++;                      // 詰めないとき（消さないとき）
     }
 }
 
@@ -117,12 +122,13 @@ void BallManagement::posCheck( const int ScrollCnt)
         // 画面外にFireballがあるとき
         if( !(*itr)->getCheckScreen( ScrollCnt ) )
         {
+            // 配列の先頭から位置を計算し破棄する
             size_t index = std::distance( fire_.begin(), itr );
             SAFE_DELETE( fire_[ index ] );
-            itr = fire_.erase( itr );                     // 詰めるとき（消すとき）
+            itr = fire_.erase( itr );   // 詰めるとき（消すとき）
         }
         else
-            itr++;                                        // 詰めないとき（消さないとき）
+            itr++;                      // 詰めないとき（消さないとき）
     }
 }
 

@@ -6,8 +6,9 @@
 class BallManagement
 {
 public :
-    static const int  kStopper = 16;   // 連射防止数値
-    static const int  kEndline = 640;  // 行ってはいけない座標
+    const int kBallLimit = 4;    // 連続で出せる数を設定
+    const int kStopper   = 16;   // 連射防止数値
+    const int kEndline   = 640;  // 行ってはいけない座標
 
     BallManagement( Field* field ) : ff_( field ) { field_ = field; }
 

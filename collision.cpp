@@ -16,7 +16,7 @@ bool Collision::sideColl(RL rl)
     int x2 = body_[ rl ][ kHands ][ kX ] / kSize;
     int y2 = body_[ rl ][ kHands ][ kY ] / kSize;
 
-    if( field_->getId( x1, y1 ) > 64 && field_->getId( x2, y2 ) > 64 )
+    if( field_->getId( x1, y1 ) > kTouchLimit && field_->getId( x2, y2 ) > kTouchLimit )
         return true;
 
     return false;       // Id <= 64
@@ -25,7 +25,7 @@ bool Collision::sideColl(RL rl)
 // 体の足元を登録し、フィールドの何と当たっているか返す関数
 int Collision::footColl()
 {
-    // return 1(Id <= 64),return 2(Id == 191), return 0 その他
+    // return 1(Id <= 64),return 2(Id == 190, 191), return 0 その他
 
     int x1 = body_[ kRight ][ kFoot ][ kX ] / kSize;
     int y1 = body_[ kRight ][ kFoot ][ kY ] / kSize;
@@ -34,11 +34,11 @@ int Collision::footColl()
     int y2 = body_[ kLeft ][ kFoot ][ kY ] / kSize;
 
     // 当たり判定のあるブロック
-    if( field_->getId( x1, y1 ) <= 64 || field_->getId( x2, y2 ) <= 64 )
+    if( field_->getId( x1, y1 ) <= kTouchLimit || field_->getId( x2, y2 ) <= kTouchLimit )
          return 1;       
     // 空中に浮いているとき
-    else if( field_->getId( x1, y1 ) == 191 || field_->getId( x2, y2 ) == 191 || 
-             field_->getId( x1, y1 ) == 190 || field_->getId( x2, y2 ) == 190  )
+    else if( field_->getId( x1, y1 ) == kNoBlockb || field_->getId( x2, y2 ) == kNoBlockb ||
+             field_->getId( x1, y1 ) == kNoBlocka || field_->getId( x2, y2 ) == kNoBlocka )
         return 2;
     else
         return 0;
@@ -59,11 +59,11 @@ int Collision::fireColl()
     if( field_->getId( x1, y1 ) == kStairs || field_->getId( x2, y2 ) == kStairs )
         return 3;
     // 当たり判定のあるブロックと衝突したとき
-    else if( field_->getId( x1, y1 ) <= 64 || field_->getId( x2, y2 ) <= 64 )
+    else if( field_->getId( x1, y1 ) <= kTouchLimit || field_->getId( x2, y2 ) <= kTouchLimit )
         return 1;
     // 空中に浮いているとき
-    else if( field_->getId( x1, y1 ) == 191 || field_->getId( x2, y2 ) == 191 ||
-        field_->getId( x1, y1 ) == 190 || field_->getId( x2, y2 ) == 190 )
+    else if( field_->getId( x1, y1 ) == kNoBlockb || field_->getId( x2, y2 ) == kNoBlockb ||
+        field_->getId( x1, y1 ) == kNoBlocka || field_->getId( x2, y2 ) == kNoBlocka )
         return 2;
     else
         return 0;
