@@ -70,7 +70,7 @@ int BallManagement::getFirePosY(int Num)
 
 int BallManagement::getSize()
 {
-    return fire_.size();                // Fire‚Ì—v‘f‚Ì”‚ğ•Ô‚·
+    return static_cast<int>(fire_.size());                // Fire‚Ì—v‘f‚Ì”‚ğ•Ô‚·
 }
 
 // V‚µ‚­¶¬‚·‚éˆ—

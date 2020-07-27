@@ -385,7 +385,7 @@ void Player::collision()
 
         acceleration_ = 0;  // 落下速度
 
-        int block_line = std::round( static_cast<float>(total_movement_y_) / kSize );
+        int block_line = static_cast<int>(std::round( static_cast<float>(total_movement_y_) / kSize ));
         pos_y_ = (block_line - kControl) * kSize;
         total_movement_y_ = block_line * kSize;
     }
@@ -446,10 +446,10 @@ void Player::hit()
     // 上への加速度を無くす
     acceleration_ = 0;
 
-    int block_line = std::round( static_cast<float>(total_movement_y_) / kSize );
+    int block_line = static_cast<int>(std::round( static_cast<float>(total_movement_y_) / kSize ));
 
     // プレイヤーの立つ場所を上の辺の高さにする
-    pos_y_ = (block_line - 4) * kSize;
+    pos_y_ = (block_line - kControl) * kSize;
     total_movement_y_ = block_line * kSize;
 }
 

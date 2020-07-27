@@ -127,6 +127,7 @@ void FireFactory::draw( int Texture, const int ScreenOver )
         texture_, TRUE, FALSE );
 }
 
+
 // ‰æ–Ê“à‚É‚¢‚é‚©Šm”F‚·‚éŠÖ”
 bool FireFactory::getCheckScreen( const int ScreenOver )
 {        

@@ -1,4 +1,3 @@
-#include <DxLib.h>
 #include "collision.hpp"
 
 class Player :
@@ -6,20 +5,20 @@ class Player :
 {
 public:
     const int kSpeed      = 6;      // 歩いているときの速度
+    const int kDownSpeed  = 6;      // ゴールしたとき落ちるスピード
     const int kDashSpeed  = 10;     // ダッシュしているときの速度
-    const int kStopper    = 16;     // 連射防止ストッパー
     const int kEnemyJump  = 15;     // 敵を踏んだ時のジャンプ力
+    const int kStopper    = 16;     // 連射防止ストッパー
     const int kJumpPower  = 24;     // ジャンプボタン時のジャンプ力
     const int kDownCnt    = 66;     // 掴んでからの待ち時間
     const int kTurnCnt    = 90;     // 向き反転させるための時間
+    const int kInvincible = 120;    // 無敵制限時間
+    const int kSkyBlue    = 191;    // 背景の何もない透明マップチップID
+    const int kGoalPost   = 194;    // ゴールポスト
     const int kStartX     = 256;    // 初期座標X
     const int kStartY     = 576;    // 初期座標Y
     const int kEndLine    = 576;    // 画面の中心
     const int kDeadLine   = 800;    // この数値より下は死ぬ
-    const int kSkyBlue    = 191;    // 背景の何もない透明マップチップID
-    const int kInvincible = 120;    // 無敵制限時間
-    const int kDownSpeed  = 6;      // ゴールしたとき落ちるスピード
-    const int kGoalPost   = 194;    // ゴールポスト
 
     Player( Field* field ) : Collision( field ) {};
     bool initialize();

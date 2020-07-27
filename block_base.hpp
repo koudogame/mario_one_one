@@ -1,6 +1,4 @@
 #pragma once
-#include <windows.h>
-#include <DxLib.h>
 
 // パーツ構造体
 struct Parts

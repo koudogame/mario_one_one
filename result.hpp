@@ -1,5 +1,4 @@
 #pragma once 
-#include <DxLib.h>
 #include "base_scene.hpp"
 
 class ResultScene :

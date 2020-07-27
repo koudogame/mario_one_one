@@ -1,5 +1,4 @@
 #pragma once
-#include<DxLib.h>
 #include "fire_factory.hpp"
 #include "collision.hpp"
 

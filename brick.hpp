@@ -1,6 +1,4 @@
 #pragma once
-#include <DxLib.h>
-#include <fstream>
 #include "block_base.hpp"
 
 class Brick :

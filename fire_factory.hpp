@@ -1,4 +1,3 @@
-#include <Dxlib.h>
 #include "collision.hpp"
 
 class FireFactory :

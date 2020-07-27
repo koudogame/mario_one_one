@@ -1,5 +1,3 @@
-#include <DxLib.h>
-#include <crtdbg.h>
 #include "scene_manager.hpp"
 
 // WinMainŠÖ”

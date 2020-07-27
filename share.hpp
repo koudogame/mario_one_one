@@ -1,4 +1,9 @@
 #pragma once 
+#include <vector>
+#include <DxLib.h>
+#include <fstream>
+#include <crtdbg.h>
+#include <windows.h>
 
 /*’è”ŒQ*/
 constexpr int kGravity     = 1;              // d—Í
