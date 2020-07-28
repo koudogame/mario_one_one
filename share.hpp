@@ -5,6 +5,7 @@
 #include <crtdbg.h>
 #include <windows.h>
 #include "rect.hpp"
+#include "number.hpp"
 #include "position.hpp"
 
 /*’è”ŒQ*/

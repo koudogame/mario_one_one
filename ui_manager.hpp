@@ -2,7 +2,7 @@
 
 /*NewするClass*/
 #include "ui_map.hpp"
-
+#include "ui_coin.hpp"
 
 class UIManager
 {
@@ -12,7 +12,10 @@ public:
     void draw();
     void finalize();
 
+    void coinCheck( int );
+
 private:
     int texture_;   // テクスチャ
     UIMap map_;     // Mapの管理
+    UICoin coin_;   // Coinの管理
 };

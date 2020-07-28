@@ -82,11 +82,19 @@ void Item::update( int Brx, int Bry, int Blx, int Bly, int Status, int Screenove
     if( Blx != 0 || Bly != 0 )
     {
         item_[ 0 ][ Bly ][ Blx ]->flagChange( Status );
+
+        // コインのIdの時
+        if( item_[ 0 ][ Bly ][ Blx ]->getId() == kCoin )
+            coin_counter_++;
     }
 
     if( Brx != 0 || Bry != 0 )
     {
         item_[ 0 ][ Bry ][ Brx ]->flagChange( Status );
+
+        // コインのIdの時
+        if( item_[ 0 ][ Bry ][ Brx ]->getId() == kCoin )
+            coin_counter_++;
     }
 }
 

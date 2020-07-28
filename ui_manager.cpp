@@ -8,23 +8,31 @@ void UIManager::initialize()
 
 
     map_.initialize();
+    coin_.initialize();
 }
 
 void UIManager::update()
 {
     map_.update();
+    coin_.update();
 }
 
 void UIManager::draw()
 {
     map_.draw( texture_ );
+    coin_.draw( texture_ );
 }
 
 void UIManager::finalize()
 {
     // ‰æ‘œ”jŠü
-    DeleteGraph( texture_ ); 
-
+    DeleteGraph( texture_ );
 
     map_.finalize();
+    coin_.finalize();
+}
+
+void UIManager::coinCheck( int Coin )
+{
+    coin_.coinCounter( Coin );
 }

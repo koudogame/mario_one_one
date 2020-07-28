@@ -71,6 +71,8 @@ void PlayScene::update()
     bm_->update( player_->getPositionX(), player_->getPositionY(),
         player_->getStatus(), player_->getDirection(), player_->getGoal(), player_->getPosY() );
 
+    ui_->coinCheck( item_->getCoin() );
+
     ui_->update();
 
     bm_->posCheck( player_->getScrollCnt() );           // d‚­‚È‚ç‚È‚¢‚æ‚¤‚É‰æ–ÊŠO‚Í”»’è‚µ‚È‚¢ˆ—

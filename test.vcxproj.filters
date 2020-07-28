@@ -180,6 +180,9 @@
     <ClCompile Include="ui_map.cpp">
       <Filter>UserInterface\UI_Map</Filter>
     </ClCompile>
+    <ClCompile Include="ui_coin.cpp">
+      <Filter>UserInterface\UI_Coin</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="result.hpp">
@@ -270,6 +273,12 @@
       <Filter>UserInterface\UI_Base</Filter>
     </ClInclude>
     <ClInclude Include="position.hpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ui_coin.hpp">
+      <Filter>UserInterface\UI_Coin</Filter>
+    </ClInclude>
+    <ClInclude Include="number.hpp">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

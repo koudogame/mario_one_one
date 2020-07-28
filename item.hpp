@@ -28,6 +28,7 @@ public:
     inline int getWidth() { return width_; }
     inline int getHeight() { return height_; }
     inline int getId( int i, int j ) { return item_[ 0 ][ i ][ j ]->getId(); }
+    inline int getCoin() { return coin_counter_; }
 
 private:
     Field* field_;
@@ -35,6 +36,8 @@ private:
     int texture_;       // テクスチャハンドル保存用
     int width_;         // 横幅
     int height_;        // 高さ
+
+    int coin_counter_;  // コインのカウンター
 
     // マップチップ配列
     std::vector<std::vector<std::vector<ItemBase*>>> item_;
