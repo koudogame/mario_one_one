@@ -214,6 +214,7 @@
     <ClInclude Include="player.hpp" />
     <ClInclude Include="pos_collision.hpp" />
     <ClInclude Include="power_up.hpp" />
+    <ClInclude Include="rect.hpp" />
     <ClInclude Include="release.hpp" />
     <ClInclude Include="result.hpp" />
     <ClInclude Include="scene_manager.hpp" />

@@ -15,6 +15,7 @@ public:
     const int kInvincible = 120;    // 無敵制限時間
     const int kSkyBlue    = 191;    // 背景の何もない透明マップチップID
     const int kGoalPost   = 194;    // ゴールポスト
+    const int kEntrance   = 201;    // 塔の入り口
     const int kStartX     = 256;    // 初期座標X
     const int kStartY     = 576;    // 初期座標Y
     const int kEndLine    = 576;    // 画面の中心
@@ -74,6 +75,8 @@ public:
     inline bool getGameover() { return gameover_flag_; }        /*死んでいるか*/
 
 private:
+    Rect<int> rect_;            // Rectを使う上で必要
+
     int texture_;              // テクスチャハンドル
 
     int total_movement_x_;     // 総合移動量x
@@ -81,13 +84,6 @@ private:
 
     int pos_x_;                // 座標x
     int pos_y_;                // 座標y 
-
-    
-    int left_;                 // SrcX
-    int top_;                  // SrcY
-
-    int right_;                // Width
-    int bottom_;               // Height
 
     int status_;               // マリオの状態
     int past_status_;          // マリオの過去の状態

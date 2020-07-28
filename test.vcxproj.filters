@@ -233,5 +233,8 @@
     <ClInclude Include="share.hpp">
       <Filter>Share</Filter>
     </ClInclude>
+    <ClInclude Include="rect.hpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

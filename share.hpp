@@ -4,6 +4,7 @@
 #include <fstream>
 #include <crtdbg.h>
 #include <windows.h>
+#include "rect.hpp"
 
 /*定数群*/
 constexpr int kGravity     = 1;              // 重力
@@ -21,6 +22,7 @@ constexpr int kQuadruple   = kSize * 4;      // ブロック4倍の大きさ
 constexpr int Quintuple    = kSize * 5;      // ブロック5倍の大きさ
 constexpr int kSextuple    = kSize * 6;      // ブロック6倍の大きさ
 constexpr int kSeptuple    = kSize * 7;      // ブロック7倍の大きさ
+constexpr int kOctuple     = kSize * 8;      // ブロック8倍の大きさ
 constexpr int kDecuple     = kSize * 10;     // ブロック10倍の大きさ
 constexpr int kFallOut     = 670;            // 地面の限界
 
@@ -40,13 +42,6 @@ constexpr int kFlag        = 3;        // 旗ID
 constexpr int kFlower      = 16;       // フラワーID
 constexpr int kGoal        = 19;       // ゴールID
 constexpr int kCoin        = 80;       // コインID
-
-// Rect管理
-enum Rect
-{
-    kLeftEdge, kTop, kRightEdge, kBottom, kRect
-};
-
 
 // マリオの状態
 enum Status

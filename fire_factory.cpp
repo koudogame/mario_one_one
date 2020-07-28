@@ -123,7 +123,7 @@ void FireFactory::draw( int Texture, const int ScreenOver )
     DrawRectGraph( x, fire_pos_y_,
         left, top, right, bottom, texture_, TRUE, FALSE );    
     DrawRectGraph( x, fire_pos_y_,
-        explosion_[ kLeftEdge ], explosion_[ kTop ], explosion_[ kRightEdge ], explosion_[ kBottom ],
+        rect_.left, rect_.top, rect_.right, rect_.bottom,
         texture_, TRUE, FALSE );
 }
 
@@ -176,13 +176,13 @@ void FireFactory::burnAnimation()
     if( explode_cnt_ <= kSmall )
     {
         // RECTの値を変更（小爆発）
-        explosion_[ kLeftEdge ]   = 0;
-        explosion_[ kTop ]        = kSeptuple;
-        explosion_[ kRightEdge ]  = kSize;
-        explosion_[ kBottom ]     = kSize;
+        rect_.left   = 0;
+        rect_.right  = kSize;
+        rect_.top    = kSeptuple;
+        rect_.bottom = kSize;
     }
     else if( explode_cnt_ <= kBic )
-        explosion_[ kLeftEdge ] = kSize;
+        rect_.left   = kSize;
     else
         // 一通りしたら消す(erase)
         explode_flag_ = false;

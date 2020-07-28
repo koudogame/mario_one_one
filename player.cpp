@@ -10,11 +10,6 @@ bool Player::initialize()
     total_movement_x_ = kStartX;
     total_movement_y_ = 832;
 
-    left_             = 0;
-    top_              = 0;
-    right_            = 0;
-    bottom_           = 0;
-
     status_           = kMario;
     past_status_      = status_;
 
@@ -279,22 +274,22 @@ void Player::draw()
         if( status_ >= kMario )
         {
             // 状態は変わってもwidthは変わらない
-            left_ = animation_ * kSize;
-            right_ = kSize;
-            top_ = 0;
-            bottom_ = kSize;
+            rect_.left   = animation_ * kSize;
+            rect_.right  = kSize;
+            rect_.top    = 0;
+            rect_.bottom = kSize;
             
             // スーパーマリオのとき
             if( status_ == kSuperMario )
             {
-                top_ = kSize * 4;
-                bottom_ = kSize * 2;
+                rect_.top = kQuadruple;
+                rect_.bottom = kDoubleSize;
             }
             // ファイアマリオのとき
             else if( status_ == kFireMario )
             {
-                top_ = kSize * 8;
-                bottom_ = kSize * 2;
+                rect_.top = kOctuple;
+                rect_.bottom = kDoubleSize;
 
                 // Status FireMario
                 if( goal_flag_ )
@@ -316,10 +311,10 @@ void Player::draw()
                     {       
                         throw_cnt_++;
 
-                        left_   = kQuadruple;
-                        right_  = kSize;
-                        top_    = kDecuple;
-                        bottom_ = kDoubleSize;
+                        rect_.left   = kQuadruple;
+                        rect_.right  = kSize;
+                        rect_.top    = kDecuple;
+                        rect_.bottom = kDoubleSize;
                     }
 
                     // 連続投射を防止する
@@ -334,10 +329,10 @@ void Player::draw()
             // 無敵状態ではないとき
             if( invincible_ )
                 // 右向きマリオの描画
-                DrawRectGraph( pos_x_, pos_y_, left_, top_, right_, bottom_, texture_, TRUE, !direction_ );
+                DrawRectGraph( pos_x_, pos_y_, rect_.left, rect_.top, rect_.right, rect_.bottom, texture_, TRUE, !direction_ );
             else
                 SetDrawBlendMode( DX_BLENDMODE_ALPHA, 128 );
-            DrawRectGraph( pos_x_, pos_y_, left_, top_, right_, bottom_, texture_, TRUE, !direction_ );
+            DrawRectGraph( pos_x_, pos_y_, rect_.left, rect_.top, rect_.right, rect_.bottom, texture_, TRUE, !direction_ );
             SetDrawBlendMode( DX_BLENDMODE_NOBLEND, 255 );
         }
         else
@@ -553,7 +548,7 @@ void Player::ending()
         // 塔へ向かって歩き出す
         else if( down_cnt_ >= kTurnCnt )
         {
-            if( total_movement_x_ < (kSize * 201) - kHalfSize )
+            if( total_movement_x_ < (kSize * kEntrance) - kHalfSize )
             {
                 pos_x_ += 3;
                 total_movement_x_ += 3;
@@ -612,7 +607,7 @@ void Player::ending()
         // 塔へ向かって歩く
         else if(down_cnt_ >= kTurnCnt)
         {
-            if( total_movement_x_ < (kSize * 201) - kHalfSize )
+            if( total_movement_x_ < (kSize * kEntrance) - kHalfSize )
             {
                 pos_x_ += 3;
                 total_movement_x_ += 3;
@@ -703,7 +698,7 @@ void Player::leftCheck()
     if( status_ == kMario )
         body_[ kLeft ][ kHands ][ kY ] = (total_movement_y_ + kSize - 1);
     else
-        body_[ kLeft ][ kHands ][ kY ] = (total_movement_y_ + (kSize * 2) - 1);
+        body_[ kLeft ][ kHands ][ kY ] = (total_movement_y_ + kDoubleSize - 1);
 
     // マリオの左側に衝突するブロックがないとき
     if( Collision::sideColl( kLeft ) == true )

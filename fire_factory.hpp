@@ -32,6 +32,8 @@ public :
 
 
 private : 
+    Rect<int> rect_;                 // Rect‚ğ—pˆÓ
+
     bool side_touch_;               // ‰¡‚©‚ç“–‚½‚Á‚½‚©’²‚×‚é
     int texture_;                   // ˆø”‚Åó‚¯æ‚Á‚½‰æ‘œ‚ğ•Û‘¶
     int direction_;                 // Å‰‚Éó‚¯æ‚Á‚½Œü‚«‚ğ•Û‘¶
@@ -41,7 +43,6 @@ private :
     int fire_pos_x_;                // ˆø”‚Åó‚¯æ‚Á‚½PosX‚ğ•Û‘¶
     int fire_pos_y_;                // ˆø”‚Åó‚¯æ‚Á‚½PosY‚ğ•Û‘¶
 
-    int explosion_[ kRect ] = { 0 };    // ”š”j‰‰oRect
     int explode_cnt_;
     int explode_flag_;
 };
