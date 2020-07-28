@@ -4,6 +4,7 @@
 PlayScene::PlayScene()
 {
     // クラスポインタ初期化
+    ui_      = nullptr;
     bm_      = nullptr;
     item_    = nullptr;
     enemy_   = nullptr;
@@ -25,6 +26,7 @@ bool PlayScene::initialize()
     player_  = new Player( field_ );
     bm_ = new BallManagement( field_ );
     pos_col_ = new PosCollision(); 
+    ui_      = new UIManager();
 
     // ファイルに対する入力ストリーム
     std::fstream stage;
@@ -42,6 +44,7 @@ bool PlayScene::initialize()
     field_->initialize( stage );
     bm_->initialize();
     player_->initialize();
+    ui_->initialize();
 
     touch_ = 0;
     change_timer_ = 0;
@@ -67,6 +70,8 @@ void PlayScene::update()
 
     bm_->update( player_->getPositionX(), player_->getPositionY(),
         player_->getStatus(), player_->getDirection(), player_->getGoal(), player_->getPosY() );
+
+    ui_->update();
 
     bm_->posCheck( player_->getScrollCnt() );           // 重くならないように画面外は判定しない処理
     bm_->sideCheck();                                   // 横から当たったら消去
@@ -274,6 +279,7 @@ void PlayScene::draw()
     enemy_->draw(player_->getScrollCnt());          // 敵
     bm_->draw( player_->getScrollCnt() );           // ファイアボール
     player_->draw();                                // マリオ
+    ui_->draw();                                    // UI
 }
 
 void PlayScene::finalize()
@@ -284,8 +290,10 @@ void PlayScene::finalize()
     enemy_->finalize();
     bm_->finalize();
     player_->finalize();
+    ui_->finalize();
 
     // メモリ開放newした分
+    delete ui_;
     delete bm_;
     delete item_;
     delete field_;

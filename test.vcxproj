@@ -192,6 +192,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="turtle.cpp" />
+    <ClCompile Include="ui_manager.cpp" />
+    <ClCompile Include="ui_map.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ball_management.hpp" />
@@ -212,6 +214,7 @@
     <ClInclude Include="mystery.hpp" />
     <ClInclude Include="play.hpp" />
     <ClInclude Include="player.hpp" />
+    <ClInclude Include="position.hpp" />
     <ClInclude Include="pos_collision.hpp" />
     <ClInclude Include="power_up.hpp" />
     <ClInclude Include="rect.hpp" />
@@ -220,6 +223,9 @@
     <ClInclude Include="scene_manager.hpp" />
     <ClInclude Include="share.hpp" />
     <ClInclude Include="turtle.hpp" />
+    <ClInclude Include="ui_base.hpp" />
+    <ClInclude Include="ui_manager.hpp" />
+    <ClInclude Include="ui_map.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

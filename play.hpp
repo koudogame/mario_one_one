@@ -4,6 +4,7 @@
 #include "player.hpp"
 #include "item.hpp"
 #include "enemy.hpp"
+#include "ui_manager.hpp"
 #include "ball_management.hpp"
 #include "pos_collision.hpp"
 
@@ -26,6 +27,7 @@ private:
     Field* field_;              // フィールドクラス
     Player* player_;            // プレイヤークラス
     Enemy* enemy_;              // エネミークラス
+    UIManager* ui_;             // UIクラス
     BallManagement* bm_;        // ボールマネージャークラス
     PosCollision* pos_col_;     // ポジション衝突判定クラス
 

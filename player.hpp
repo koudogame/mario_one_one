@@ -75,7 +75,7 @@ public:
     inline bool getGameover() { return gameover_flag_; }        /*死んでいるか*/
 
 private:
-    Rect<int> rect_;            // Rectを使う上で必要
+    Rect<int> rect_;           // Rectを使う上で必要
 
     int texture_;              // テクスチャハンドル
 

@@ -82,6 +82,24 @@
     <Filter Include="Share">
       <UniqueIdentifier>{2234b63c-9a70-47ae-a334-ccd2eb2f3bbe}</UniqueIdentifier>
     </Filter>
+    <Filter Include="UserInterface">
+      <UniqueIdentifier>{995f902b-b292-404f-83ed-7c7a631e5396}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UserInterface\UI_Coin">
+      <UniqueIdentifier>{ecea364e-3f78-4e11-a970-a932f999ffa4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UserInterface\UI_Score">
+      <UniqueIdentifier>{a412c46f-a89b-43ce-8b1a-7c93e469477d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UserInterface\UI_Map">
+      <UniqueIdentifier>{c811a5bf-cd44-4af1-a194-2d57d98a9b18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UserInterface\UI_Base">
+      <UniqueIdentifier>{c0bea572-78f1-44c3-ab76-9a6c58bcf2b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UserInterface\UI_Time">
+      <UniqueIdentifier>{a222b8ba-0a22-4452-bf96-15dca8c5de3a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -155,6 +173,12 @@
     </ClCompile>
     <ClCompile Include="share.cpp">
       <Filter>Share</Filter>
+    </ClCompile>
+    <ClCompile Include="ui_manager.cpp">
+      <Filter>UserInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="ui_map.cpp">
+      <Filter>UserInterface\UI_Map</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -234,6 +258,18 @@
       <Filter>Share</Filter>
     </ClInclude>
     <ClInclude Include="rect.hpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ui_manager.hpp">
+      <Filter>UserInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="ui_map.hpp">
+      <Filter>UserInterface\UI_Map</Filter>
+    </ClInclude>
+    <ClInclude Include="ui_base.hpp">
+      <Filter>UserInterface\UI_Base</Filter>
+    </ClInclude>
+    <ClInclude Include="position.hpp">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

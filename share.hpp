@@ -5,6 +5,7 @@
 #include <crtdbg.h>
 #include <windows.h>
 #include "rect.hpp"
+#include "position.hpp"
 
 /*定数群*/
 constexpr int kGravity     = 1;              // 重力
@@ -62,7 +63,7 @@ enum BodyParts
 };
 
 //　体のパーツのX,Y
-enum Position
+enum PartsPosition
 {
     kX, kY, kPosition
 };
