@@ -18,8 +18,8 @@ void Powerup::update( int Screenover )
                 rect.right = kSize;
                 item_.rect = rect;
 
-                up_cnt_ += 16;
-                item_.y -= 16;
+                up_cnt_ += kPunchUp;
+                item_.y -= kPunchUp;
 
                 punch_ = false;
             }
@@ -33,8 +33,8 @@ void Powerup::update( int Screenover )
                 rect.right = kSize;
                 item_.rect = rect;
 
-                up_cnt_ += 16;
-                item_.y -= 16;
+                up_cnt_ += kPunchUp;
+                item_.y -= kPunchUp;
 
                 punch_ = false;
             }

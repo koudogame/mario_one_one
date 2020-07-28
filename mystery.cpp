@@ -9,7 +9,7 @@ void Mystery::update( int Status )
         if( parts_.Id == kMystery )
         {
             base_pos_ = parts_.y;
-            parts_.y -= kSize / 4;
+            parts_.y -= kBlockUp;
             upblock_flag_ = false;
 
             parts_.Id = kUsedBlock;
@@ -29,8 +29,8 @@ void Mystery::update( int Status )
         if( animation_cnt_ <= kChangeTime * 3 )
         {
             RECT rect;
-            rect.top = kMystery / 16 * kSize;
-            rect.left = kMystery % 16 * kSize;
+            rect.top = kMystery / kLength * kSize;
+            rect.left = kMystery % kLength * kSize;
             rect.bottom = kSize;
             rect.right = kSize;
             parts_.rect = rect;
@@ -38,8 +38,8 @@ void Mystery::update( int Status )
         else if( animation_cnt_ <= kChangeTime * 4 )
         {
             RECT rect;
-            rect.top = kMystery / 16 * kSize;
-            rect.left = (kMystery + 1) % 16 * kSize;
+            rect.top = kMystery / kLength * kSize;
+            rect.left = (kMystery + 1) % kLength * kSize;
             rect.bottom = kSize;
             rect.right = kSize;
             parts_.rect = rect;
@@ -47,8 +47,8 @@ void Mystery::update( int Status )
         else if( animation_cnt_ <= kChangeTime * 5 )
         {
             RECT rect;
-            rect.top = kMystery / 16 * kSize;
-            rect.left = (kMystery + 2) % 16 * kSize;
+            rect.top = kMystery / kLength * kSize;
+            rect.left = (kMystery + 2) % kLength * kSize;
             rect.bottom = kSize;
             rect.right = kSize;
             parts_.rect = rect;
@@ -56,8 +56,8 @@ void Mystery::update( int Status )
         else if( animation_cnt_ <= kChangeTime * 6 )
         {
             RECT rect;
-            rect.top = kMystery / 16 * kSize;
-            rect.left = (kMystery + 3) % 16 * kSize;
+            rect.top = kMystery / kLength * kSize;
+            rect.left = (kMystery + 3) % kLength * kSize;
             rect.bottom = kSize;
             rect.right = kSize;
             parts_.rect = rect;
@@ -73,7 +73,7 @@ void Mystery::downBlock()
     if( !upblock_flag_ )
     {
         if( parts_.y < base_pos_ )
-            parts_.y += 2;
+            parts_.y += kDownSpeed;
         else
         upblock_flag_ = true;
     }

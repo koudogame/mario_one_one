@@ -6,6 +6,7 @@ class Powerup :
 {
 public :
     const int kSpeed    = 4;     // キノコ進む速さ
+    const int kPunchUp  = 16;    // 叩かれて上に上がる
     const int kNoBlock  = 115;   // 何もないアイテムのID
     const int kGround   = 575;   // 床の最低ライン
 

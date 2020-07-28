@@ -5,7 +5,9 @@ class Mystery :
     public BlockBase
 {
 public :
-    static const int kChangeTime = 8;   // はてなボックスアニメーション用
+    const int kDownSpeed  = 2;          // ブロックが下に落ちる
+    const int kChangeTime = 8;          // はてなボックスアニメーション用
+    const int kBlockUp    = 16;         // 叩かれたときに上に上がる
 
     void update(int) override;          // 叩かれたときの処理
     void downBlock() override;          // ブロックが高くなったとき
