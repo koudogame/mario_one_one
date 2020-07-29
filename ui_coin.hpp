@@ -10,10 +10,10 @@ public:
     const int kCoinNum  = 2;      // コインの左端
     const int kTimesNum = 10;     // ×の番号 
     const int kCountUp  = 10;     // カウントアップ
-    const int kCoinPosX = 472;    // コインのポジション
-    const int kTimes    = 514;    // ×のポジション 
-    const int kNumPosBX = 556;    // Bのポジション
-    const int kNumPosAX = 598;    // Aのポジション
+    const int kCoinPosX = 434;    // コインのポジション
+    const int kTimes    = 492;    // ×のポジション 
+    const int kNumPosBX = 534;    // Bのポジション
+    const int kNumPosAX = 576;    // Aのポジション
 
     void initialize() override;
     void update() override;

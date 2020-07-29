@@ -6,7 +6,7 @@ void Kuribo::update( int ScreenOver )
     if( ScreenOver > (enemy_parts_.x - (kSize * kMoveStart)) )
     {
         // “®‚«‚Â‚Ã‚¯‚é‚Ì‚Í‰æ–Ê“à‚É‚¢‚é‚Æ‚«
-        if( ScreenOver <= enemy_parts_.x + kSize )
+        if( ScreenOver <= enemy_parts_.x + kQuadruple )
         {
             // Ä‚©‚ê‚Ä‚¢‚È‚¢‚©
             if( burn_ )
