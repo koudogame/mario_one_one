@@ -74,28 +74,23 @@ void Item::update( int Brx, int Bry, int Blx, int Bly, int Status, int Screenove
     {
         for( int j = 0; j < width_; j++ )
         {
-            item_[ 0 ][ i ][ j ]->update(Screenover);
+            item_[ 0 ][ i ][ j ]->update( Screenover );
         }
     }
 
-    // 叩かれた左側のflagChange()を呼ぶ
-    if( Blx != 0 || Bly != 0 )
-    {
-        item_[ 0 ][ Bly ][ Blx ]->flagChange( Status );
-
-        // コインのIdの時
-        if( item_[ 0 ][ Bly ][ Blx ]->getId() == kCoin )
-            coin_counter_++;
-    }
-
+    // 叩かれた右側のflagChange()を呼ぶ
     if( Brx != 0 || Bry != 0 )
-    {
         item_[ 0 ][ Bry ][ Brx ]->flagChange( Status );
 
-        // コインのIdの時
-        if( item_[ 0 ][ Bry ][ Brx ]->getId() == kCoin )
-            coin_counter_++;
-    }
+    // コインの時追加
+    coinCheckRight( Brx, Bry );
+
+    // 叩かれた左側のflagChange()を呼ぶ
+    if( Blx != 0 || Bly != 0 )
+        item_[ 0 ][ Bly ][ Blx ]->flagChange( Status );
+
+    // コインの時追加
+    coinCheckLeft( Blx, Bly );
 }
 
 void Item::draw( int Screenover )
@@ -121,6 +116,51 @@ void Item::finalize()
         for( int j = 0; j < width_; j++ )
         {
             SAFE_DELETE( item_[ 0 ][ i ][ j ] );
+        }
+    }
+}
+
+void Item::coinCheckRight( int Brx, int Bry )
+{
+    // 連続して叩けないようにするために
+    if( !(double_touch_.x == Brx && double_touch_.y == Bry ||
+        past_r_.x == Brx && past_r_.y == Bry) )
+    {
+        // コインのIDの時
+        if( item_[ 0 ][ Bry ][ Brx ]->getId() == kCoin )
+        {
+            // 叩いたか確認
+            if( !item_[ 0 ][ Bry ][ Brx ]->getPunch() )
+            {
+                past_r_.x = Brx;
+                past_r_.y = Bry;
+                double_touch_.x = Brx;
+                double_touch_.y = Bry;
+                coin_counter_++;
+            }
+        }
+    }
+}
+
+
+void Item::coinCheckLeft( int Blx, int Bly )
+{
+    // 連続して叩けないようにするために
+    if( !(double_touch_.x == Blx && double_touch_.y == Bly ||
+        past_l_.x == Blx && past_l_.y == Bly) )
+    {
+        // コインのIDの時
+        if( item_[ 0 ][ Bly ][ Blx ]->getId() == kCoin )
+        {
+            // 叩いたか確認
+            if( !item_[ 0 ][ Bly ][ Blx ]->getPunch() )
+            {
+                past_l_.x = Blx;
+                past_l_.y = Bly;
+                double_touch_.x = Blx;
+                double_touch_.y = Bly;
+                coin_counter_++;
+            }
         }
     }
 }

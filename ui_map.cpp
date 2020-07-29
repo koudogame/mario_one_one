@@ -8,9 +8,9 @@ void UIMap::initialize()
     number_b_ = 1;
 
     // ‘S‹¤’Ê
-    rect_.right = kHalfSize;
+    rect_.right = kQuarterSize;
     rect_.top = 0;
-    rect_.bottom = kHalfSize;
+    rect_.bottom = kQuarterSize;
 }        
 
 void UIMap::draw(int Texture )
@@ -27,6 +27,6 @@ void UIMap::draw(int Texture )
     
     // -
     DrawRectGraph( kLineX, kUIposY,
-        Quintuple + kHalfSize, rect_.top, rect_.right, rect_.bottom,
+        kTripleSize - kQuarterSize, rect_.top, rect_.right, rect_.bottom,
         Texture, TRUE, FALSE );
 }

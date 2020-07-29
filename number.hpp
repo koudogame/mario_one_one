@@ -4,5 +4,5 @@
 template <class T>
 constexpr int left( T number )
 {
-    return number * 32;     // 32は数字サイズ
+    return number * 16;     // 16は数字サイズ
 };

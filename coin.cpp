@@ -84,3 +84,8 @@ void Coin::flagChange( int Status )
         item_.x += kLength;
     }
 }
+
+bool Coin::getPunch()
+{
+    return punch_;
+}

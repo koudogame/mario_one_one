@@ -7,21 +7,21 @@ class UICoin :
     public UIBase
 {
 public:
-    const int kNumPosAX = 598;    // Aのポジション
-    const int kNumPosBX = 556;    // Bのポジション
-    const int kTimes    = 514;    // ×のポジション 
-    const int kCoinPosX = 472;    // コインのポジション
-    const int kCountUp  = 10;     // カウントアップ
-    const int kTimesNum = 10;     // ×の番号 
     const int kCoinNum  = 2;      // コインの左端
+    const int kTimesNum = 10;     // ×の番号 
+    const int kCountUp  = 10;     // カウントアップ
+    const int kCoinPosX = 472;    // コインのポジション
+    const int kTimes    = 514;    // ×のポジション 
+    const int kNumPosBX = 556;    // Bのポジション
+    const int kNumPosAX = 598;    // Aのポジション
 
     void initialize() override;
     void update() override;
     void draw(int) override;
     void finalize() override;
 
-    void coinCounter( int );
+    void coinCounter( int );      // 叩かれた分だけ取得
 
 private:
-    int item_texture_;
+    int item_texture_;            // アイテムテクスチャ
 };

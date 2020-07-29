@@ -45,6 +45,11 @@ int ItemBase::getPosY()
     return 0;
 }
 
+bool ItemBase::getPunch()
+{
+    return true;
+}
+
 void ItemBase::posCollision()
 {
 }

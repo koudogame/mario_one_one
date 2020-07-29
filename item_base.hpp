@@ -34,6 +34,7 @@ public:
     
     virtual int getPosX();
     virtual int getPosY();
+    virtual bool getPunch();
 
     virtual void posCollision();        // ƒ}ƒŠƒI‚ÆÕ“Ë‚µ‚½‚Æ‚«‚ÌŠÖ”‚ğŒÄ‚Ô
     virtual void getGoal( bool );

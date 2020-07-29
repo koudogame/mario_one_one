@@ -19,6 +19,9 @@ public:
     void draw( int Screenover );
     void finalize();
 
+    void coinCheckRight( int, int );
+    void coinCheckLeft( int, int );
+
     void posCollision( int i, int j );      // マリオと当たったときに呼ばれる関数
     void getGoal( bool );
     void getEnd( bool );
@@ -33,11 +36,15 @@ public:
 private:
     Field* field_;
 
-    int texture_;       // テクスチャハンドル保存用
-    int width_;         // 横幅
-    int height_;        // 高さ
+    int texture_;                 // テクスチャハンドル保存用
+    int width_;                   // 横幅
+    int height_;                  // 高さ
+    
+    Position<int> double_touch_;  
+    Position<int> past_r_;
+    Position<int> past_l_;
 
-    int coin_counter_;  // コインのカウンター
+    int coin_counter_;            // コインのカウンター
 
     // マップチップ配列
     std::vector<std::vector<std::vector<ItemBase*>>> item_;

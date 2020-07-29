@@ -16,7 +16,11 @@ constexpr int kGather      = 10;             // 寄せている量(position)
 constexpr int kGroundArray = 13;             // 地面に値する配列番号
 constexpr int kLength      = 16;             // 配列の横の長さ
 constexpr int kMoveStart   = 20;             // エネミー動き出し
-constexpr int kHalfSize    = 32;             // ブロック半分の大きさ
+constexpr int kFallOut     = 670;            // 地面の限界
+
+/*サイズ*/
+constexpr int kQuarterSize = 16;             // ブロック1/4
+constexpr int kHalfSize    = 32;             // ブロック1/2
 constexpr int kSize        = 64;             // ブロックサイズ
 constexpr int kDoubleSize  = kSize * 2;      // ブロック2倍の大きさ
 constexpr int kTripleSize  = kSize * 3;      // ブロック3倍の大きさ
@@ -26,7 +30,6 @@ constexpr int kSextuple    = kSize * 6;      // ブロック6倍の大きさ
 constexpr int kSeptuple    = kSize * 7;      // ブロック7倍の大きさ
 constexpr int kOctuple     = kSize * 8;      // ブロック8倍の大きさ
 constexpr int kDecuple     = kSize * 10;     // ブロック10倍の大きさ
-constexpr int kFallOut     = 670;            // 地面の限界
 
 /*ブロックID*/
 constexpr int kUsedBlock   = 16;       // 叩かれたID
