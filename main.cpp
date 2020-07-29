@@ -11,6 +11,7 @@ int WINAPI WinMain( HINSTANCE hI, HINSTANCE hP, LPSTR lpC, int nC )
 
     //int* a = new int[ 5 ]; メモリリーク用
 #endif
+    SetOutApplicationLogValidFlag( false );
 
     ChangeWindowMode( TRUE );                              // ウィンドウモード切り替え
     SetGraphMode( 1280, 720, 32 );                         // ウィンドウサイズ変更
