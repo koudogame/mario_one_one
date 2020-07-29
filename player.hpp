@@ -23,7 +23,7 @@ public:
 
     Player( Field* field ) : Collision( field ) {};
     bool initialize();
-    bool update();
+    bool update(bool);
     void draw();
     void finalize();
 
@@ -121,7 +121,7 @@ private:
 
     int down_cnt_;             // この値が66になったら向き反転
     int throw_cnt_;            // 投げるモーションの維持
-    bool throw_flag_;            // 投げるモーションの維持
+    bool throw_flag_;          // 投げるモーションの維持
 
     int push_time_jump_;       // 1 = Pressed,2 <= Held
     int push_time_fire_;       // 1 = Pressed,2 <= Held

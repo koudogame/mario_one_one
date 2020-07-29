@@ -54,7 +54,7 @@ bool PlayScene::initialize()
 
 void PlayScene::update()
 {
-    player_->update();
+    player_->update( ui_->timeLimit() );
 
     field_->downBlock();
 
@@ -73,7 +73,7 @@ void PlayScene::update()
 
     ui_->coinCheck( item_->getCoin() );
 
-    ui_->update();
+    ui_->update( player_->getGoal() );
 
     bm_->posCheck( player_->getScrollCnt() );           // d‚­‚È‚ç‚È‚¢‚æ‚¤‚É‰æ–ÊŠO‚Í”»’è‚µ‚È‚¢ˆ—
     bm_->sideCheck();                                   // ‰¡‚©‚ç“–‚½‚Á‚½‚çÁ‹

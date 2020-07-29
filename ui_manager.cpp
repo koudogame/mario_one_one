@@ -12,8 +12,10 @@ void UIManager::initialize()
     time_.initialize();
 }
 
-void UIManager::update()
-{
+void UIManager::update( bool GoalFlag )
+{    
+    time_.setGoalFlag( GoalFlag );
+
     map_.update();
     coin_.update();
     time_.update();

@@ -65,12 +65,10 @@ bool Player::initialize()
     return true;
 }
 
-bool Player::update()
+bool Player::update(bool TimeLimit)
 {
     if( !goal_flag_ ) ending();
-        
-    // GameOver判定
-    else if( gameover_flag_ )
+    else if( gameover_flag_  )
     {
         // ダッシュボタン判定
         if( !(GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_4) == 0 || CheckHitKey( KEY_INPUT_B ) == 1 )
@@ -226,6 +224,14 @@ bool Player::update()
             animation_        = 6;
             acceleration_     = 0;
             total_movement_x_ = (kSize * kGoalPost) + kHalfSize;
+        }
+
+        // 時間制限による死亡
+        if( !TimeLimit )
+        {
+            gameover_flag_ = false;
+            acceleration_ = -kJumpPower;
+            status_ = -1;
         }
     }
     // 死んでいるとき

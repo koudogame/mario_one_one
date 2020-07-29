@@ -9,11 +9,14 @@ class UIManager
 {
 public:
     void initialize();
-    void update();
+    void update( bool );
     void draw();
     void finalize();
 
     void coinCheck( int );
+    
+    // 時間内か時間外を伝える
+    inline bool timeLimit() { return time_.timeLimit(); }
 
 private:
     int texture_;   // テクスチャ
