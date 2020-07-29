@@ -7,13 +7,12 @@ class UICoin :
     public UIBase
 {
 public:
-    const int kCoinNum  = 2;                                 // コインの左端
-    const int kTimesNum = 10;                                // ×の番号 
-    const int kCountUp  = 10;                                // カウントアップ
-    const int kNumPosAX = 424;                               // Aのポジション
-    const int kNumPosBX = kNumPosAX - kQuarterSize;          // Bのポジション
-    const int kTimes    = kNumPosBX - kQuarterSize;          // ×のポジション 
-    const int kCoinPosX = kTimes - kHalfSize - kQuarterSize; // コインのポジション
+    const int kDigitArray = 2;                                 // 使用する桁数
+    const int kCoinNum    = 2;                                 // コインの左端
+    const int kTimesNum   = 10;                                // ×の番号 
+    const int kStartPos   = 424;                               // Aのポジション
+    const int kTimes      = kStartPos - kHalfSize;             // ×のポジション 
+    const int kCoinPosX   = kTimes - kHalfSize - kQuarterSize; // コインのポジション
 
     void initialize() override;
     void update() override;

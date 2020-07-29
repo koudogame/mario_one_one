@@ -3,27 +3,26 @@
 
 void UIMap::initialize()
 {      
-    // マップを表示
-    number_a_ = 1;
-    number_b_ = 1;
+    // マップ1-1
+    map_num_ = 11;
 
-    // 全共通
-    rect_.right = kQuarterSize;
-    rect_.top = 0;
-    rect_.bottom = kQuarterSize;
+    // 各値の分までシフト
+    auto binary = 0b10;
+    for( int i = 0; i < kDigitArray; i++ )
+    {
+        digit_[ i ] = digit( map_num_, binary >> i );
+    }
 }        
 
 void UIMap::draw(int Texture )
 {
-    // A
-    DrawRectGraph( kNumPosAX, kUIposY,
-        left(number_a_), rect_.top, rect_.right, rect_.bottom,
-        Texture, TRUE, FALSE );
-    
-    // B
-    DrawRectGraph( kNumPosBX, kUIposY,
-        left(number_b_), rect_.top, rect_.right, rect_.bottom,
-        Texture, TRUE, FALSE );
+    // 各桁の描画
+    for( int i = 0; i < kDigitArray; i++ )
+    {
+        DrawRectGraph( kStartPos + (i * kHalfSize), kUIposY,
+            left( digit_[i] ), rect_.top, rect_.right, rect_.bottom,
+            Texture, TRUE, FALSE );
+    }
     
     // -
     DrawRectGraph( kLineX, kUIposY,

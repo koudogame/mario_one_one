@@ -4,6 +4,7 @@
 #include "ui_map.hpp"
 #include "ui_coin.hpp"
 #include "ui_time.hpp"
+#include "ui_score.hpp"
 
 class UIManager
 {
@@ -13,6 +14,7 @@ public:
     void draw();
     void finalize();
 
+    // ˆø”‚©‚çƒRƒCƒ“–‡”•`‰æ
     void coinCheck( int );
     
     // ŠÔ“à‚©ŠÔŠO‚ğ“`‚¦‚é
@@ -23,4 +25,5 @@ private:
     UIMap map_;     // Map‚ÌŠÇ—
     UICoin coin_;   // Coin‚ÌŠÇ—
     UITime time_;   // Time‚ÌŠÇ—
+    UIScore score_; // Score‚ÌŠÇ—
 };

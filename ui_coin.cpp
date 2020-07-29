@@ -4,26 +4,18 @@ void UICoin::initialize()
 {
     // アイテム画像読み込み
     item_texture_ = LoadGraph( "texture/mario_item.png" );
-
-    // 全共通
-    rect_.right = kQuarterSize;
-    rect_.top = 0;
-    rect_.bottom = kQuarterSize;
 }
 
 void UICoin::update(){}
 
 void UICoin::draw( int Texture )
 {
-    // 一桁目
-    DrawRectGraph( kNumPosAX, kUIposY,
-        left( number_a_ ), rect_.top, rect_.right, rect_.bottom,
-        Texture, TRUE, FALSE );
-
-    // 二桁目
-    DrawRectGraph( kNumPosBX, kUIposY,
-        left( number_b_ ), rect_.top, rect_.right, rect_.bottom,
-        Texture, TRUE, FALSE );
+    for( int i = 0; i < kDigitArray; i++ )
+    {
+        DrawRectGraph( kStartPos + (i * kQuarterSize), kUIposY,
+            left( digit_[i] ), rect_.top, rect_.right, rect_.bottom,
+            Texture, TRUE, FALSE );
+    }
 
     // ×
     DrawRectGraph( kTimes, kUIposY,
@@ -45,7 +37,10 @@ void UICoin::finalize()
 
 void UICoin::coinCounter( int Coin )
 {
-    // １０枚ごとに繰り上がり
-    number_a_ = Coin % kCountUp;
-    number_b_ = Coin / kCountUp;
+    // 各値の分までシフト
+    auto binary = 0b10;
+    for( int i = 0; i < kDigitArray; i++ )
+    {
+        digit_[ i ] = digit( Coin, binary >> i );
+    }
 }

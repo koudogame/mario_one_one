@@ -195,6 +195,7 @@
     <ClCompile Include="ui_coin.cpp" />
     <ClCompile Include="ui_manager.cpp" />
     <ClCompile Include="ui_map.cpp" />
+    <ClCompile Include="ui_score.cpp" />
     <ClCompile Include="ui_time.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -205,6 +206,7 @@
     <ClInclude Include="castle_flag.hpp" />
     <ClInclude Include="coin.hpp" />
     <ClInclude Include="collision.hpp" />
+    <ClInclude Include="digit.hpp" />
     <ClInclude Include="enemy.hpp" />
     <ClInclude Include="enemy_base.hpp" />
     <ClInclude Include="field.hpp" />
@@ -230,6 +232,7 @@
     <ClInclude Include="ui_coin.hpp" />
     <ClInclude Include="ui_manager.hpp" />
     <ClInclude Include="ui_map.hpp" />
+    <ClInclude Include="ui_score.hpp" />
     <ClInclude Include="ui_time.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

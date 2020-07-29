@@ -7,12 +7,13 @@ class UIMap :
     public UIBase
 {
 public:
-    const int kNumPosAX = 840;                         // Aのポジション
-    const int kLineX    = kNumPosAX + kQuarterSize;    // ーのポジション
-    const int kNumPosBX = kLineX + kQuarterSize;       // Bのポジション
+    const int kDigitArray = 2;
+    const int kStartPos = 840;                         // Aのポジション
+    const int kLineX = kStartPos + kQuarterSize;    // ーのポジション
 
     void initialize() override;
-    void draw(int) override;
+    void draw( int ) override;
 
-private:                      
-}; 
+private:
+    int map_num_;
+};
