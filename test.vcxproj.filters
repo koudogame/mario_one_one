@@ -183,6 +183,9 @@
     <ClCompile Include="ui_coin.cpp">
       <Filter>UserInterface\UI_Coin</Filter>
     </ClCompile>
+    <ClCompile Include="ui_time.cpp">
+      <Filter>UserInterface\UI_Time</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="result.hpp">
@@ -280,6 +283,9 @@
     </ClInclude>
     <ClInclude Include="number.hpp">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ui_time.hpp">
+      <Filter>UserInterface\UI_Time</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

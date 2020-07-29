@@ -1,4 +1,3 @@
-#include "share.hpp"
 #include "ui_coin.hpp"
 
 void UICoin::initialize()

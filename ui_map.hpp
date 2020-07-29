@@ -7,9 +7,9 @@ class UIMap :
     public UIBase
 {
 public:
-    const int kNumPosAX = 720;    // Aのポジション
-    const int kNumPosBX = 804;    // Bのポジション
-    const int kLineX    = 762;    // ーのポジション
+    const int kNumPosAX = 840;                         // Aのポジション
+    const int kLineX    = kNumPosAX + kQuarterSize;    // ーのポジション
+    const int kNumPosBX = kLineX + kQuarterSize;       // Bのポジション
 
     void initialize() override;
     void draw(int) override;
