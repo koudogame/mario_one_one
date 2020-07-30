@@ -6,6 +6,7 @@
 #include <windows.h>
 #include "rect.hpp"
 #include "digit.hpp"
+#include "xinput.hpp"
 #include "number.hpp"
 #include "position.hpp"
 

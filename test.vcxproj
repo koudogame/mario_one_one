@@ -197,6 +197,7 @@
     <ClCompile Include="ui_map.cpp" />
     <ClCompile Include="ui_score.cpp" />
     <ClCompile Include="ui_time.cpp" />
+    <ClCompile Include="xinput.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ball_management.hpp" />
@@ -234,6 +235,7 @@
     <ClInclude Include="ui_map.hpp" />
     <ClInclude Include="ui_score.hpp" />
     <ClInclude Include="ui_time.hpp" />
+    <ClInclude Include="xinput.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

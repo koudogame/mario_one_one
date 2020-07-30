@@ -38,17 +38,17 @@ public:
     void rightCheck();              // 体の右側を登録してチェックする関数
     void leftCheck();               // 体の左側を登録してチェックする関数
 
-    /*背景の描画を流す数値*/
-    inline int getScrollCnt() { return scroll_cnt_; }
+    inline int getScrollCnt() { return scroll_cnt_; }   /*背景の描画を流す数値*/
 
-    /*マリオの状態をfieldにも知らせる*/
-    inline int getStatus() { return status_; }
 
-    /*無敵状態か確認*/
-    inline bool getInvincible() { return invincible_; }
+    inline int getStatus() { return status_; }          /*マリオの状態をfieldにも知らせる*/
 
-    /*ゴールしているか*/
-    inline bool getGoal() { return goal_flag_; }
+
+
+    inline bool getInvincible() { return invincible_; } /*無敵状態か確認*/
+
+  
+    inline bool getGoal() { return goal_flag_; }        /*ゴールしているか*/
 
     // 向きに応じて渡す
     inline int getDirection() 
@@ -58,32 +58,31 @@ public:
     }
 
     /*マリオの画面座標を渡す*/
-    inline int getPosX() { return pos_x_; }
-    inline int getPosY() { return pos_y_; }
+    inline int getPosX() { return position_.x; }
+    inline int getPosY() { return position_.y; }
 
     /*マリオのポジションを渡す*/
-    inline int getPositionX() { return total_movement_x_; }
-    inline int getPositionY() { return total_movement_y_; }
+    inline int getPositionX() { return total_move_.x; }
+    inline int getPositionY() { return total_move_.y; }
 
     /*頭の当たったとき*/
-    inline int getBreakLeftX() { return break_left_x_; }        /*左頭の配列x*/
-    inline int getBreakLeftY() { return break_left_y_; }        /*左頭の配列y*/
-    inline int getBreakRightX() { return break_right_x_; }      /*右頭の配列x*/
-    inline int getBreakRightY() { return break_right_y_; }      /*右頭の配列y*/
+    inline int getBreakRightX() { return break_right_.x; }      /*右頭の配列x*/
+    inline int getBreakRightY() { return break_right_.y; }      /*右頭の配列y*/
+
+    inline int getBreakLeftX() { return break_left_.x; }        /*左頭の配列x*/
+    inline int getBreakLeftY() { return break_left_.y; }        /*左頭の配列y*/
     
     inline bool getEnd() { return extinguish_existence_; }      /*存在が消えたら*/
     inline bool getGameover() { return gameover_flag_; }        /*死んでいるか*/
 
 private:
-    Rect<int> rect_;           // Rectを使う上で必要
+    Rect<int> rect_;           // Rect呼び出し
+    Position<int> position_;   // Position呼び出し
+    Position<int> total_move_; // Position呼び出し
+    Position<int> break_right_;// 頭の右の座標
+    Position<int> break_left_; // 頭の左の座標
 
     int texture_;              // テクスチャハンドル
-
-    int total_movement_x_;     // 総合移動量x
-    int total_movement_y_;     // 総合移動量y
-
-    int pos_x_;                // 座標x
-    int pos_y_;                // 座標y 
 
     int status_;               // マリオの状態
     int past_status_;          // マリオの過去の状態
@@ -106,12 +105,6 @@ private:
     bool right_button_;        // true : 押してない, false : 押しています 
     bool left_button_;         // true : 押してない, false : 押しています
 
-    int break_right_x_;        // 右頭のぶつかった座標x
-    int break_right_y_;        // 右頭のぶつかった座標y
-
-    int break_left_x_;         // 左頭のぶつかった座標x
-    int break_left_y_;         // 左頭のぶつかった座標y
-
     int invincible_cnt_;       // 無敵時間の計測
     bool invincible_;          // true : ぶつかる, false : 無敵状態
 
@@ -127,4 +120,6 @@ private:
     int push_time_fire_;       // 1 = Pressed,2 <= Held
     int push_time_run_;        // 1 = Pressed,2 <= Held
     int push_time_squat_;      // 1 = Pressed,2 <= Held
+
+    void fireMove();           // ファイアボールを投げる動き
 };
