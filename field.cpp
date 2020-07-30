@@ -4,9 +4,6 @@ bool Field::initialize( std::fstream& stage )
 {
     texture_ = LoadGraph( "Texture/mario_field.png" );
 
-    block_rx_, block_ry_ = 0;
-    block_lx_, block_ly_ = 0;
-
     // ファイルポインタを先頭に移動
     stage.seekg( 0 );
 
@@ -75,19 +72,19 @@ void Field::update( int Brx, int Bry, int Blx, int Bly, int Status )
     if( Brx != 0 || Bry != 0 )
     {
         // 先に右の頭を登録
-        block_rx_ = Brx;
-        block_ry_ = Bry;
+        block_right_.x = Brx;
+        block_right_.y = Bry;
 
-        field_[ 0 ][ Bry ][ Brx ]->standby(Brx, Bry);
+        field_[ 0 ][ Bry ][ Brx ]->standby( Brx, Bry );
     }
 
     // 叩かれた左側
     if( Blx != 0 || Bly != 0 )
     {
-            block_lx_ = Blx;
-            block_ly_ = Bly;
+        block_left_.x = Blx;
+        block_left_.y = Bly;
 
-            field_[ 0 ][ Bly ][ Blx ]->standby(Blx, Bly);
+        field_[ 0 ][ Bly ][ Blx ]->standby( Blx, Bly );
     }
 
     for( int i = 0; i < height_; i++ )

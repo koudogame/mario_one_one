@@ -40,14 +40,13 @@ public :
     int getId( int PosX, int PosY );
 
 private :
+    Position<int> block_right_;
+    Position<int> block_left_;
+
     int texture_;              // テクスチャハンドル保存用
     int height_;               // 高さ
     int width_;                // 横幅
-    int block_rx_;             // 多重updateを防ぐため
-    int block_ry_;             // 多重updateを防ぐため
-    int block_lx_;             // 多重updateを防ぐため
-    int block_ly_;             // 多重updateを防ぐため
 
-                               // 数字を設定しなくても増える配列
+    // 数字を設定しなくても増える配列
     std::vector<std::vector<std::vector<BlockBase*>>> field_;
 };

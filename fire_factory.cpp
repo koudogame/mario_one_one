@@ -3,8 +3,8 @@
 void FireFactory::initialize( int PosX, int PosY, int Direction)
 {
     // 投げられた時のマリオの座標をスタート位置とする
-    fire_pos_x_    = PosX + kHalfSize;
-    fire_pos_y_    = PosY + kHalfSize - kQuadruple;
+    fire_position_.x    = PosX + kHalfSize;
+    fire_position_.y    = PosY + kHalfSize - kQuadruple;
 
     // マリオの向きの受け渡し
     direction_     = Direction;
@@ -29,13 +29,13 @@ void FireFactory::update()
         animation();            
         
         // 常に横移動
-        fire_pos_x_ += kSpeed * direction_;
+        fire_position_.x += kSpeed * direction_;
 
         // 右サイドの登録
-        body_[ kRight ][ kShoulder ][ kX ] = fire_pos_x_ + kHalfSize + 1;
-        body_[ kRight ][ kShoulder ][ kY ] = (fire_pos_y_ + kDisplace) + kQuadruple;
-        body_[ kRight ][ kHands ][ kX ] = fire_pos_x_ + kHalfSize + 1;
-        body_[ kRight ][ kHands ][ kY ] = (fire_pos_y_ - kDisplace) + kQuadruple;
+        body_[ kRight ][ kShoulder ][ kX ] = fire_position_.x + kHalfSize + 1;
+        body_[ kRight ][ kShoulder ][ kY ] = (fire_position_.y + kDisplace) + kQuadruple;
+        body_[ kRight ][ kHands ][ kX ] = fire_position_.x + kHalfSize + 1;
+        body_[ kRight ][ kHands ][ kY ] = (fire_position_.y - kDisplace) + kQuadruple;
 
         // 当たり判定があるとき
         if( !Collision::sideColl( kRight ))
@@ -43,10 +43,10 @@ void FireFactory::update()
             side_touch_ = false;
 
         // 左サイドの登録
-        body_[ kLeft ][ kShoulder ][ kX ] = fire_pos_x_ - 1;
-        body_[ kLeft ][ kShoulder ][ kY ] = fire_pos_y_ + kQuadruple + kDisplace;
-        body_[ kLeft ][ kHands ][ kX ] = fire_pos_x_ - 1;
-        body_[ kLeft ][ kHands ][ kY ] = fire_pos_y_ + kQuadruple - kDisplace;
+        body_[ kLeft ][ kShoulder ][ kX ] = fire_position_.x - 1;
+        body_[ kLeft ][ kShoulder ][ kY ] = fire_position_.y + kQuadruple + kDisplace;
+        body_[ kLeft ][ kHands ][ kX ] = fire_position_.x - 1;
+        body_[ kLeft ][ kHands ][ kY ] = fire_position_.y + kQuadruple - kDisplace;
 
         // 当たり判定があるとき
         if( !Collision::sideColl( kLeft ))
@@ -56,11 +56,11 @@ void FireFactory::update()
 
         // 下の部分の登録(Collision)
         // 右足、左足の登録
-        body_[ kRight ][ kFoot ][ kX ] = fire_pos_x_ + (kHalfSize - kDisplace);
-        body_[ kRight ][ kFoot ][ kY ] = fire_pos_y_ + (kHalfSize + 1) + kQuadruple;
+        body_[ kRight ][ kFoot ][ kY ] = fire_position_.y + (kHalfSize + 1) + kQuadruple;
+        body_[ kRight ][ kFoot ][ kX ] = fire_position_.x + (kHalfSize - kDisplace);
 
-        body_[ kLeft ][ kFoot ][ kX ] = fire_pos_x_ + kDisplace;
-        body_[ kLeft ][ kFoot ][ kY ] = fire_pos_y_ + (kHalfSize + 1) + kQuadruple;
+        body_[ kLeft ][ kFoot ][ kX ] = fire_position_.x + kDisplace;
+        body_[ kLeft ][ kFoot ][ kY ] = fire_position_.y + (kHalfSize + 1) + kQuadruple;
 
         // 足場があるとき
         if( Collision::fireColl() == 3 )
@@ -68,10 +68,10 @@ void FireFactory::update()
             jumping_ = kNoMove;
 
             int block_line = (body_[ kRight ][ kFoot ][ kY ] - 1) / kSize;
-            fire_pos_y_ = ((block_line - kControl) * kSize) - kSize;
+            fire_position_.y = ((block_line - kControl) * kSize) - kSize;
 
             if( block_line >= kGroundArray )
-                fire_pos_y_ = kGround;
+                fire_position_.y = kGround;
 
             acceleration_ = 0;  // 落下速度
             acceleration_ = (-kJumpPower / 2);
@@ -81,10 +81,10 @@ void FireFactory::update()
             jumping_ = kNoMove;
 
             int block_line = (body_[ kRight ][ kFoot ][ kY ] - 1) / kSize;
-            fire_pos_y_ = ((block_line - kControl) * kSize) - kSize;
+            fire_position_.y = ((block_line - kControl) * kSize) - kSize;
 
             if( block_line >= kGroundArray )
-                fire_pos_y_ = kGround;
+                fire_position_.y = kGround;
 
             acceleration_ = 0;  // 落下速度
             acceleration_ = -kJumpPower;
@@ -98,7 +98,7 @@ void FireFactory::update()
             if( jumping_ == kNoJump )
             {
                 acceleration_ += kGravity;
-                fire_pos_y_ += acceleration_;
+                fire_position_.y += acceleration_;
             }
         }
     }
@@ -117,12 +117,12 @@ void FireFactory::draw( int Texture, const int ScreenOver )
     int left   = (animation_ * kHalfSize);
     int right  = kHalfSize;
 
-    int x = fire_pos_x_ - ScreenOver;
+    int x = fire_position_.x - ScreenOver;
 
     if(side_touch_)
-    DrawRectGraph( x, fire_pos_y_,
+    DrawRectGraph( x, fire_position_.y,
         left, top, right, bottom, texture_, TRUE, FALSE );    
-    DrawRectGraph( x, fire_pos_y_,
+    DrawRectGraph( x, fire_position_.y,
         rect_.left, rect_.top, rect_.right, rect_.bottom,
         texture_, TRUE, FALSE );
 }
@@ -138,11 +138,11 @@ bool FireFactory::getCheckScreen( const int ScreenOver )
     int screen_top    = 0;
     int screen_bottom = kScreenYSize;
 
-    int fire_left     = fire_pos_x_;
-    int fire_right    = fire_pos_x_ + kHalfSize;
+    int fire_left     = fire_position_.x;
+    int fire_right    = fire_position_.x + kHalfSize;
 
-    int fire_top      = fire_pos_y_;
-    int fire_bottom   = fire_pos_y_ + kHalfSize;
+    int fire_top      = fire_position_.y;
+    int fire_bottom   = fire_position_.y + kHalfSize;
 
     // 画面内にいるとき
     if( (screen_right > fire_left) && (fire_right > screen_left)

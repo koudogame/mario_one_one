@@ -27,12 +27,13 @@ public :
     
     inline bool getExplode() { return explode_flag_; }
 
-    inline int getFirePosX() { return fire_pos_x_; }
-    inline int getFirePosY() { return fire_pos_y_; }
+    inline int getFirePosX() { return fire_position_.x; }
+    inline int getFirePosY() { return fire_position_.y; }
 
 
 private : 
-    Rect<int> rect_;                 // Rectを用意
+    Rect<int> rect_;                // Rectを用意
+    Position<int> fire_position_;   // Positionを用意 
 
     bool side_touch_;               // 横から当たったか調べる
     int texture_;                   // 引数で受け取った画像を保存
@@ -40,8 +41,6 @@ private :
 
     int animation_cnt_;             // if文判定用
     int animation_;                 // 数値によって回転する
-    int fire_pos_x_;                // 引数で受け取ったPosXを保存
-    int fire_pos_y_;                // 引数で受け取ったPosYを保存
 
     int explode_cnt_;
     int explode_flag_;
