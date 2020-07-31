@@ -6,13 +6,14 @@ class Player :
 public:
     const int kSpeed      = 6;      // 歩いているときの速度
     const int kDownSpeed  = 6;      // ゴールしたとき落ちるスピード
+    const int kAnimeMove  = 8;      // アニメーション用
     const int kDashSpeed  = 10;     // ダッシュしているときの速度
     const int kEnemyJump  = 15;     // 敵を踏んだ時のジャンプ力
     const int kStopper    = 16;     // 連射防止ストッパー
     const int kJumpPower  = 24;     // ジャンプボタン時のジャンプ力
     const int kDownCnt    = 66;     // 掴んでからの待ち時間
     const int kTurnCnt    = 90;     // 向き反転させるための時間
-    const int kInvincible = 120;    // 無敵制限時間
+    const int kInvincible = 180;    // 無敵制限時間
     const int kSkyBlue    = 191;    // 背景の何もない透明マップチップID
     const int kGoalPost   = 194;    // ゴールポスト
     const int kEntrance   = 201;    // 塔の入り口
@@ -39,15 +40,9 @@ public:
     void leftCheck();               // 体の左側を登録してチェックする関数
 
     inline int getScrollCnt() { return scroll_cnt_; }   /*背景の描画を流す数値*/
-
-
     inline int getStatus() { return status_; }          /*マリオの状態をfieldにも知らせる*/
-
-
-
     inline bool getInvincible() { return invincible_; } /*無敵状態か確認*/
-
-  
+    inline bool getInvincibleTime() { return invincible_time_; }
     inline bool getGoal() { return goal_flag_; }        /*ゴールしているか*/
 
     // 向きに応じて渡す
@@ -107,6 +102,7 @@ private:
 
     int invincible_cnt_;       // 無敵時間の計測
     bool invincible_;          // true : ぶつかる, false : 無敵状態
+    bool invincible_time_;     // 無敵だが動ける時間
 
     bool catch_flag_;          // true : 掴まっていない, false : 掴んでいる
     bool goal_flag_;           // true : ゴールしていない, false : ゴールしている
