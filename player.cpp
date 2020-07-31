@@ -295,6 +295,10 @@ void Player::draw()
         else if( status_ == kFireMario )
             fireMove(); // “Š‚°‚é“®‚«
 
+                // gameclear‚Ì
+        if( status_ == kFireMario && !goal_flag_ )
+            rect_.top = kOctuple;
+
         // –³“Gó‘Ô(”¼“§–¾)
         if( !invincible_ && status_ != -1 )
         {
