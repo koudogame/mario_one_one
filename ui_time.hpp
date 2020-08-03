@@ -14,6 +14,7 @@ public :
     void update() override;
     void draw(int) override;
 
+    void setTime(int);
     void setGoalFlag(bool);
 
     inline int getTime() { return timer_; }

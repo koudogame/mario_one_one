@@ -61,14 +61,14 @@ public:
     inline int getPositionY() { return total_move_.y; }
 
     /*頭の当たったとき*/
-    inline int getBreakRightX() { return break_right_.x; }      /*右頭の配列x*/
-    inline int getBreakRightY() { return break_right_.y; }      /*右頭の配列y*/
+    inline int getBreakRightX() { return break_right_.x; }  /*右頭の配列x*/
+    inline int getBreakRightY() { return break_right_.y; }  /*右頭の配列y*/
 
-    inline int getBreakLeftX() { return break_left_.x; }        /*左頭の配列x*/
-    inline int getBreakLeftY() { return break_left_.y; }        /*左頭の配列y*/
+    inline int getBreakLeftX() { return break_left_.x; }    /*左頭の配列x*/
+    inline int getBreakLeftY() { return break_left_.y; }    /*左頭の配列y*/
     
-    inline bool getEnd() { return extinguish_existence_; }      /*存在が消えたら*/
-    inline bool getGameover() { return gameover_flag_; }        /*死んでいるか*/
+    inline bool getEnd() { return extinguish_existence_; }  /*存在が消えたら*/
+    inline bool getGameover() { return gameover_flag_; }    /*死んでいるか*/
 
 private:
     Rect<int> rect_;           // Rect呼び出し

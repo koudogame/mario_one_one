@@ -50,3 +50,15 @@ void UITime::setGoalFlag(bool GoalFlag)
 {
     goal_flag_ = GoalFlag;          // フラグの受け渡し
 }
+
+void UITime::setTime( int Time )
+{
+    timer_ = Time;
+
+    // 指定回数分シフト
+    auto binary = 0b100;
+    for( int i = 0; i < kDigitArray; i++ )
+    {
+        digit_[ i ] = digit( timer_, binary >> i );
+    }
+}

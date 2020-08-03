@@ -12,6 +12,11 @@ public :
     void update() override;
     void draw(int) override;
 
+    void changeTime( int Time );
+
+    inline int getTime() { return timer_; }
+
 private :
     int score_;
+    int timer_;
 };

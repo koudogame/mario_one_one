@@ -254,21 +254,19 @@ void PlayScene::update()
                 }
             }
 
-            // ゴール後透明か確認
-            item_->getEnd( player_->getEnd() );
-
-            // ゴール後数秒後シーンチェンジ
+            // 透明化後
             if( !player_->getEnd() )
             {
-                change_timer_++;
-
-                if( change_timer_ > kChangeTime )
-                    SceneManager::ChangeScene( SceneManager::Scene::Result );
+                if(ui_->getTime() != 0)
+                    ui_->timeScore(); // UI内で関数をまわす
+                else
+                    item_->getEnd( player_->getEnd() );
             }
+
         }
         else
         {
-            // ゴール後数秒後シーンチェンジ
+            // ゲームオーバー数秒後シーンチェンジ
             change_timer_++;
 
             if( change_timer_ > kChangeTime )
@@ -307,3 +305,13 @@ void PlayScene::finalize()
     delete player_;
     delete pos_col_;
 }
+
+
+// ゴール後数秒後シーンチェンジ
+//if( !player_->getEnd() )
+//{
+//    change_timer_++;
+
+//    if( change_timer_ > kChangeTime )
+//        SceneManager::ChangeScene( SceneManager::Scene::Result );
+//}

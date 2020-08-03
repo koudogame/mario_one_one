@@ -46,6 +46,15 @@ void UIManager::finalize()
     score_.finalize();
 }
 
+void UIManager::timeScore()
+{
+    // 時間を１減らしスコアを50増やす
+    score_.changeTime(time_.getTime());
+
+    // 減らした数値を返す
+    time_.setTime( score_.getTime() );
+}
+
 void UIManager::coinCheck( int Coin )
 {
     // コインのカウントアップ関数
