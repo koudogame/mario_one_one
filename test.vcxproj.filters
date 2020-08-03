@@ -100,6 +100,9 @@
     <Filter Include="UserInterface\UI_Time">
       <UniqueIdentifier>{a222b8ba-0a22-4452-bf96-15dca8c5de3a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GoalFire">
+      <UniqueIdentifier>{e13f4af4-5e09-4a36-976a-6b0621b1726e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -191,6 +194,9 @@
     </ClCompile>
     <ClCompile Include="xinput.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="goal_fire.cpp">
+      <Filter>GoalFire</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -301,6 +307,9 @@
     </ClInclude>
     <ClInclude Include="xinput.hpp">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="goal_fire.hpp">
+      <Filter>GoalFire</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

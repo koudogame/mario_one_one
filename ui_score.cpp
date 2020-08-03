@@ -33,7 +33,6 @@ void UIScore::changeTime( int Time )
     timer_ = Time;        // 時間を保存
     timer_--;             // １秒減らす
 
-
     score_ += kTimeScore; // スコアを50追加
     
     // 各値の分までシフト

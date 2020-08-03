@@ -4,6 +4,7 @@
 PlayScene::PlayScene()
 {
     // クラスポインタ初期化
+    gf_      = nullptr;
     ui_      = nullptr;
     bm_      = nullptr;
     item_    = nullptr;
@@ -24,9 +25,10 @@ bool PlayScene::initialize()
     item_    = new Item( field_ );
     enemy_   = new Enemy( field_ );
     player_  = new Player( field_ );
-    bm_ = new BallManagement( field_ );
+    bm_      = new BallManagement( field_ );
     pos_col_ = new PosCollision(); 
     ui_      = new UIManager();
+    gf_      = new GoalFire();
 
     // ファイルに対する入力ストリーム
     std::fstream stage;
@@ -45,8 +47,10 @@ bool PlayScene::initialize()
     bm_->initialize();
     player_->initialize();
     ui_->initialize();
+    gf_->initialize();
 
     touch_ = 0;
+    clear_num_ = 0;
     change_timer_ = 0;
  
     return true;
@@ -254,24 +258,32 @@ void PlayScene::update()
                 }
             }
 
+            // 透明化前(一桁を取得)
+            if( player_->getEnd() )
+                clear_num_ = ui_->getTime() % 10;
+
             // 透明化後
-            if( !player_->getEnd() )
+            else
             {
                 if(ui_->getTime() != 0)
                     ui_->timeScore(); // UI内で関数をまわす
                 else
+                {
                     item_->getEnd( player_->getEnd() );
-            }
 
+                    // numCheck関数が０の時
+                    if( gf_->numCheck( clear_num_ ) == 0 )
+                    resultScene();
+                    
+                    // numCheck関数が０以外の時
+                    else
+                    { }
+                }
+            }
         }
         else
-        {
             // ゲームオーバー数秒後シーンチェンジ
-            change_timer_++;
-
-            if( change_timer_ > kChangeTime )
-                SceneManager::ChangeScene( SceneManager::Scene::Result );
-        }
+            resultScene();
     }
 }
 
@@ -284,6 +296,7 @@ void PlayScene::draw()
     bm_->draw( player_->getScrollCnt() );           // ファイアボール
     player_->draw();                                // マリオ
     ui_->draw();                                    // UI
+    gf_->draw();                                    // 花火
 }
 
 void PlayScene::finalize()
@@ -295,8 +308,10 @@ void PlayScene::finalize()
     bm_->finalize();
     player_->finalize();
     ui_->finalize();
+    gf_->finalize();
 
     // メモリ開放newした分
+    delete gf_;
     delete ui_;
     delete bm_;
     delete item_;
@@ -306,12 +321,10 @@ void PlayScene::finalize()
     delete pos_col_;
 }
 
+void PlayScene::resultScene()
+{
+    change_timer_++;
 
-// ゴール後数秒後シーンチェンジ
-//if( !player_->getEnd() )
-//{
-//    change_timer_++;
-
-//    if( change_timer_ > kChangeTime )
-//        SceneManager::ChangeScene( SceneManager::Scene::Result );
-//}
+    if( change_timer_ > kChangeTime )
+        SceneManager::ChangeScene( SceneManager::Scene::Result );
+}
