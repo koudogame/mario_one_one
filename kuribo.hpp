@@ -5,7 +5,7 @@ class Kuribo :
     public EnemyBase
 {
 public :
-    const int kDown        = 5;        // 落ちていく
+    const int kDown        = 10;        // 落ちていく
     const int kDeathTime   = 32;       // 画面から消えるまでのリミット
     const int kDead        = 112;      // 死んだとき
     const int kFieldSize   = 800;      // 下の限界値

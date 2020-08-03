@@ -3,6 +3,13 @@
 class GoalFire
 {
 public :
+    const int kFireAX = 960;
+    const int kFireAY = 90;
+    const int kFireBX = 1120;
+    const int kFireBY = 210;
+    const int kFireCX = 840;
+    const int kFireCY = 150;
+
     void initialize();
     void draw();
     void finalize();

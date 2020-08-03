@@ -5,12 +5,12 @@ void GoalFire::initialize()
     texture_ = LoadGraph( "Texture/mario_item.png" );
 
     // 打ち上げ花火座標
-    position_[ 5 ].x = 960;
-    position_[ 5 ].y = 90;
-    position_[ 4 ].x = 1120;
-    position_[ 4 ].y = 210;
-    position_[ 3 ].x = 840;
-    position_[ 3 ].y = 150;
+    position_[ 5 ].x = kFireAX;
+    position_[ 5 ].y = kFireAY;
+    position_[ 4 ].x = kFireBX;
+    position_[ 4 ].y = kFireBY;
+    position_[ 3 ].x = kFireCX;
+    position_[ 3 ].y = kFireCY;
     position_[ 2 ].x = position_[ 5 ].x;
     position_[ 2 ].y = position_[ 5 ].y;
     position_[ 1 ].x = position_[ 4 ].x;
@@ -83,11 +83,11 @@ void GoalFire::createFire()
         rect_.left = 0;
     
     // アニメーション②
-    else if( animation_cnt_ <= 24 )
+    else if( animation_cnt_ <= 32 )
         rect_.left = kSize;
     
     // 終わったら次の花火
-    else if( animation_cnt_ > 24 )
+    else if( animation_cnt_ > 32 )
     {
         number_--;
         animation_cnt_ = 0;

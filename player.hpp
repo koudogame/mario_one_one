@@ -7,8 +7,8 @@ public:
     const int kSpeed      = 6;      // 歩いているときの速度
     const int kDownSpeed  = 6;      // ゴールしたとき落ちるスピード
     const int kAnimeMove  = 8;      // アニメーション用
+    const int kEnemyJump  = 8;     // 敵を踏んだ時のジャンプ力
     const int kDashSpeed  = 10;     // ダッシュしているときの速度
-    const int kEnemyJump  = 15;     // 敵を踏んだ時のジャンプ力
     const int kStopper    = 16;     // 連射防止ストッパー
     const int kJumpPower  = 24;     // ジャンプボタン時のジャンプ力
     const int kDownCnt    = 66;     // 掴んでからの待ち時間
