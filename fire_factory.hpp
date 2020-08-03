@@ -6,12 +6,9 @@ class FireFactory :
 public :
     const int kJumpPower   = 4;     // ジャンプ力
     const int kLimit       = 4;     // アニメ切り替え
-    const int kSmall       = 6;     // 小爆発
     const int kAnime       = 8;     // アニメーション
-    const int kBic         = 12;    // 大爆発
     const int kSpeed       = 12;    // ファイア移動速度
     const int kGround      = 575;   // 地面
-
     const int kScreenXSize = 1280;  // X軸上限
     const int kScreenYSize = 720;   // Y軸上限
 

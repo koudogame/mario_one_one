@@ -36,6 +36,7 @@ private:
     int touch_;
     int clear_num_;
     int change_timer_;
+    bool gf_flag_;              // 結果保存用変数
 
     void resultScene();         // リザルトシーンへ遷移
 };

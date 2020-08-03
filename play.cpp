@@ -49,6 +49,7 @@ bool PlayScene::initialize()
     ui_->initialize();
     gf_->initialize();
 
+    gf_flag_ = true;
     touch_ = 0;
     clear_num_ = 0;
     change_timer_ = 0;
@@ -260,24 +261,34 @@ void PlayScene::update()
 
             // “§–¾‰»‘O(ˆêŒ…‚ðŽæ“¾)
             if( player_->getEnd() )
+            {
                 clear_num_ = ui_->getTime() % 10;
-
+                gf_flag_ = gf_->numCheck( clear_num_ );
+            }
             // “§–¾‰»Œã
             else
             {
-                if(ui_->getTime() != 0)
-                    ui_->timeScore(); // UI“à‚ÅŠÖ”‚ð‚Ü‚í‚·
+                // 0‚É‚È‚é‚Ü‚ÅƒXƒRƒA‰ÁŽZ
+                if( ui_->getTime() != 0 )
+                    // UI“à‚ÅŠÖ”‚ð‚Ü‚í‚·
+                    ui_->timeScore(); 
                 else
                 {
-                    item_->getEnd( player_->getEnd() );
+                    // ‚PŒ…‚ª1,3,6‚ÌŽž
+                    if( !gf_flag_ )
+                    {
+                        // ƒXƒRƒA‰ÁŽZŒã‚ÉŠø‚ðŒf‚°‚é
+                        item_->getEnd( player_->getEnd() );
 
-                    // numCheckŠÖ”‚ª‚O‚ÌŽž
-                    if( gf_->numCheck( clear_num_ ) == 0 )
-                    resultScene();
-                    
-                    // numCheckŠÖ”‚ª‚OˆÈŠO‚ÌŽž
+                        // numCheck‚ª0ˆÈŠO‚ÌŽž
+                        if( gf_->getNumber() != 0 )
+                            gf_->createFire();
+
+                        if( !gf_->getSceneFlag() )
+                            resultScene();
+                    }
                     else
-                    { }
+                        resultScene();
                 }
             }
         }

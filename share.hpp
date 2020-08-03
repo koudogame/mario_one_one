@@ -14,7 +14,9 @@
 constexpr int kGravity     = 1;              // 重力
 constexpr int kControl     = 4;              // 配列描画調整用
 constexpr int kDisplace    = 4;              // 内側、外側寄せ
+constexpr int kSmall       = 4;              // 小爆発
 constexpr int kGather      = 10;             // 寄せている量(position)
+constexpr int kBic         = 12;             // 大爆発
 constexpr int kGroundArray = 13;             // 地面に値する配列番号
 constexpr int kLength      = 16;             // 配列の横の長さ
 constexpr int kMoveStart   = 20;             // エネミー動き出し
