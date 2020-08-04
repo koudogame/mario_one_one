@@ -92,11 +92,10 @@ private:
     int animation_cnt_;        // 動かすためのアニメーション速さ調整 
     bool animation_flag_;      // true : 動く, false : 動かない
 
-    // 過去の状態を保存する
     bool old_right_button_;    // true : 押してない, false : 押しています
     bool old_left_button_;     // true : 押してない, false : 押しています
+    bool old_down_button_;     // true : 押してない, false : 押しています
 
-    // いまの状態を保存する
     bool right_button_;        // true : 押してない, false : 押しています 
     bool left_button_;         // true : 押してない, false : 押しています
 
@@ -117,5 +116,7 @@ private:
     int push_time_run_;        // 1 = Pressed,2 <= Held
     int push_time_squat_;      // 1 = Pressed,2 <= Held
 
+    void squat();              // しゃがむ動作を行う関数
     void fireMove();           // ファイアボールを投げる動き
+    void defaultSize( int Status ); // 引数でrect_を調整する関数
 };

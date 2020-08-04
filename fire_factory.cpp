@@ -62,8 +62,10 @@ void FireFactory::update()
         body_[ kLeft ][ kFoot ][ kX ] = fire_position_.x + kDisplace;
         body_[ kLeft ][ kFoot ][ kY ] = fire_position_.y + (kHalfSize + 1) + kQuadruple;
 
+        int fire_col = Collision::fireColl();
+
         // ë´èÍÇ™Ç†ÇÈÇ∆Ç´
-        if( Collision::fireColl() == 3 )
+        if( fire_col == 3 )
         {
             jumping_ = kNoMove;
 
@@ -76,7 +78,7 @@ void FireFactory::update()
             acceleration_ = 0;  // óéâ∫ë¨ìx
             acceleration_ = (-kJumpPower / 2);
         }
-        else if( Collision::fireColl() == 1 )
+        else if( fire_col == 1 )
         {
             jumping_ = kNoMove;
 
@@ -90,7 +92,7 @@ void FireFactory::update()
             acceleration_ = -kJumpPower;
         }
         // íàÇ…ïÇÇ¢ÇƒÇ¢ÇÈÇ∆Ç´
-        else if( Collision::fireColl() == 2 )
+        else if( fire_col == 2 )
         {
             jumping_ = kNoJump;
 

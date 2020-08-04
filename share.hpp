@@ -55,7 +55,7 @@ constexpr int kCoin        = 80;       // コインID
 // マリオの状態
 enum Status
 {
-    kMario, kSuperMario, kFireMario
+    kGameover = -1, kMario, kSuperMario, kFireMario
 };
 
 // 体の右、左

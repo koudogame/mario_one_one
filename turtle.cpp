@@ -29,8 +29,10 @@ void Turtle::update( int ScreenOver )
                 body_[ kLeft ][ kFoot ][ kX ] = (enemy_parts_.x + kDisplace);
                 body_[ kLeft ][ kFoot ][ kY ] = (enemy_parts_.y + kSize + 1) + kQuadruple;
 
+                int fool_col = Collision::footColl();
+
                 // ‘«ê‚ª‚ ‚é‚Æ‚«
-                if( Collision::footColl() == 1 )
+                if( fool_col == 1 )
                 {
                     jumping_ = kNoMove;
                     acceleration_ = 0;  // —‰º‘¬“x
@@ -42,7 +44,7 @@ void Turtle::update( int ScreenOver )
                         enemy_parts_.y = kGround;
                 }
                 // ’ˆ‚É•‚‚¢‚Ä‚¢‚é‚Æ‚«
-                else if( Collision::footColl() == 2 )
+                else if( fool_col == 2 )
                 {
                     jumping_ = kNoJump;
 

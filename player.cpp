@@ -6,9 +6,17 @@ bool Player::initialize()
     position_.x       = kStartX;
     position_.y       = kStartY;
   
-    rect_.top         = 0;
-    rect_.bottom      = kSize;
+    // ゲーム開始時のRECT
+    defaultSize( kMario );
+ 
+    // 開始時status_がkMario以外なら
+    if( status_ != kMario )
+    {
+        position_.y -= kSize;
+        total_move_.y -= kSize;
+    }
 
+    
     // 数値の中のポジション
     total_move_.x = kStartX;
     total_move_.y = 832;
@@ -28,6 +36,7 @@ bool Player::initialize()
 
     old_right_button_ = true;
     old_left_button_  = true;
+    old_down_button_  = true;
 
     right_button_     = true;
     left_button_      = true;
@@ -53,13 +62,6 @@ bool Player::initialize()
     push_time_run_  = 0;
     push_time_squat_= 0;
 
-    // 始まったときstatus_がkMario以外なら
-    if( status_ != kMario )
-    {
-        position_.y -= kSize;
-        total_move_.y -= kSize;
-    }
-
     return true;
 }
 
@@ -70,56 +72,58 @@ bool Player::update(bool TimeLimit)
     {
         if( invincible_time_ )
         {
-            // ダッシュボタン判定
-            if( !(GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_4) == 0 || CheckHitKey( KEY_INPUT_B ) == 1 )
-                push_time_run_++;
-            else
-                push_time_run_ = 0;
-
-            if( left_button_ )
+            if( push_time_squat_ == 0 )
             {
-                // 右入力
-                if( !(GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_RIGHT) == 0 || CheckHitKey( KEY_INPUT_D ) == 1 )
-                {
-                    direction_ = true;         // 向きを右向きに変える
-                    right_button_ = false;     // 押している(トラッカー) 
-
-                    rightCheck();              // 体の右側を確認する
-
-                    animation();               // 歩いているアニメーション
-                }
+                // ダッシュボタン判定
+                if( !(GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_4) == 0 || CheckHitKey( KEY_INPUT_B ) == 1 )
+                    push_time_run_++;
                 else
-                    right_button_ = true;
-            }
+                    push_time_run_ = 0;
 
-            if( right_button_ )
-            {
-                // 左入力
-                if( !(GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_LEFT) == 0 || CheckHitKey( KEY_INPUT_A ) == 1 )
+                if( left_button_ )
                 {
-                    direction_ = false;        // 向きを左向きに変える
-                    left_button_ = false;      // 押している
+                    // 右入力
+                    if( !(GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_RIGHT) == 0 || CheckHitKey( KEY_INPUT_D ) == 1 )
+                    {
+                        direction_ = true;         // 向きを右向きに変える
+                        right_button_ = false;     // 押している(トラッカー) 
 
-                    leftCheck();
+                        rightCheck();              // 体の右側を確認する
 
-                    animation();               // 歩いているアニメーション
+                        animation();               // 歩いているアニメーション
+                    }
+                    else
+                        right_button_ = true;
                 }
-                else
-                    left_button_ = true;
+
+                if( right_button_ )
+                {
+                    // 左入力
+                    if( !(GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_LEFT) == 0 || CheckHitKey( KEY_INPUT_A ) == 1 )
+                    {
+                        direction_ = false;        // 向きを左向きに変える
+                        left_button_ = false;      // 押している
+
+                        leftCheck();
+
+                        animation();               // 歩いているアニメーション
+                    }
+                    else
+                        left_button_ = true;
+                }
+                // 入力が終わったときに比較する
+                if( old_left_button_ == false && left_button_ == true ||
+                    old_right_button_ == false && right_button_ == true )
+                {
+                    animation_ = 0;
+                    animation_cnt_ = 0;
+                }
+
+                // 過去に引き継ぐ
+                old_left_button_ = left_button_;
+                old_right_button_ = right_button_;
             }
-            // 入力が終わったときに比較する
-            if( old_left_button_ == false && left_button_ == true ||
-                old_right_button_ == false && right_button_ == true )
-            {
-                animation_ = 0;
-                animation_cnt_ = 0;
-            }
-
-            // 過去に引き継ぐ
-            old_left_button_ = left_button_;
-            old_right_button_ = right_button_;
-
-
+        
             // ジャンプ入力
             if( !(GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_B) == 0 || CheckHitKey( KEY_INPUT_SPACE ) == 1 )
                 push_time_jump_++;
@@ -131,7 +135,8 @@ bool Player::update(bool TimeLimit)
             {
                 // ジャンプRECTに切り替え
                 // kMario状態の時のみ有効
-                animation_ = 4;
+                if( push_time_squat_ == 0 )
+                    animation_ = 4;
 
                 // ジャンプ中にアニメーションを動かさないようにする
                 animation_flag_ = false;
@@ -230,7 +235,7 @@ bool Player::update(bool TimeLimit)
             {
                 gameover_flag_ = false;
                 acceleration_ = -kJumpPower;
-                status_ = -1;
+                status_ = kGameover;
             }
         }
 
@@ -283,24 +288,24 @@ void Player::draw()
         rect_.left = animation_ * kSize;
         rect_.right = kSize;
 
-        // やられるとき
-        if( status_ == -1 )
-        {
-            rect_.left = 0;
-            rect_.top = kSize;
-            rect_.right = kSize;
-            rect_.bottom = kSize;
-        }
-        // ファイアマリオ
-        else if( status_ == kFireMario )
-            fireMove(); // 投げる動き
+        // しゃがめる大きさかどうか
+        if( status_ > kMario && goal_flag_ )
+            squat();
 
-                // gameclearの時
+        // やられるとき
+        if( status_ == kGameover )
+            defaultSize( kGameover );
+
+        // ファイアマリオ
+        else if( status_ == kFireMario && push_time_squat_ == 0 )
+            fireMove();
+
+        // RECTのずれが発生しないように
         if( status_ == kFireMario && !goal_flag_ )
-            rect_.top = kOctuple;
+            defaultSize( kFireMario );
 
         // 無敵状態(半透明)
-        if( !invincible_ && status_ != -1 )
+        if( !invincible_ && status_ != kGameover )
         {
             // サイズ変換
             SetDrawBlendMode( DX_BLENDMODE_ALPHA, 128 );
@@ -316,8 +321,7 @@ void Player::draw()
                 if( m == 0 && n % 2 == 0 )
                 {
                     // Rectを切り替える
-                    rect_.top = 0;
-                    rect_.bottom = kSize;
+                    defaultSize( kMario );
 
                     // 高さを揃える
                     position_.y += kSize;
@@ -327,8 +331,7 @@ void Player::draw()
                 else if( m == 0 && n % 2 == 1 )
                 {
                     // Rectを切り替える
-                    rect_.top = kQuadruple;
-                    rect_.bottom = kDoubleSize;
+                    defaultSize( kSuperMario );
 
                     // 高さを揃える
                     position_.y -= kSize;
@@ -356,7 +359,7 @@ void Player::finalize()
 
 void Player::animation()
 {
-    // 動いても良いか調べる
+        // 動いても良いか調べる
     if( animation_flag_ == true )
     {
         animation_cnt_++;
@@ -375,8 +378,10 @@ void Player::animation()
 
 void Player::collision()
 {
+    int fool_col = Collision::footColl();
+
     // 足元にあるブロックが乗れるとき
-    if( Collision::footColl() == 1 )
+    if( fool_col == 1 )
     {
         landing();          // 着地処理
 
@@ -387,7 +392,7 @@ void Player::collision()
         total_move_.y = block_line * kSize;
     }
     // 足元に何もなく浮いているとき
-    else if( Collision::footColl() == 2 )
+    else if( fool_col == 2 )
     {
         // 飛べないようにする
         jumping_ = kNoJump;
@@ -397,32 +402,6 @@ void Player::collision()
         {
             // gameover
             gameover_flag_ = false;
-        }
-    }
-    // 足元にあるブロックが乗れないとき
-    else
-    {
-        if( status_ == kMario )
-        {
-            // 床より下の時
-            if( position_.y > kEndLine )
-            {
-                landing(); // 着地処理
-
-                position_.y = kStartY - 1;
-                total_move_.y = 831;
-            }
-        }
-        else
-        {
-            // 床より下の時
-            if( position_.y > kEndLine - kSize )
-            {
-                landing(); // 着地処理
-
-                position_.y = kStartY - kSize - 1;
-                total_move_.y = 763;
-            }
         }
     }
 }
@@ -459,16 +438,11 @@ void Player::itemCollision()
 
         // スーパーマリオ
         if( status_ == kSuperMario )
-        {
-            rect_.top = kQuadruple;
-            rect_.bottom = kDoubleSize;
-        }
+            defaultSize( kSuperMario );
+
         // ファイアマリオ
         else if( status_ == kFireMario )
-        {
-            rect_.top = kOctuple;
-            rect_.bottom = kDoubleSize;
-        }
+            defaultSize( kFireMario );
 
         // 高さを揃える
         if( past_status_ == kMario )
@@ -484,35 +458,26 @@ void Player::itemCollision()
 
 void Player::enemyCollision()
 {
-
-    if( past_status_ == kFireMario )
+    if( past_status_ > kMario )
     {
-        status_ -= 2;              // マリオ退化
-        invincible_ = false;       // マリオ無敵に変える
-        invincible_time_ = false;  // マリオ無敵カウント開始
+        status_ = kMario;           // マリオ退化
+        invincible_ = false;        // マリオ無敵に変える
+        invincible_time_ = false;   // マリオ無敵カウント開始
 
-        // マリオRect
-        rect_.top = 0;
-        rect_.bottom = kSize;
-    }
-    else if( past_status_ == kSuperMario )
-    {
-        status_ -= 1;              // マリオ退化
-        invincible_ = false;       // マリオ無敵に変える
-        invincible_time_ = false;  // マリオ無敵カウント開始
-
-        // マリオRect
-        rect_.top = 0;
-        rect_.bottom = kSize;
+        if( push_time_squat_ != 0 )
+        {
+            defaultSize( kMario );
+            push_time_squat_ = 0;
+        }
     }
     else
     {
-        status_ -= 1;              // マリオ退化
-        gameover_flag_ = false;
-        acceleration_ = -kJumpPower;
+        status_ = kGameover;        // マリオ死亡
+        gameover_flag_ = false;     // ゲームオーバー
+        acceleration_ = -kJumpPower;// 跳ねるアクション
     }
-    // 変身後の状態を保存
-    past_status_ = status_;
+
+    past_status_ = status_;         // 変身後の状態を保存
 }
 
 void Player::enemyStepon()
@@ -761,6 +726,35 @@ void Player::leftCheck()
     }
 }
 
+// しゃがみ動作
+void Player::squat()
+{
+    // 下が押されたとき
+    if( !(GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_DOWN) == 0 || CheckHitKey( KEY_INPUT_S ) == 1 )
+        push_time_squat_++;
+    else
+    {
+        if( push_time_squat_ != 0 )
+        {
+            defaultSize( status_ );
+            push_time_squat_ = 0;
+        }
+    }
+
+    if( push_time_squat_ >= 1 )
+    {
+        if( status_ == kSuperMario )
+            rect_.top = kSextuple;
+
+        else if( status_ == kFireMario )
+            rect_.top = kDecuple;
+
+        rect_.left = 0;
+        rect_.right = kSize;
+        rect_.bottom = kDoubleSize;
+    }
+}
+
 void Player::fireMove()
 {
     // Status FireMario
@@ -784,17 +778,13 @@ void Player::fireMove()
             throw_cnt_++;
 
             // 投げる切り取り範囲
-            rect_.left   = kQuadruple;
-            rect_.right  = kSize;
-            rect_.top    = kDecuple;
+            rect_.left = kQuadruple;
+            rect_.right = kSize;
+            rect_.top = kDecuple;
             rect_.bottom = kDoubleSize;
         }
         else
-        {
-            // 投げないときは体の高さ戻す
-            rect_.top    = kOctuple;
-            rect_.bottom = kDoubleSize;
-        }
+            defaultSize( kFireMario );
 
         // 連続投射を防止する
         if( throw_cnt_ >= kStopper )
@@ -802,5 +792,36 @@ void Player::fireMove()
             throw_cnt_ = 0;
             throw_flag_ = true;
         }
+    }
+}
+
+// RECT登録
+void Player::defaultSize( int Status )
+{
+    // ゲームオーバー
+    if( Status == kGameover )
+    {        
+        rect_.left   = 0;
+        rect_.right  = kSize;
+        rect_.top    = kSize;
+        rect_.bottom = kSize;
+    }
+    // マリオ
+    else if( Status == kMario )
+    {
+        rect_.top    = 0;
+        rect_.bottom = kSize;
+    }
+    // スーパーマリオ
+    else if( Status == kSuperMario )
+    { 
+        rect_.top = kQuadruple;
+        rect_.bottom = kDoubleSize;
+    }
+    // ファイアマリオ
+    else if( Status == kFireMario )
+    {
+        rect_.top = kOctuple;
+        rect_.bottom = kDoubleSize;
     }
 }

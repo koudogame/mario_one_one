@@ -66,8 +66,10 @@ void Powerup::update( int Screenover )
                 body_[ kLeft ][ kFoot ][ kX ] = (item_.x + kGather);
                 body_[ kLeft ][ kFoot ][ kY ] = (item_.y + kSize + 1) + kQuadruple;
 
+                int fool_col = Collision::footColl();
+
                 // ‘«ê‚ª‚ ‚é‚Æ‚«
-                if( Collision::footColl() == 1 )
+                if( fool_col == 1 )
                 {
                     jumping_ = kNoMove;
                     acceleration_ = 0;  // —‰º‘¬“x
@@ -81,7 +83,7 @@ void Powerup::update( int Screenover )
 
                 }
                 // ’ˆ‚É•‚‚¢‚Ä‚¢‚é‚Æ‚«
-                else if( Collision::footColl() == 2 )
+                else if( fool_col == 2 )
                 {
                     jumping_ = kNoJump;
 
