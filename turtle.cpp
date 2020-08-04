@@ -172,7 +172,7 @@ void Turtle::shellCollision()
         pushout_ = false;
         direction_ = 1;
     }
-    else if( action_cnt_ == 3 )
+    else if( action_cnt_ == 2 )
     {
         pushout_ = true;
         action_cnt_ = 0;

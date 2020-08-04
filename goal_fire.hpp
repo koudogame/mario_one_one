@@ -29,4 +29,5 @@ private:
 
     Rect<int> rect_;
     Position<int> position_[ 6 ];
+   
 };
