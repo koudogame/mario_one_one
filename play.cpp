@@ -274,11 +274,12 @@ void PlayScene::update()
                     ui_->timeScore(); 
                 else
                 {
+                    // ƒXƒRƒA‰ÁZŒã‚ÉŠø‚ğŒf‚°‚é
+                    item_->getEnd( player_->getEnd() );
+
                     // ‚PŒ…‚ª1,3,6‚Ì
                     if( !gf_flag_ )
                     {
-                        // ƒXƒRƒA‰ÁZŒã‚ÉŠø‚ğŒf‚°‚é
-                        item_->getEnd( player_->getEnd() );
 
                         // numCheck‚ª0ˆÈŠO‚Ì
                         if( gf_->getNumber() != 0 )
