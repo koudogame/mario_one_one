@@ -14,9 +14,9 @@ int WINAPI WinMain( HINSTANCE hI, HINSTANCE hP, LPSTR lpC, int nC )
     SetOutApplicationLogValidFlag( false );
 
     ChangeWindowMode( TRUE );                              // ウィンドウモード切り替え
-    SetGraphMode( 1280, 720, 32 );                         // ウィンドウサイズ変更
-    SetBackgroundColor( 100, 149, 237 );                 // 背景色変更
-    //SetBackgroundColor( 255, 255, 239 );                   // 背景色変更
+    SetGraphMode( 1280, 720, 32, 60 );                     // ウィンドウサイズ変更
+    //SetBackgroundColor( 100, 149, 237 );                 // 背景色変更
+    SetBackgroundColor( 255, 255, 239 );                   // 背景色変更
     if( DxLib_Init() == -1 )    return -1;                 // Dxlib初期化
 
     SetDrawScreen( DX_SCREEN_BACK );                       // 裏画面描画に設定
