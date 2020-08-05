@@ -12,7 +12,7 @@ public :
     BallManagement( Field* field ) : ff_( field ) { field_ = field; }
 
     void initialize();
-    void update( int, int, int, int, bool ,int);
+    void update( int, int, int, int, bool ,int, int );
     void draw(const int);              // ScreenOver
     void finalize();
 

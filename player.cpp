@@ -132,19 +132,20 @@ bool Player::update(bool TimeLimit)
 
             // 初回限定
             if( push_time_jump_ == 1 )
-            {
-                // ジャンプRECTに切り替え
-                // kMario状態の時のみ有効
-                if( push_time_squat_ == 0 )
-                    animation_ = 4;
-
-                // ジャンプ中にアニメーションを動かさないようにする
-                animation_flag_ = false;
-
+            {                
                 if( jumping_ == kJump )
                 {
+                    timekeep_squat_ = push_time_squat_;
                     jumping_ = kNoJump;
                     acceleration_ = -kJumpPower;
+
+                    // ジャンプ中にアニメーションを動かさないようにする
+                    animation_flag_ = false;
+
+                    // ジャンプRECTに切り替え
+                    // kMario状態の時のみ有効
+                    if( timekeep_squat_ == 0 )
+                        animation_ = 4;
                 }
             }
 
@@ -164,11 +165,23 @@ bool Player::update(bool TimeLimit)
                 acceleration_ = 20;
             }
 
-            // マリオの頭(幅を左右10小さく)
-            body_[ kRight ][ kHead ][ kX ] = (total_move_.x + (kSize - kGather));
-            body_[ kRight ][ kHead ][ kY ] = (total_move_.y - 1);
-            body_[ kLeft ][ kHead ][ kX ] = (total_move_.x + kGather);
-            body_[ kLeft ][ kHead ][ kY ] = (total_move_.y - 1);
+            // しゃがみ状態のみ頭の位置を下げる
+            if( push_time_squat_ == 0 )
+            {
+                // マリオの頭(幅を左右10小さく)
+                body_[ kRight ][ kHead ][ kX ] = (total_move_.x + (kSize - kGather));
+                body_[ kRight ][ kHead ][ kY ] = (total_move_.y - 1);
+                body_[ kLeft ][ kHead ][ kX ] = (total_move_.x + kGather);
+                body_[ kLeft ][ kHead ][ kY ] = (total_move_.y - 1);
+            }
+            else
+            {
+                // マリオの頭(幅を左右10小さく)
+                body_[ kRight ][ kHead ][ kX ] = (total_move_.x + (kSize - kGather));
+                body_[ kRight ][ kHead ][ kY ] = (total_move_.y + kSize - 1);
+                body_[ kLeft ][ kHead ][ kX ] = (total_move_.x + kGather);
+                body_[ kLeft ][ kHead ][ kY ] = (total_move_.y + kSize - 1);
+            }
 
             // マリオの足元
             body_[ kRight ][ kFoot ][ kX ] = (total_move_.x + (kSize - kGather));
@@ -190,18 +203,36 @@ bool Player::update(bool TimeLimit)
             // 上へ飛んでいるときにだけhit()を呼ぶ
             if( acceleration_ < 0 )
             {
-                // 右頭にあたるとき
-                if( Collision::collision( kRight, kHead ) <= kSize )
+                // しゃがみ時
+                if( push_time_squat_ == 0 )
                 {
-                    break_right_.x = (total_move_.x / kSize) + 1;
-                    break_right_.y = total_move_.y / kSize;
+                    // 右頭にあたるとき
+                    if( Collision::collision( kRight, kHead ) <= kSize )
+                    {
+                        break_right_.x = (total_move_.x / kSize) + 1;
+                        break_right_.y = total_move_.y / kSize;
+                    }
+                    // 左頭にあたるとき
+                    if( Collision::collision( kLeft, kHead ) <= kSize )
+                    {
+                        break_left_.x = (total_move_.x / kSize);
+                        break_left_.y = total_move_.y / kSize;
+                    }
                 }
-
-                // 左頭にあたるとき
-                if( Collision::collision( kLeft, kHead ) <= kSize )
-                {
-                    break_left_.x = (total_move_.x / kSize);
-                    break_left_.y = total_move_.y / kSize;
+                else
+                { 
+                    // 右頭にあたるとき
+                    if( Collision::collision( kRight, kHead ) <= kSize )
+                    {
+                        break_right_.x = (total_move_.x / kSize) + 1;
+                        break_right_.y = (total_move_.y + kSize) / kSize;
+                    }
+                    // 左頭にあたるとき
+                    if( Collision::collision( kLeft, kHead ) <= kSize )
+                    {
+                        break_left_.x = (total_move_.x / kSize);
+                        break_left_.y = (total_move_.y + kSize) / kSize;
+                    }
                 }
 
                 // 頭の上にあるブロックを調べる
@@ -734,6 +765,7 @@ void Player::squat()
         push_time_squat_++;
     else
     {
+        // 数値が入っているときリセット
         if( push_time_squat_ != 0 )
         {
             defaultSize( status_ );
@@ -741,6 +773,11 @@ void Player::squat()
         }
     }
 
+    // ジャンプした瞬間の状態をキープ
+    if( !animation_flag_ )
+        push_time_squat_ = timekeep_squat_;
+
+    // しゃがみが押されたときRECT切り替え
     if( push_time_squat_ >= 1 )
     {
         if( status_ == kSuperMario )

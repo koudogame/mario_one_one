@@ -77,7 +77,7 @@ void PlayScene::update()
         enemy_->update( player_->getScrollCnt() );
 
         bm_->update( player_->getPositionX(), player_->getPositionY(),
-            player_->getStatus(), player_->getDirection(), player_->getGoal(), player_->getPosY() );
+            player_->getStatus(), player_->getDirection(), player_->getGoal(), player_->getPosY(), player_->getPushSquat() );
 
         ui_->coinCheck( item_->getCoin() );
 

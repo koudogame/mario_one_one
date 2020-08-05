@@ -76,7 +76,7 @@ void FireFactory::update()
                 fire_position_.y = kGround;
 
             acceleration_ = 0;  // —Ž‰º‘¬“x
-            acceleration_ = (-kJumpPower / 2);
+            acceleration_ = (-kJumpPower / 4);
         }
         else if( fire_col == 1 )
         {

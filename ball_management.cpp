@@ -9,10 +9,10 @@ void BallManagement::initialize()
     create_flag_      = true;
 }
 
-void BallManagement::update( int TotalX, int TotalY, int Status, int Direction, bool GameOver, int PosY )
+void BallManagement::update( int TotalX, int TotalY, int Status, int Direction, bool GameOver, int PosY, int Squat )
 {
     // ”­Ë‰Â”\ó‘Ô
-    if( GameOver && PosY <= kEndline )
+    if( GameOver && PosY <= kEndline && Squat == 0)
     {
         // ƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚½‚Æ‚«
         if( !(GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_4) == 0 || CheckHitKey( KEY_INPUT_B ) == 1 )

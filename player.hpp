@@ -7,7 +7,7 @@ public:
     const int kSpeed      = 6;      // 歩いているときの速度
     const int kDownSpeed  = 6;      // ゴールしたとき落ちるスピード
     const int kAnimeMove  = 8;      // アニメーション用
-    const int kEnemyJump  = 8;     // 敵を踏んだ時のジャンプ力
+    const int kEnemyJump  = 8;      // 敵を踏んだ時のジャンプ力
     const int kDashSpeed  = 10;     // ダッシュしているときの速度
     const int kStopper    = 16;     // 連射防止ストッパー
     const int kJumpPower  = 24;     // ジャンプボタン時のジャンプ力
@@ -39,11 +39,12 @@ public:
     void rightCheck();              // 体の右側を登録してチェックする関数
     void leftCheck();               // 体の左側を登録してチェックする関数
 
-    inline int getScrollCnt() { return scroll_cnt_; }   /*背景の描画を流す数値*/
-    inline int getStatus() { return status_; }          /*マリオの状態をfieldにも知らせる*/
-    inline bool getInvincible() { return invincible_; } /*無敵状態か確認*/
+    inline int getPushSquat() { return push_time_squat_; }/*しゃがみ状態の確認*/
+    inline int getScrollCnt() { return scroll_cnt_; }     /*背景の描画を流す数値*/
+    inline int getStatus() { return status_; }            /*マリオの状態をfieldにも知らせる*/
+    inline bool getInvincible() { return invincible_; }   /*無敵状態か確認*/
     inline bool getInvincibleTime() { return invincible_time_; }
-    inline bool getGoal() { return goal_flag_; }        /*ゴールしているか*/
+    inline bool getGoal() { return goal_flag_; }          /*ゴールしているか*/
 
     // 向きに応じて渡す
     inline int getDirection() 
@@ -115,6 +116,7 @@ private:
     int push_time_fire_;       // 1 = Pressed,2 <= Held
     int push_time_run_;        // 1 = Pressed,2 <= Held
     int push_time_squat_;      // 1 = Pressed,2 <= Held
+    int timekeep_squat_;      // 1 = Pressed,2 <= Held
 
     void squat();              // しゃがむ動作を行う関数
     void fireMove();           // ファイアボールを投げる動き
