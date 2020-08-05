@@ -61,7 +61,7 @@ void PlayScene::update()
 {
     player_->update( ui_->timeLimit() );
 
-    // ƒ}ƒŠƒI“§–¾‚©‚ÂŠgkŽž Žž‚ðŽ~‚ß‚é
+    // ƒ}ƒŠƒI“§–¾‚©‚ÂŠgkŽž Žž‚ðŽ~‚ß‚é‚‚d
     if( player_->getInvincibleTime() )
     {
         field_->downBlock();

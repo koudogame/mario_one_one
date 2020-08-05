@@ -245,10 +245,8 @@ bool Player::update(bool TimeLimit)
             }
             // 上へ飛ぶ加速がなくなったときに下の判定を取り始める
             else
-            {
                 // 足元の衝突判定
                 collision();
-            }
 
             // ゴール
             if( total_move_.x >= (kSize * kGoalPost) + kHalfSize )
@@ -390,7 +388,7 @@ void Player::finalize()
 
 void Player::animation()
 {
-        // 動いても良いか調べる
+    // 動いても良いか調べる
     if( animation_flag_ == true )
     {
         animation_cnt_++;
@@ -428,6 +426,9 @@ void Player::collision()
         // 飛べないようにする
         jumping_ = kNoJump;
 
+        // アニメーションカット
+        animation_flag_ = false;
+
         // マリオが画面外に行ったとき
         if( position_.y > kFallOut )
         {
@@ -437,6 +438,7 @@ void Player::collision()
     }
 }
 
+// 着地したタイミング
 void Player::landing()
 {
     // フラグリセット        
