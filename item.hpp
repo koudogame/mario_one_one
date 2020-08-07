@@ -15,7 +15,7 @@ class Item
 public:
     Item( Field* Field );
     bool initialize( std::fstream& stage );
-    void update( int Brx, int Bry, int Blx, int Bly, int Status, int Screenover );
+    void update( PlayerData );
     void draw( int Screenover );
     void finalize();
 

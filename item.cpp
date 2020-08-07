@@ -67,30 +67,30 @@ bool Item::initialize( std::fstream& stage )
     return true;
 }
 
-void Item::update( int Brx, int Bry, int Blx, int Bly, int Status, int Screenover )
+void Item::update( PlayerData PlayerData )
 {
     // 常にupdate()は呼ばれる
     for( int i = 0; i < height_; i++ )
     {
         for( int j = 0; j < width_; j++ )
         {
-            item_[ 0 ][ i ][ j ]->update( Screenover );
+            item_[ 0 ][ i ][ j ]->update( PlayerData.scroll_cnt );
         }
     }
 
     // 叩かれた右側のflagChange()を呼ぶ
-    if( Brx != 0 || Bry != 0 )
-        item_[ 0 ][ Bry ][ Brx ]->flagChange( Status );
+    if( PlayerData.break_right.x != 0 || PlayerData.break_right.y != 0 )
+        item_[ 0 ][ PlayerData.break_right.y ][ PlayerData.break_right.x ]->flagChange( PlayerData.player_status );
 
     // コインの時追加
-    coinCheckRight( Brx, Bry );
+    coinCheckRight( PlayerData.break_right.x, PlayerData.break_right.y );
 
     // 叩かれた左側のflagChange()を呼ぶ
-    if( Blx != 0 || Bly != 0 )
-        item_[ 0 ][ Bly ][ Blx ]->flagChange( Status );
+    if( PlayerData.break_left.x != 0 || PlayerData.break_left.y != 0 )
+        item_[ 0 ][ PlayerData.break_left.y ][ PlayerData.break_left.x ]->flagChange( PlayerData.player_status );
 
     // コインの時追加
-    coinCheckLeft( Blx, Bly );
+    coinCheckLeft( PlayerData.break_left.x, PlayerData.break_left.y );
 }
 
 void Item::draw( int Screenover )

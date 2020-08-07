@@ -59,32 +59,34 @@ bool PlayScene::initialize()
 
 void PlayScene::update()
 {
+    PlayerData player_data;
+
+    player_data = player_->getData();
+
     player_->update( ui_->timeLimit() );
 
-    // マリオ透明かつ拡縮時 時を止めるｂd
-    if( player_->getInvincibleTime() )
+    // マリオ透明かつ拡縮時 時を止める
+    if( player_data.invincible_flag )
     {
         field_->downBlock();
 
-        field_->update( player_->getBreakRightX(), player_->getBreakRightY(),
-            player_->getBreakLeftX(), player_->getBreakLeftY(), player_->getStatus() );
+        field_->update( player_data );
 
-        item_->update( player_->getBreakRightX(), player_->getBreakRightY(),
-            player_->getBreakLeftX(), player_->getBreakLeftY(), player_->getStatus(), player_->getScrollCnt() );
+        item_->update( player_data );
 
         item_->getGoal( player_->getGoal() );
 
         enemy_->update( player_->getScrollCnt() );
 
-        bm_->update( player_->getPositionX(), player_->getPositionY(),
-            player_->getStatus(), player_->getDirection(), player_->getGoal(), player_->getPosY(), player_->getPushSquat() );
+        bm_->update( player_data );
 
         ui_->coinCheck( item_->getCoin() );
 
         ui_->update( player_->getGoal() );
 
-        bm_->posCheck( player_->getScrollCnt() );           // 重くならないように画面外は判定しない処理
-        bm_->sideCheck();                                   // 横から当たったら消去
+        bm_->posCheck( player_->getScrollCnt() ); // 重くならないように画面外は判定しない処理
+
+        bm_->sideCheck();                         // 横から当たったら消去
 
         // ゲームオーバーではないとき
         if( player_->getGameover() )
@@ -301,14 +303,16 @@ void PlayScene::update()
 
 void PlayScene::draw()
 {       
-    field_->drawFront(player_->getScrollCnt());     // フィールド背景
-    item_->draw(player_->getScrollCnt());           // アイテム
-    field_->draw( player_->getScrollCnt() );        // 触れるブロック
-    enemy_->draw(player_->getScrollCnt());          // 敵
-    bm_->draw( player_->getScrollCnt() );           // ファイアボール
-    player_->draw();                                // マリオ
-    ui_->draw();                                    // UI
-    gf_->draw();                                    // 花火
+    int scroll_cnt = player_->getScrollCnt();
+
+    field_->drawFront(scroll_cnt); // フィールド背景
+    item_->draw(scroll_cnt);       // アイテム
+    field_->draw( scroll_cnt );    // 触れるブロック
+    enemy_->draw(scroll_cnt);      // 敵
+    bm_->draw( scroll_cnt );       // ファイアボール
+    player_->draw();               // マリオ
+    ui_->draw();                   // UI
+    gf_->draw();                   // 花火
 }
 
 void PlayScene::finalize()
@@ -323,14 +327,14 @@ void PlayScene::finalize()
     gf_->finalize();
 
     // メモリ開放newした分
-    delete gf_;
-    delete ui_;
-    delete bm_;
-    delete item_;
-    delete field_;
-    delete enemy_;
-    delete player_;
-    delete pos_col_;
+    SAFE_DELETE( gf_ );
+    SAFE_DELETE( ui_ );
+    SAFE_DELETE( bm_ );
+    SAFE_DELETE( item_ );
+    SAFE_DELETE( field_ );
+    SAFE_DELETE( enemy_ );
+    SAFE_DELETE( player_ );
+    SAFE_DELETE( pos_col_ );
 }
 
 void PlayScene::resultScene()

@@ -29,9 +29,7 @@ void ItemBase::draw( int Texture, const int Screenover )
         Texture, TRUE, FALSE );                         
 }
 
-void ItemBase::flagChange( int Status )
-{
-}
+void ItemBase::flagChange( int Status ) {}
 
 int ItemBase::getPosX()
 {
@@ -50,14 +48,8 @@ bool ItemBase::getPunch()
     return true;
 }
 
-void ItemBase::posCollision()
-{
-}
+void ItemBase::posCollision() {}
 
-void ItemBase::getGoal( bool Goal )
-{
-}
+void ItemBase::getGoal( bool Goal ) {}
 
-void ItemBase::upHata( bool Hata )
-{
-}
+void ItemBase::upHata( bool Hata ) {}

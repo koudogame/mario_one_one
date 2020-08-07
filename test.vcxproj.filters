@@ -311,5 +311,8 @@
     <ClInclude Include="goal_fire.hpp">
       <Filter>GoalFire</Filter>
     </ClInclude>
+    <ClInclude Include="namespace.hpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
