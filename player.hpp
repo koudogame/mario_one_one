@@ -118,7 +118,12 @@ private:
     int push_time_squat_;      // 1 = Pressed,2 <= Held
     int timekeep_squat_;      // 1 = Pressed,2 <= Held
 
+    int speed_;
+
     void squat();              // しゃがむ動作を行う関数
     void fireMove();           // ファイアボールを投げる動き
     void defaultSize( int Status ); // 引数でrect_を調整する関数
+
+    void rightPush();
+    void leftPush();
 };

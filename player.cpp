@@ -61,69 +61,87 @@ bool Player::initialize()
     push_time_fire_ = 0;
     push_time_run_  = 0;
     push_time_squat_= 0;
+    speed_ = 0;
 
     return true;
 }
 
-bool Player::update(bool TimeLimit)
+bool Player::update( bool TimeLimit )
 {
     if( !goal_flag_ ) ending();
     else if( gameover_flag_ )
     {
         if( invincible_time_ )
         {
-            if( push_time_squat_ == 0 )
+            // しゃがめる大きさかどうか
+            if( status_ > kMario && goal_flag_ )
+                squat();
+
+            // ダッシュボタン判定
+            if( !(GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_4) == 0 || CheckHitKey( KEY_INPUT_B ) == 1 )
+                push_time_run_++;
+            else
+                push_time_run_ = 0;
+
+            if( left_button_ )
             {
-                // ダッシュボタン判定
-                if( !(GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_4) == 0 || CheckHitKey( KEY_INPUT_B ) == 1 )
-                    push_time_run_++;
+                // 右入力
+                if( !(GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_RIGHT) == 0 || CheckHitKey( KEY_INPUT_D ) == 1 )
+                {
+                    rightPush();
+
+                    // しゃがんでいなかったらアニメーション
+                    if( push_time_squat_ == 0 )
+                        animation();
+                }
                 else
-                    push_time_run_ = 0;
-
-                if( left_button_ )
-                {
-                    // 右入力
-                    if( !(GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_RIGHT) == 0 || CheckHitKey( KEY_INPUT_D ) == 1 )
-                    {
-                        direction_ = true;         // 向きを右向きに変える
-                        right_button_ = false;     // 押している(トラッカー) 
-
-                        rightCheck();              // 体の右側を確認する
-
-                        animation();               // 歩いているアニメーション
-                    }
-                    else
-                        right_button_ = true;
-                }
-
-                if( right_button_ )
-                {
-                    // 左入力
-                    if( !(GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_LEFT) == 0 || CheckHitKey( KEY_INPUT_A ) == 1 )
-                    {
-                        direction_ = false;        // 向きを左向きに変える
-                        left_button_ = false;      // 押している
-
-                        leftCheck();
-
-                        animation();               // 歩いているアニメーション
-                    }
-                    else
-                        left_button_ = true;
-                }
-                // 入力が終わったときに比較する
-                if( old_left_button_ == false && left_button_ == true ||
-                    old_right_button_ == false && right_button_ == true )
-                {
-                    animation_ = 0;
-                    animation_cnt_ = 0;
-                }
-
-                // 過去に引き継ぐ
-                old_left_button_ = left_button_;
-                old_right_button_ = right_button_;
+                    right_button_ = true;
             }
-        
+
+            if( right_button_ )
+            {
+                // 左入力
+                if( !(GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_LEFT) == 0 || CheckHitKey( KEY_INPUT_A ) == 1 )
+                {
+                    leftPush();
+                 
+                    // しゃがんでいなかったらアニメーション
+                    if( push_time_squat_ == 0 )
+                        animation();
+                }
+                else
+                    left_button_ = true;
+            }
+
+            // 右への移動時
+            if( speed_ > 0 )
+                rightCheck();
+
+            // 左への移動時
+            if( speed_ < 0 )
+                leftCheck();
+
+            // スピードはあるがボタンは押していない時は0にする
+            if( speed_ != 0 && right_button_ && left_button_ )
+            {
+                if( speed_ > 0 )
+                    speed_--;
+                if( speed_ < 0 )
+                    speed_++;
+            }
+
+            // 入力が終わったときに比較する
+            if( old_left_button_ == false && left_button_ == true ||
+                old_right_button_ == false && right_button_ == true )
+            {
+                animation_ = 0;
+                animation_cnt_ = 0;
+            }
+
+            // 過去に引き継ぐ
+            old_left_button_ = left_button_;
+            old_right_button_ = right_button_;
+
             // ジャンプ入力
             if( !(GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_B) == 0 || CheckHitKey( KEY_INPUT_SPACE ) == 1 )
                 push_time_jump_++;
@@ -132,7 +150,7 @@ bool Player::update(bool TimeLimit)
 
             // 初回限定
             if( push_time_jump_ == 1 )
-            {                
+            {
                 if( jumping_ == kJump )
                 {
                     timekeep_squat_ = push_time_squat_;
@@ -220,7 +238,7 @@ bool Player::update(bool TimeLimit)
                     }
                 }
                 else
-                { 
+                {
                     // 右頭にあたるとき
                     if( Collision::collision( kRight, kHead ) <= kSize )
                     {
@@ -313,13 +331,12 @@ void Player::draw()
         break_left_.x = 0; break_left_.y = 0;
         break_right_.x = 0; break_right_.y = 0;
 
-        // 共通範囲
-        rect_.left = animation_ * kSize;
-        rect_.right = kSize;
-
-        // しゃがめる大きさかどうか
-        if( status_ > kMario && goal_flag_ )
-            squat();
+        // 共通範囲(しゃがんでいない時)
+        if( push_time_squat_ == 0 )
+        {
+            rect_.left = animation_ * kSize;
+            rect_.right = kSize;
+        }
 
         // やられるとき
         if( status_ == kGameover )
@@ -426,9 +443,6 @@ void Player::collision()
         // 飛べないようにする
         jumping_ = kNoJump;
 
-        // アニメーションカット
-        animation_flag_ = false;
-
         // マリオが画面外に行ったとき
         if( position_.y > kFallOut )
         {
@@ -514,8 +528,9 @@ void Player::enemyCollision()
 }
 
 void Player::enemyStepon()
-{
-    // ジャンプRECTに切り替え
+{    
+    // しゃがんでいない時
+    if(push_time_squat_ == 0)
     animation_ = 4;
 
     // ジャンプ中にアニメーションを動かさないようにする
@@ -679,20 +694,8 @@ void Player::rightCheck()
         // もう一度当たり判定を確認する
         if( Collision::sideColl( kRight ) == true )
         {
-            // HELD中のとき
-            if( push_time_run_ >= 2 )
-            {
-                // 右への移動
-                position_.x += kDashSpeed;
-                total_move_.x += kDashSpeed;
-            }
-            else
-            {
-                // 右への移動
-                position_.x += kSpeed;
-                total_move_.x += kSpeed;
-
-            }
+            position_.x += speed_;
+            total_move_.x += speed_;
 
             // pos_x_ センターを超えるとき
             if( position_.x > kEndLine )
@@ -732,29 +735,14 @@ void Player::leftCheck()
         // もう一度当たり判定を確認する
         if( Collision::sideColl( kLeft ) == true )
         {
-            if( push_time_run_ >= 2 )
-            {
                 // ポジションゼロより左の時
                 if( position_.x <= 0 )
                     position_.x = 0;
                 else
                 {
-                    position_.x -= kDashSpeed;
-                    total_move_.x -= kDashSpeed;
+                    position_.x += speed_;
+                    total_move_.x += speed_;
                 }
-            }
-            // 左壁以外の時
-            else
-            {   
-                // ポジションゼロより左の時
-                if( position_.x <= 0 )
-                    position_.x = 0;
-                else
-                {
-                    position_.x -= kSpeed;
-                    total_move_.x -= kSpeed;
-                }
-            }
         }
     }
 }
@@ -767,12 +755,8 @@ void Player::squat()
         push_time_squat_++;
     else
     {
-        // 数値が入っているときリセット
-        if( push_time_squat_ != 0 )
-        {
             defaultSize( status_ );
             push_time_squat_ = 0;
-        }
     }
 
     // ジャンプした瞬間の状態をキープ
@@ -862,5 +846,72 @@ void Player::defaultSize( int Status )
     {
         rect_.top = kOctuple;
         rect_.bottom = kDoubleSize;
+    }
+}
+
+void Player::rightPush()
+{
+    direction_ = true;         // 向きを右向きに変える
+    right_button_ = false;     // 押している(トラッカー) 
+
+    if( push_time_squat_ == 0 )
+    {
+        // ダッシュ押されている時
+        if( push_time_run_ != 0 )
+        {
+            if( speed_ < kDashSpeed )
+                speed_++;
+        }
+        // ダッシュ押されていない時
+        else
+        {
+            if( speed_ > kSpeed )
+                speed_ = kSpeed;
+
+            if( speed_ < kSpeed )
+                speed_++;
+        }
+    }
+    else
+    {
+        if( speed_ > 0 )
+            speed_--;
+
+        if( speed_ < 0 )
+            speed_++;
+    }
+}
+
+void Player::leftPush()
+{
+    direction_ = false;        // 向きを左向きに変える
+    left_button_ = false;      // 押している(トラッカー)
+
+    if( push_time_squat_ == 0 )
+    {
+        // ダッシュ押されている時
+        if( push_time_run_ != 0 )
+        {
+            if( speed_ > -kDashSpeed )
+                speed_--;
+        }
+        // ダッシュ押されていない時
+        else
+        {
+            if( speed_ < -kSpeed )
+                speed_ = -kSpeed;
+
+            if( speed_ > -kSpeed )
+                speed_--;
+        }
+    }
+    // しゃがんでいる時
+    else
+    {
+        if( speed_ < 0 )
+            speed_++;
+
+        if( speed_ > 0 )
+            speed_--;
     }
 }
