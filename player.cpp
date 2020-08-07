@@ -61,7 +61,11 @@ bool Player::initialize()
     push_time_fire_ = 0;
     push_time_run_  = 0;
     push_time_squat_= 0;
+
     speed_ = 0;
+    speed_up_ = 0;
+    speed_down_ = 0;
+    sliding_ = true;
 
     return true;
 }
@@ -87,13 +91,7 @@ bool Player::update( bool TimeLimit )
             {
                 // 右入力
                 if( !(GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_RIGHT) == 0 || CheckHitKey( KEY_INPUT_D ) == 1 )
-                {
                     rightPush();
-
-                    // しゃがんでいなかったらアニメーション
-                    if( push_time_squat_ == 0 )
-                        animation();
-                }
                 else
                     right_button_ = true;
             }
@@ -102,13 +100,7 @@ bool Player::update( bool TimeLimit )
             {
                 // 左入力
                 if( !(GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_LEFT) == 0 || CheckHitKey( KEY_INPUT_A ) == 1 )
-                {
                     leftPush();
-                 
-                    // しゃがんでいなかったらアニメーション
-                    if( push_time_squat_ == 0 )
-                        animation();
-                }
                 else
                     left_button_ = true;
             }
@@ -124,15 +116,24 @@ bool Player::update( bool TimeLimit )
             // スピードはあるがボタンは押していない時は0にする
             if( speed_ != 0 && right_button_ && left_button_ )
             {
-                if( speed_ > 0 )
-                    speed_--;
-                if( speed_ < 0 )
-                    speed_++;
+                speed_down_++;
+
+                if( speed_down_ >= 2 )
+                {
+                    if( speed_ > 0 )
+                        speed_--;
+                    if( speed_ < 0 )
+                        speed_++;
+
+                    speed_down_ = 0;
+                }
             }
 
-            // 入力が終わったときに比較する
-            if( old_left_button_ == false && left_button_ == true ||
-                old_right_button_ == false && right_button_ == true )
+            // しゃがんでいなかったらアニメーション
+            if( push_time_squat_ == 0 && speed_ != 0 )
+                animation();
+
+            if( push_time_squat_ == 0 && speed_ == 0 )
             {
                 animation_ = 0;
                 animation_cnt_ = 0;
@@ -386,6 +387,15 @@ void Player::draw()
             }
         }
 
+        // 滑っているときだけ反転
+        if( animation_ == 5 )
+        {
+            if( direction_ )
+                direction_ = false;
+            else
+                direction_ = true;
+        }
+
         // 通常描画
         DrawRectGraph( position_.x, position_.y,
             rect_.left, rect_.top, rect_.right, rect_.bottom,
@@ -406,7 +416,7 @@ void Player::finalize()
 void Player::animation()
 {
     // 動いても良いか調べる
-    if( animation_flag_ == true )
+    if( animation_flag_ && sliding_ )
     {
         animation_cnt_++;
 
@@ -440,6 +450,12 @@ void Player::collision()
     // 足元に何もなく浮いているとき
     else if( fool_col == 2 )
     {
+        // 時間を保存
+        timekeep_squat_ = push_time_squat_;
+
+        // 落下中に動かないように
+        animation_flag_ = false;
+
         // 飛べないようにする
         jumping_ = kNoJump;
 
@@ -855,12 +871,27 @@ void Player::rightPush()
     right_button_ = false;     // 押している(トラッカー) 
 
     if( push_time_squat_ == 0 )
-    {
+    {           
+        speed_up_++;
+
         // ダッシュ押されている時
         if( push_time_run_ != 0 )
         {
-            if( speed_ < kDashSpeed )
-                speed_++;
+            if( speed_up_ >= 2 )
+            {
+                if( speed_ < kDashSpeed )
+                    speed_++;
+
+                if( speed_ < 0 )
+                {
+                    sliding_ = false;
+                    animation_ = 5;
+                }
+                else
+                    sliding_ = true;
+
+                speed_up_ = 0;
+            }
         }
         // ダッシュ押されていない時
         else
@@ -868,17 +899,36 @@ void Player::rightPush()
             if( speed_ > kSpeed )
                 speed_ = kSpeed;
 
-            if( speed_ < kSpeed )
-                speed_++;
+            if( speed_up_ >= 2 )
+            {
+                if( speed_ < kSpeed )
+                    speed_++;
+
+                if( speed_ < 0 )
+                {
+                    sliding_ = false;
+                    animation_ = 5;
+                }
+                else
+                    sliding_ = true;
+
+                speed_up_ = 0;
+            }
         }
     }
     else
     {
-        if( speed_ > 0 )
-            speed_--;
+        speed_down_++;
 
-        if( speed_ < 0 )
-            speed_++;
+        if( speed_down_ >= 2 )
+        {
+            if( speed_ > 0 )
+                speed_--;
+            if( speed_ < 0 )
+                speed_++;
+
+            speed_down_ = 0;
+        }
     }
 }
 
@@ -889,11 +939,26 @@ void Player::leftPush()
 
     if( push_time_squat_ == 0 )
     {
+        speed_up_++;
+
         // ダッシュ押されている時
         if( push_time_run_ != 0 )
         {
-            if( speed_ > -kDashSpeed )
-                speed_--;
+            if( speed_up_ >= 2 )
+            {
+                if( speed_ > -kDashSpeed )
+                    speed_--;
+
+                if( speed_ > 0 )
+                {
+                    sliding_ = false;
+                    animation_ = 5;
+                }
+                else
+                    sliding_ = true;
+
+                speed_up_ = 0;
+            }
         }
         // ダッシュ押されていない時
         else
@@ -901,17 +966,36 @@ void Player::leftPush()
             if( speed_ < -kSpeed )
                 speed_ = -kSpeed;
 
-            if( speed_ > -kSpeed )
-                speed_--;
+            if( speed_up_ >= 2 )
+            {
+                if( speed_ > -kSpeed )
+                    speed_--;
+
+                if(speed_ > 0)
+                {
+                    sliding_ = false;
+                    animation_ = 5;
+                }
+                else
+                    sliding_ = true;
+
+                speed_up_ = 0;
+            }
         }
     }
     // しゃがんでいる時
     else
     {
-        if( speed_ < 0 )
-            speed_++;
+        speed_down_++;
 
-        if( speed_ > 0 )
-            speed_--;
+        if( speed_down_ >= 2 )
+        {
+            if( speed_ > 0 )
+                speed_--;
+            if( speed_ < 0 )
+                speed_++;
+
+            speed_down_ = 0;
+        }
     }
 }

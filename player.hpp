@@ -119,6 +119,9 @@ private:
     int timekeep_squat_;      // 1 = Pressed,2 <= Held
 
     int speed_;
+    int speed_up_;             // 数フレームで１回加速を行う
+    int speed_down_;           // 数フレームで１回減速を行う
+    bool sliding_;             // true : 滑っている, false : 滑っていない
 
     void squat();              // しゃがむ動作を行う関数
     void fireMove();           // ファイアボールを投げる動き
