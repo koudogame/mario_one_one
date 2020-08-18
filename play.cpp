@@ -60,9 +60,11 @@ bool PlayScene::initialize()
 
 void PlayScene::update()
 {
-    player_->update( ui_->timeLimit() );
-    
+    PlayerData player_data;
+
     player_data = player_->getData();
+
+    player_->update( ui_->timeLimit() );
 
     // マリオ透明かつ拡縮時 時を止める
     if( player_data.invincible_flag )
@@ -83,7 +85,7 @@ void PlayScene::update()
 
         ui_->update( player_data );
 
-        bm_->posCheck( player_data ); // 重くならないように画面外は判定しない処理
+        bm_->posCheck( player_->getScrollCnt() ); // 重くならないように画面外は判定しない処理
 
         bm_->sideCheck();                         // 横から当たったら消去
 
@@ -302,7 +304,7 @@ void PlayScene::update()
 
 void PlayScene::draw()
 {       
-    int scroll_cnt = player_data.scroll_cnt;
+    int scroll_cnt = player_->getScrollCnt();
 
     field_->drawFront(scroll_cnt); // フィールド背景
     item_->draw(scroll_cnt);       // アイテム

@@ -62,8 +62,14 @@ private:
     Position<int> break_left_;      // 頭の左の座標
                                     
     int texture_;                   // テクスチャハンドル
+                                    
+    int status_;                    // マリオの状態
     int past_status_;               // マリオの過去の状態
-                                                                                                            
+                                    
+    int scroll_cnt_;                // 半分をマリオが超えたときにスクロール
+                                    
+    bool gameover_flag_;            // true : 生きている, false : 死んでいる
+                                    
     int animation_;                 // 動いているときの切り取り範囲
     bool direction_;                // true : 右向き, false : 左向き
                                     
@@ -78,9 +84,12 @@ private:
     bool left_button_;              // true : 押してない, false : 押しています
                                     
     int invincible_cnt_;            // 無敵時間の計測
+    bool invincible_;               // true : ぶつかる, false : 無敵状態
     bool invincible_time_;          // 無敵だが動ける時間
                                     
     bool catch_flag_;               // true : 掴まっていない, false : 掴んでいる
+    bool goal_flag_;                // true : ゴールしていない, false : ゴールしている
+    bool extinguish_existence_;     // flase : 存在を消す
                                     
     int down_cnt_;                  // この値が66になったら向き反転
     int throw_cnt_;                 // 投げるモーションの維持
@@ -89,6 +98,7 @@ private:
     int push_time_jump_;            // 1 = Pressed,2 <= Held
     int push_time_fire_;            // 1 = Pressed,2 <= Held
     int push_time_run_;             // 1 = Pressed,2 <= Held
+    int push_time_squat_;           // 1 = Pressed,2 <= Held
     int timekeep_squat_;            // 1 = Pressed,2 <= Held
                                     
     int speed_;                     // 加速度
