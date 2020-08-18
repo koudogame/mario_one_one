@@ -66,25 +66,26 @@ bool Field::initialize( std::fstream& stage )
     return true;
 }
 
-void Field::update( int Brx, int Bry, int Blx, int Bly, int Status )
+void Field::update( PlayerData PlayerData )
 {
+  
     // ’@‚©‚ê‚½‰E‘¤
-    if( Brx != 0 || Bry != 0 )
+    if( PlayerData.break_right.x != 0 || PlayerData.break_right.y != 0 )
     {
         // æ‚É‰E‚Ì“ª‚ð“o˜^
-        block_right_.x = Brx;
-        block_right_.y = Bry;
+        block_right_.x = PlayerData.break_right.x;
+        block_right_.y = PlayerData.break_right.y;
 
-        field_[ 0 ][ Bry ][ Brx ]->standby( Brx, Bry );
+        field_[ 0 ][ PlayerData.break_right.y ][ PlayerData.break_right.x ]->standby( PlayerData.break_right.x, PlayerData.break_right.y );
     }
 
     // ’@‚©‚ê‚½¶‘¤
-    if( Blx != 0 || Bly != 0 )
+    if( PlayerData.break_left.x != 0 || PlayerData.break_left.y != 0 )
     {
-        block_left_.x = Blx;
-        block_left_.y = Bly;
+        block_left_.x = PlayerData.break_left.x;
+        block_left_.y = PlayerData.break_left.y;
 
-        field_[ 0 ][ Bly ][ Blx ]->standby( Blx, Bly );
+        field_[ 0 ][ PlayerData.break_left.y ][ PlayerData.break_left.x ]->standby( PlayerData.break_left.x, PlayerData.break_left.y );
     }
 
     for( int i = 0; i < height_; i++ )
@@ -95,7 +96,7 @@ void Field::update( int Brx, int Bry, int Blx, int Bly, int Status )
             if( field_[ 0 ][ i ][ j ]->getId() == kBrick || field_[ 0 ][ i ][ j ]->getId() == kMystery || field_[ 0 ][ i ][ j ]->getId() == kNoblock )
             {
                 // XV‚³‚ê‚½BlockBase->update()‚ðŒÄ‚Ño‚·
-                field_[ 0 ][ i ][ j ]->update( Status );
+                field_[ 0 ][ i ][ j ]->update( PlayerData.player_status );
             }
         }
     }

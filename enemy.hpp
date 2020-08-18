@@ -13,7 +13,7 @@ class Enemy
 public:
     Enemy( Field* Field );
     void initalize( std::fstream& FieldEnemy );
-    void update( int ScreenOver );
+    void update( PlayerData );
     void draw( int ScreenOver );
     void finalize();
 

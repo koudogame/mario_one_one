@@ -9,10 +9,10 @@ void BallManagement::initialize()
     create_flag_      = true;
 }
 
-void BallManagement::update( int TotalX, int TotalY, int Status, int Direction, bool GameOver, int PosY, int Squat )
+void BallManagement::update( PlayerData PlayerData )
 {
     // 発射可能状態
-    if( GameOver && PosY <= kEndline && Squat == 0)
+    if( PlayerData.gameover_flag && PlayerData.player_position.y <= kEndline && PlayerData.push_squat == 0)
     {
         // ボタンが押されたとき
         if( !(GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_4) == 0 || CheckHitKey( KEY_INPUT_B ) == 1 )
@@ -23,7 +23,8 @@ void BallManagement::update( int TotalX, int TotalY, int Status, int Direction, 
 
         // ボタンが押された瞬間
         if( push_create_fire_ == 1 )
-            createFire( TotalX, TotalY, Status, Direction );
+            createFire( PlayerData.total_position.x, PlayerData.total_position.y,
+                PlayerData.player_status, PlayerData.direction );
 
         // 時間管理
         if( !create_flag_ )
@@ -113,13 +114,13 @@ void BallManagement::sideCheck()
     }
 }
 
-void BallManagement::posCheck( const int ScrollCnt)
+void BallManagement::posCheck(PlayerData PlayerData)
 {
     // それぞれ自分で画面内にいるか確認を行う
     for( auto itr = fire_.begin(); itr != fire_.end();  )
     {
         // 画面外にFireballがあるとき
-        if( !(*itr)->getCheckScreen( ScrollCnt ) )
+        if( !(*itr)->getCheckScreen( PlayerData.scroll_cnt ) )
         {
             // 配列の先頭から位置を計算し破棄する
             size_t index = std::distance( fire_.begin(), itr );
