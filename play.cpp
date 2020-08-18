@@ -53,41 +53,42 @@ bool PlayScene::initialize()
     touch_ = 0;
     clear_num_ = 0;
     change_timer_ = 0;
- 
+    player_data = player_->getData();
+
     return true;
 }
 
 void PlayScene::update()
 {
     player_->update( ui_->timeLimit() );
+    
+    player_data = player_->getData();
 
-    // マリオ透明かつ拡縮時 時を止めるｂd
-    if( player_->getInvincibleTime() )
+    // マリオ透明かつ拡縮時 時を止める
+    if( player_data.invincible_flag )
     {
         field_->downBlock();
 
-        field_->update( player_->getBreakRightX(), player_->getBreakRightY(),
-            player_->getBreakLeftX(), player_->getBreakLeftY(), player_->getStatus() );
+        field_->update( player_data );
 
-        item_->update( player_->getBreakRightX(), player_->getBreakRightY(),
-            player_->getBreakLeftX(), player_->getBreakLeftY(), player_->getStatus(), player_->getScrollCnt() );
+        item_->update( player_data );
 
-        item_->getGoal( player_->getGoal() );
+        item_->getGoal( player_data );
 
-        enemy_->update( player_->getScrollCnt() );
+        enemy_->update( player_data );
 
-        bm_->update( player_->getPositionX(), player_->getPositionY(),
-            player_->getStatus(), player_->getDirection(), player_->getGoal(), player_->getPosY(), player_->getPushSquat() );
+        bm_->update( player_data );
 
         ui_->coinCheck( item_->getCoin() );
 
-        ui_->update( player_->getGoal() );
+        ui_->update( player_data );
 
-        bm_->posCheck( player_->getScrollCnt() );           // 重くならないように画面外は判定しない処理
-        bm_->sideCheck();                                   // 横から当たったら消去
+        bm_->posCheck( player_data ); // 重くならないように画面外は判定しない処理
+
+        bm_->sideCheck();                         // 横から当たったら消去
 
         // ゲームオーバーではないとき
-        if( player_->getGameover() )
+        if( player_data.gameover_flag )
         {
             // 敵と敵の当たり判定を取る
             for( int i = 0; i < enemy_->getHeight(); i++ )
@@ -151,7 +152,7 @@ void PlayScene::update()
                 for( int j = 0; j < item_->getWidth(); j++ )
                 {
                     // アイテムとマリオの衝突判定を調べる
-                    if( pos_col_->getCollision( player_->getPositionX(), player_->getPositionY(),
+                    if( pos_col_->getCollision( player_data.total_position.x, player_data.total_position.y,
                         item_->getItemPosX( i, j ), item_->getItemPosY( i, j ) ) == false )
                     {
                         int id = item_->getId( i, j );
@@ -173,9 +174,9 @@ void PlayScene::update()
                 {
                     // 上から踏みつけたとき
                     if( pos_col_->getEnemyCollision(
-                        player_->getPositionX(), player_->getPositionY(),
+                        player_data.total_position.x, player_data.total_position.y,
                         enemy_->getEnemyPosX( i, j ), enemy_->getEnemyPosY( i, j ),
-                        player_->getStatus() ) == 1 )
+                        player_data.player_status ) == 1 )
                     {
                         int id = enemy_->getId( i, j );
                         touch_ = 1;
@@ -197,9 +198,9 @@ void PlayScene::update()
                     }
                     // 体の右と衝突したとき
                     else if( pos_col_->getEnemyCollision(
-                        player_->getPositionX(), player_->getPositionY(),
+                        player_data.total_position.x, player_data.total_position.y,
                         enemy_->getEnemyPosX( i, j ), enemy_->getEnemyPosY( i, j ),
-                        player_->getStatus() ) == 2 )
+                        player_data.player_status ) == 2 )
                     {
                         int id = enemy_->getId( i, j );
                         touch_ = 2;
@@ -212,7 +213,7 @@ void PlayScene::update()
                             else
                             {
                                 // 無敵時間中は当たり判定を取らない
-                                if( player_->getInvincible() )
+                                if( player_data.invincible_flag )
                                     player_->enemyCollision();
                             }
                         }
@@ -220,18 +221,18 @@ void PlayScene::update()
                         if( id == kKuribo || id == kTurtle )
                         {
                             // 無敵時間中は当たり判定を取らない
-                            if( player_->getInvincible() == true )
+                            if( player_data.invincible_flag == true )
                                 player_->enemyCollision();
                         }
 
                     }
                     // 体の左と衝突したとき
                     else if( pos_col_->getEnemyCollision(
-                        player_->getPositionX(),
-                        player_->getPositionY(),
+                        player_data.total_position.x,
+                        player_data.total_position.y,
                         enemy_->getEnemyPosX( i, j ),
                         enemy_->getEnemyPosY( i, j ),
-                        player_->getStatus() ) == 3 )
+                        player_data.player_status ) == 3 )
                     {
                         int id = enemy_->getId( i, j );
                         touch_ = 3;
@@ -244,7 +245,7 @@ void PlayScene::update()
                             else
                             {
                                 // 無敵時間中は当たり判定を取らない
-                                if( player_->getInvincible() )
+                                if( player_data.invincible_flag )
                                     player_->enemyCollision();
                             }
                         }
@@ -252,7 +253,7 @@ void PlayScene::update()
                         if( id == kKuribo || id == kTurtle )
                         {
                             // 無敵時間中は当たり判定を取らない
-                            if( player_->getInvincible() )
+                            if( player_data.invincible_flag )
                                 player_->enemyCollision();
                         }
                     }
@@ -260,7 +261,7 @@ void PlayScene::update()
             }
 
             // 透明化前(一桁を取得)
-            if( player_->getEnd() )
+            if( player_data.end_flag )
             {
                 clear_num_ = ui_->getTime() % 10;
                 gf_flag_ = gf_->numCheck( clear_num_ );
@@ -275,7 +276,7 @@ void PlayScene::update()
                 else
                 {
                     // スコア加算後に旗を掲げる
-                    item_->getEnd( player_->getEnd() );
+                    item_->getEnd( player_data );
 
                     // １桁が1,3,6の時
                     if( !gf_flag_ )
@@ -301,14 +302,16 @@ void PlayScene::update()
 
 void PlayScene::draw()
 {       
-    field_->drawFront(player_->getScrollCnt());     // フィールド背景
-    item_->draw(player_->getScrollCnt());           // アイテム
-    field_->draw( player_->getScrollCnt() );        // 触れるブロック
-    enemy_->draw(player_->getScrollCnt());          // 敵
-    bm_->draw( player_->getScrollCnt() );           // ファイアボール
-    player_->draw();                                // マリオ
-    ui_->draw();                                    // UI
-    gf_->draw();                                    // 花火
+    int scroll_cnt = player_data.scroll_cnt;
+
+    field_->drawFront(scroll_cnt); // フィールド背景
+    item_->draw(scroll_cnt);       // アイテム
+    field_->draw( scroll_cnt );    // 触れるブロック
+    enemy_->draw(scroll_cnt);      // 敵
+    bm_->draw( scroll_cnt );       // ファイアボール
+    player_->draw();               // マリオ
+    ui_->draw();                   // UI
+    gf_->draw();                   // 花火
 }
 
 void PlayScene::finalize()
@@ -323,14 +326,14 @@ void PlayScene::finalize()
     gf_->finalize();
 
     // メモリ開放newした分
-    delete gf_;
-    delete ui_;
-    delete bm_;
-    delete item_;
-    delete field_;
-    delete enemy_;
-    delete player_;
-    delete pos_col_;
+    SAFE_DELETE( gf_ );
+    SAFE_DELETE( ui_ );
+    SAFE_DELETE( bm_ );
+    SAFE_DELETE( item_ );
+    SAFE_DELETE( field_ );
+    SAFE_DELETE( enemy_ );
+    SAFE_DELETE( player_ );
+    SAFE_DELETE( pos_col_ );
 }
 
 void PlayScene::resultScene()

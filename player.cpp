@@ -3,33 +3,32 @@
 bool Player::initialize()
 {
     texture_          = LoadGraph( "Texture/mario_anime.png" );
-    position_.x       = kStartX;
-    position_.y       = kStartY;
+    data_.player_position.x       = kStartX;
+    data_.player_position.y       = kStartY;
   
     // ゲーム開始時のRECT
     defaultSize( kMario );
  
-    // 開始時status_がkMario以外なら
-    if( status_ != kMario )
+    // 開始時data_.player_statusがkMario以外なら
+    if( data_.player_status != kMario )
     {
-        position_.y -= kSize;
-        total_move_.y -= kSize;
+        data_.player_position.y -= kSize;
+        data_.total_position.y -= kSize;
     }
-
     
     // 数値の中のポジション
-    total_move_.x = kStartX;
-    total_move_.y = 832;
+    data_.total_position.x = kStartX;
+    data_.total_position.y = 832;
 
-    status_           = kMario;
-    past_status_      = status_;
+    data_.player_status           = kMario;
+    past_status_      = data_.player_status;
 
-    scroll_cnt_       = 0;            // 右に抜けた分増やしていく
+    data_.scroll_cnt       = 0;            // 右に抜けた分増やしていく
 
-    gameover_flag_    = true;         // これが立ったら死ぬ
+    data_.gameover_flag    = true;         // これが立ったら死ぬ
 
     animation_        = 0;            // 立っているだけの状態
-    direction_        = true;         // 初期は右向き
+    data_.direction        = true;         // 初期は右向き
 
     animation_cnt_    = 0;            // 何もしていないときは動かない
     animation_flag_   = true;         // ジャンプしているとき以外は移動時アニメーション
@@ -44,13 +43,13 @@ bool Player::initialize()
     acceleration_     = 0;
     jumping_          = kJump;
 
-    invincible_       = true;
+    data_.invincible_flag       = true;
     invincible_time_  = true;
     invincible_cnt_   = 0;
 
-    goal_flag_        = true;
+    data_.goal_flag        = true;
     catch_flag_       = true;
-    extinguish_existence_ = true;
+    data_.end_flag = true;
 
     throw_cnt_ = 0;
     throw_flag_ = true;
@@ -60,7 +59,7 @@ bool Player::initialize()
     push_time_jump_ = 0;
     push_time_fire_ = 0;
     push_time_run_  = 0;
-    push_time_squat_= 0;
+    data_.push_squat= 0;
 
     speed_ = 0;
     speed_up_ = 0;
@@ -72,13 +71,13 @@ bool Player::initialize()
 
 bool Player::update( bool TimeLimit )
 {
-    if( !goal_flag_ ) ending();
-    else if( gameover_flag_ )
+    if( !data_.goal_flag ) ending();
+    else if( data_.gameover_flag )
     {
         if( invincible_time_ )
         {
             // しゃがめる大きさかどうか
-            if( status_ > kMario && goal_flag_ )
+            if( data_.player_status > kMario && data_.goal_flag )
                 squat();
 
             // ダッシュボタン判定
@@ -130,10 +129,10 @@ bool Player::update( bool TimeLimit )
             }
 
             // しゃがんでいなかったらアニメーション
-            if( push_time_squat_ == 0 && speed_ != 0 )
+            if( data_.push_squat == 0 && speed_ != 0 )
                 animation();
 
-            if( push_time_squat_ == 0 && speed_ == 0 )
+            if( data_.push_squat == 0 && speed_ == 0 )
             {
                 animation_ = 0;
                 animation_cnt_ = 0;
@@ -154,7 +153,7 @@ bool Player::update( bool TimeLimit )
             {
                 if( jumping_ == kJump )
                 {
-                    timekeep_squat_ = push_time_squat_;
+                    timekeep_squat_ = data_.push_squat;
                     jumping_ = kNoJump;
                     acceleration_ = -kJumpPower;
 
@@ -174,8 +173,8 @@ bool Player::update( bool TimeLimit )
                 acceleration_ += kGravity;
 
                 // マリオを飛ばす
-                position_.y += acceleration_;
-                total_move_.y += acceleration_;
+                data_.player_position.y += acceleration_;
+                data_.total_position.y += acceleration_;
             }
 
             // 加速度上限
@@ -185,57 +184,57 @@ bool Player::update( bool TimeLimit )
             }
 
             // しゃがみ状態のみ頭の位置を下げる
-            if( push_time_squat_ == 0 )
+            if( data_.push_squat == 0 )
             {
                 // マリオの頭(幅を左右10小さく)
-                body_[ kRight ][ kHead ][ kX ] = (total_move_.x + (kSize - kGather));
-                body_[ kRight ][ kHead ][ kY ] = (total_move_.y - 1);
-                body_[ kLeft ][ kHead ][ kX ] = (total_move_.x + kGather);
-                body_[ kLeft ][ kHead ][ kY ] = (total_move_.y - 1);
+                body_[ kRight ][ kHead ][ kX ] = (data_.total_position.x + (kSize - kGather));
+                body_[ kRight ][ kHead ][ kY ] = (data_.total_position.y - 1);
+                body_[ kLeft ][ kHead ][ kX ] = (data_.total_position.x + kGather);
+                body_[ kLeft ][ kHead ][ kY ] = (data_.total_position.y - 1);
             }
             else
             {
                 // マリオの頭(幅を左右10小さく)
-                body_[ kRight ][ kHead ][ kX ] = (total_move_.x + (kSize - kGather));
-                body_[ kRight ][ kHead ][ kY ] = (total_move_.y + kSize - 1);
-                body_[ kLeft ][ kHead ][ kX ] = (total_move_.x + kGather);
-                body_[ kLeft ][ kHead ][ kY ] = (total_move_.y + kSize - 1);
+                body_[ kRight ][ kHead ][ kX ] = (data_.total_position.x + (kSize - kGather));
+                body_[ kRight ][ kHead ][ kY ] = (data_.total_position.y + kSize - 1);
+                body_[ kLeft ][ kHead ][ kX ] = (data_.total_position.x + kGather);
+                body_[ kLeft ][ kHead ][ kY ] = (data_.total_position.y + kSize - 1);
             }
 
             // マリオの足元
-            body_[ kRight ][ kFoot ][ kX ] = (total_move_.x + (kSize - kGather));
-            body_[ kLeft ][ kFoot ][ kX ] = (total_move_.x + kGather);
+            body_[ kRight ][ kFoot ][ kX ] = (data_.total_position.x + (kSize - kGather));
+            body_[ kLeft ][ kFoot ][ kX ] = (data_.total_position.x + kGather);
 
             // マリオの時
-            if( status_ == kMario )
+            if( data_.player_status == kMario )
             {
-                body_[ kRight ][ kFoot ][ kY ] = (total_move_.y + kSize + 1);
-                body_[ kLeft ][ kFoot ][ kY ] = (total_move_.y + kSize + 1);
+                body_[ kRight ][ kFoot ][ kY ] = (data_.total_position.y + kSize + 1);
+                body_[ kLeft ][ kFoot ][ kY ] = (data_.total_position.y + kSize + 1);
             }
             // マリオ以外の時
             else
             {
-                body_[ kRight ][ kFoot ][ kY ] = (total_move_.y + kDoubleSize + 1);
-                body_[ kLeft ][ kFoot ][ kY ] = (total_move_.y + kDoubleSize + 1);
+                body_[ kRight ][ kFoot ][ kY ] = (data_.total_position.y + kDoubleSize + 1);
+                body_[ kLeft ][ kFoot ][ kY ] = (data_.total_position.y + kDoubleSize + 1);
             }
 
             // 上へ飛んでいるときにだけhit()を呼ぶ
             if( acceleration_ < 0 )
             {
                 // しゃがみ時
-                if( push_time_squat_ == 0 )
+                if( data_.push_squat == 0 )
                 {
                     // 右頭にあたるとき
                     if( Collision::collision( kRight, kHead ) <= kSize )
                     {
-                        break_right_.x = (total_move_.x / kSize) + 1;
-                        break_right_.y = total_move_.y / kSize;
+                        data_.break_right.x = (data_.total_position.x / kSize) + 1;
+                        data_.break_right.y = data_.total_position.y / kSize;
                     }
                     // 左頭にあたるとき
                     if( Collision::collision( kLeft, kHead ) <= kSize )
                     {
-                        break_left_.x = (total_move_.x / kSize);
-                        break_left_.y = total_move_.y / kSize;
+                        data_.break_left.x = (data_.total_position.x / kSize);
+                        data_.break_left.y = data_.total_position.y / kSize;
                     }
                 }
                 else
@@ -243,14 +242,14 @@ bool Player::update( bool TimeLimit )
                     // 右頭にあたるとき
                     if( Collision::collision( kRight, kHead ) <= kSize )
                     {
-                        break_right_.x = (total_move_.x / kSize) + 1;
-                        break_right_.y = (total_move_.y + kSize) / kSize;
+                        data_.break_right.x = (data_.total_position.x / kSize) + 1;
+                        data_.break_right.y = (data_.total_position.y + kSize) / kSize;
                     }
                     // 左頭にあたるとき
                     if( Collision::collision( kLeft, kHead ) <= kSize )
                     {
-                        break_left_.x = (total_move_.x / kSize);
-                        break_left_.y = (total_move_.y + kSize) / kSize;
+                        data_.break_left.x = (data_.total_position.x / kSize);
+                        data_.break_left.y = (data_.total_position.y + kSize) / kSize;
                     }
                 }
 
@@ -268,27 +267,27 @@ bool Player::update( bool TimeLimit )
                 collision();
 
             // ゴール
-            if( total_move_.x >= (kSize * kGoalPost) + kHalfSize )
+            if( data_.total_position.x >= (kSize * kGoalPost) + kHalfSize )
             {
                 animation_flag_ = true;
                 catch_flag_ = false;
-                goal_flag_ = false;
+                data_.goal_flag = false;
                 animation_ = 6;
                 acceleration_ = 0;
-                total_move_.x = (kSize * kGoalPost) + kHalfSize;
+                data_.total_position.x = (kSize * kGoalPost) + kHalfSize;
             }
 
             // 時間制限による死亡
             if( !TimeLimit )
             {
-                gameover_flag_ = false;
+                data_.gameover_flag = false;
                 acceleration_ = -kJumpPower;
-                status_ = kGameover;
+                data_.player_status = kGameover;
             }
         }
 
         // 無敵時間制限
-        if( !invincible_ )
+        if( !data_.invincible_flag )
         {
             invincible_cnt_++;
 
@@ -300,7 +299,7 @@ bool Player::update( bool TimeLimit )
             if( invincible_cnt_ > kInvincible )
             {
                 invincible_cnt_ = 0;
-                invincible_ = true;
+                data_.invincible_flag = true;
             }
         }
     }
@@ -308,16 +307,16 @@ bool Player::update( bool TimeLimit )
     else
     {
         // 落ちたとき演出無く死亡
-        if( position_.y > kDeadLine )
+        if( data_.player_position.y > kDeadLine )
             return false;
 
-        // status_がマイナスの時
+        // data_.player_statusがマイナスの時
         // GameOver Action
         acceleration_ += kGravity;
 
         // マリオを飛ばす
-        position_.y += acceleration_;
-        total_move_.y += acceleration_;
+        data_.player_position.y += acceleration_;
+        data_.total_position.y += acceleration_;
     }
 
     return true;
@@ -326,33 +325,33 @@ bool Player::update( bool TimeLimit )
 void Player::draw()
 {
     // ゴール前
-    if( extinguish_existence_ )
+    if( data_.end_flag )
     {
         // 頭の初期化
-        break_left_.x = 0; break_left_.y = 0;
-        break_right_.x = 0; break_right_.y = 0;
+        data_.break_left.x = 0; data_.break_left.y = 0;
+        data_.break_right.x = 0; data_.break_right.y = 0;
 
         // 共通範囲(しゃがんでいない時)
-        if( push_time_squat_ == 0 )
+        if( data_.push_squat == 0 )
         {
             rect_.left = animation_ * kSize;
             rect_.right = kSize;
         }
 
         // やられるとき
-        if( status_ == kGameover )
+        if( data_.player_status == kGameover )
             defaultSize( kGameover );
 
         // ファイアマリオ
-        else if( status_ == kFireMario && push_time_squat_ == 0 )
+        else if( data_.player_status == kFireMario && data_.push_squat == 0 )
             fireMove();
 
         // RECTのずれが発生しないように
-        if( status_ == kFireMario && !goal_flag_ )
+        if( data_.player_status == kFireMario && !data_.goal_flag )
             defaultSize( kFireMario );
 
         // 無敵状態(半透明)
-        if( !invincible_ && status_ != kGameover )
+        if( !data_.invincible_flag && data_.player_status != kGameover )
         {
             // サイズ変換
             SetDrawBlendMode( DX_BLENDMODE_ALPHA, 128 );
@@ -371,8 +370,8 @@ void Player::draw()
                     defaultSize( kMario );
 
                     // 高さを揃える
-                    position_.y += kSize;
-                    total_move_.y += kSize;
+                    data_.player_position.y += kSize;
+                    data_.total_position.y += kSize;
                 }
                 // 余り０で奇数の時
                 else if( m == 0 && n % 2 == 1 )
@@ -381,25 +380,25 @@ void Player::draw()
                     defaultSize( kSuperMario );
 
                     // 高さを揃える
-                    position_.y -= kSize;
-                    total_move_.y -= kSize;
+                    data_.player_position.y -= kSize;
+                    data_.total_position.y -= kSize;
                 }
             }
         }
 
         // 滑っているときだけ反転
-        if( animation_ == 5 )
+        if( animation_ == kSliding )
         {
-            if( direction_ )
-                direction_ = false;
+            if( data_.direction )
+                data_.direction = false;
             else
-                direction_ = true;
+                data_.direction = true;
         }
 
         // 通常描画
-        DrawRectGraph( position_.x, position_.y,
+        DrawRectGraph( data_.player_position.x, data_.player_position.y,
             rect_.left, rect_.top, rect_.right, rect_.bottom,
-            texture_, TRUE, !direction_ );
+            texture_, TRUE, !data_.direction );
 
         // 状態を戻す
         SetDrawBlendMode( DX_BLENDMODE_NOBLEND, 255 );
@@ -443,15 +442,15 @@ void Player::collision()
 
         acceleration_ = 0;  // 落下速度
 
-        int block_line = static_cast<int>(std::round( static_cast<float>(total_move_.y) / kSize ));
-        position_.y = (block_line - kControl) * kSize;
-        total_move_.y = block_line * kSize;
+        int block_line = static_cast<int>(std::round( static_cast<float>(data_.total_position.y) / kSize ));
+        data_.player_position.y = (block_line - kControl) * kSize;
+        data_.total_position.y = block_line * kSize;
     }
     // 足元に何もなく浮いているとき
     else if( fool_col == 2 )
     {
         // 時間を保存
-        timekeep_squat_ = push_time_squat_;
+        timekeep_squat_ = data_.push_squat;
 
         // 落下中に動かないように
         animation_flag_ = false;
@@ -460,10 +459,10 @@ void Player::collision()
         jumping_ = kNoJump;
 
         // マリオが画面外に行ったとき
-        if( position_.y > kFallOut )
+        if( data_.player_position.y > kFallOut )
         {
             // gameover
-            gameover_flag_ = false;
+            data_.gameover_flag = false;
         }
     }
 }
@@ -485,37 +484,37 @@ void Player::hit()
     // 上への加速度を無くす
     acceleration_ = 0;
 
-    int block_line = static_cast<int>(std::round( static_cast<float>(total_move_.y) / kSize ));
+    int block_line = static_cast<int>(std::round( static_cast<float>(data_.total_position.y) / kSize ));
 
     // プレイヤーの立つ場所を上の辺の高さにする
-    position_.y = (block_line - kControl) * kSize;
-    total_move_.y = block_line * kSize;
+    data_.player_position.y = (block_line - kControl) * kSize;
+    data_.total_position.y = block_line * kSize;
 }
 
 void Player::itemCollision()
 {
     // 最終進化じゃないとき
-    if( status_ < kFireMario )
+    if( data_.player_status < kFireMario )
     {
-        status_ += 1;          // マリオ変身
+        data_.player_status += 1;          // マリオ変身
 
         // スーパーマリオ
-        if( status_ == kSuperMario )
+        if( data_.player_status == kSuperMario )
             defaultSize( kSuperMario );
 
         // ファイアマリオ
-        else if( status_ == kFireMario )
+        else if( data_.player_status == kFireMario )
             defaultSize( kFireMario );
 
         // 高さを揃える
         if( past_status_ == kMario )
         {
-            position_.y -= kSize;
-            total_move_.y -= kSize;
+            data_.player_position.y -= kSize;
+            data_.total_position.y -= kSize;
         }
 
         // 変身後の状態を保存
-        past_status_ = status_;
+        past_status_ = data_.player_status;
     }
 }
 
@@ -523,30 +522,30 @@ void Player::enemyCollision()
 {
     if( past_status_ > kMario )
     {
-        status_ = kMario;           // マリオ退化
-        invincible_ = false;        // マリオ無敵に変える
+        data_.player_status = kMario;           // マリオ退化
+        data_.invincible_flag = false;        // マリオ無敵に変える
         invincible_time_ = false;   // マリオ無敵カウント開始
 
-        if( push_time_squat_ != 0 )
+        if( data_.push_squat != 0 )
         {
             defaultSize( kMario );
-            push_time_squat_ = 0;
+            data_.push_squat = 0;
         }
     }
     else
     {
-        status_ = kGameover;        // マリオ死亡
-        gameover_flag_ = false;     // ゲームオーバー
+        data_.player_status = kGameover;        // マリオ死亡
+        data_.gameover_flag = false;     // ゲームオーバー
         acceleration_ = -kJumpPower;// 跳ねるアクション
     }
 
-    past_status_ = status_;         // 変身後の状態を保存
+    past_status_ = data_.player_status;         // 変身後の状態を保存
 }
 
 void Player::enemyStepon()
 {    
     // しゃがんでいない時
-    if(push_time_squat_ == 0)
+    if(data_.push_squat == 0)
     animation_ = 4;
 
     // ジャンプ中にアニメーションを動かさないようにする
@@ -562,13 +561,13 @@ void Player::ending()
     down_cnt_++;
 
     // 状態がマリオの時
-    if( status_ == kMario )
+    if( data_.player_status == kMario )
     {
-        if( total_move_.y < (kSize * 11 + kHalfSize) )
+        if( data_.total_position.y < (kSize * 11 + kHalfSize) )
         {
             // ゆっくりとポストから降りる
-            position_.y += kDownSpeed;
-            total_move_.y += kDownSpeed;
+            data_.player_position.y += kDownSpeed;
+            data_.total_position.y += kDownSpeed;
 
             animation_cnt_++;
 
@@ -588,46 +587,46 @@ void Player::ending()
             if( !catch_flag_ )
             {
                 catch_flag_ = true;
-                position_.x += kSize;
-                total_move_.x += kSize;
+                data_.player_position.x += kSize;
+                data_.total_position.x += kSize;
             }
 
-            direction_ = false;
+            data_.direction = false;
         }
         // 塔へ向かって歩き出す
         else if( down_cnt_ >= kTurnCnt )
         {
-            if( total_move_.x < (kSize * kEntrance) - kHalfSize )
+            if( data_.total_position.x < (kSize * kEntrance) - kHalfSize )
             {
-                position_.x += 3;
-                total_move_.x += 3;
+                data_.player_position.x += 3;
+                data_.total_position.x += 3;
 
                 animation();
 
-                if( position_.y < kEndLine )
+                if( data_.player_position.y < kEndLine )
                 {
                     acceleration_ += kGravity;
-                    position_.y += acceleration_;
-                    total_move_.y += acceleration_;
+                    data_.player_position.y += acceleration_;
+                    data_.total_position.y += acceleration_;
                 }
                 else
                 {
-                    direction_ = true;
-                    position_.y = kEndLine;
+                    data_.direction = true;
+                    data_.player_position.y = kEndLine;
                 }
             }
             else
                 // 透明化
-                extinguish_existence_ = false;
+                data_.end_flag = false;
         }
     }
     // 体がマリオ以外の時
     else
-        if( total_move_.y < (kDecuple + kHalfSize) )
+        if( data_.total_position.y < (kDecuple + kHalfSize) )
         {
             // ポストから降りる
-            position_.y += kDownSpeed;
-            total_move_.y += kDownSpeed;
+            data_.player_position.y += kDownSpeed;
+            data_.total_position.y += kDownSpeed;
 
             animation_cnt_++;
 
@@ -647,77 +646,77 @@ void Player::ending()
             if( !catch_flag_ )
             {
                 catch_flag_ = true;
-                position_.x += kSize;
-                total_move_.x += kSize;
+                data_.player_position.x += kSize;
+                data_.total_position.x += kSize;
             }
 
-            direction_ = false;
+            data_.direction = false;
         }
         // 塔へ向かって歩く
         else if(down_cnt_ >= kTurnCnt)
         {
-            if( total_move_.x < (kSize * kEntrance) - kHalfSize )
+            if( data_.total_position.x < (kSize * kEntrance) - kHalfSize )
             {
-                position_.x += 3;
-                total_move_.x += 3;
+                data_.player_position.x += 3;
+                data_.total_position.x += 3;
 
                 // 歩くアニメーション
                 animation();
 
-                if( position_.y < kEndLine - kSize )
+                if( data_.player_position.y < kEndLine - kSize )
                 {
                     acceleration_ += kGravity;
-                    position_.y += acceleration_;
-                    total_move_.y += acceleration_;
+                    data_.player_position.y += acceleration_;
+                    data_.total_position.y += acceleration_;
                 }
                 else
                 {
-                    direction_ = true;
-                    position_.y = kEndLine - kSize;
+                    data_.direction = true;
+                    data_.player_position.y = kEndLine - kSize;
                 }
             }
             else
                 // 体の透明化
-                extinguish_existence_ = false;
+                data_.end_flag = false;
         }
 }
 
 void Player::rightCheck()
 {
     // 体の上下の確認
-    body_[ kRight ][ kShoulder ][ kX ] = (total_move_.x + kSize + 1);
-    body_[ kRight ][ kShoulder ][ kY ] = (total_move_.y);
+    body_[ kRight ][ kShoulder ][ kX ] = (data_.total_position.x + kSize + 1);
+    body_[ kRight ][ kShoulder ][ kY ] = (data_.total_position.y);
 
-    body_[ kRight ][ kHands ][ kX ] = (total_move_.x + kSize + 1);
-    // status_がkMarioの時
-    if( status_ == kMario )
-        body_[ kRight ][ kHands ][ kY ] = (total_move_.y + kSize - 1);
+    body_[ kRight ][ kHands ][ kX ] = (data_.total_position.x + kSize + 1);
+    // data_.player_statusがkMarioの時
+    if( data_.player_status == kMario )
+        body_[ kRight ][ kHands ][ kY ] = (data_.total_position.y + kSize - 1);
     else
-        body_[ kRight ][ kHands ][ kY ] = (total_move_.y + kDoubleSize - 1);
+        body_[ kRight ][ kHands ][ kY ] = (data_.total_position.y + kDoubleSize - 1);
 
 
     // 当たり判定のないブロックのとき
     if( Collision::sideColl( kRight ) == true )
     {
         // kSuperMario以上の時体の真ん中をすり抜けないように確認
-        if( status_ >= kSuperMario )
+        if( data_.player_status >= kSuperMario )
         {
             // 体の右側を登録
-            body_[ kRight ][ kShoulder ][ kX ] = (total_move_.x + kSize + 1);
-            body_[ kRight ][ kShoulder ][ kY ] = (total_move_.y + kSize);
+            body_[ kRight ][ kShoulder ][ kX ] = (data_.total_position.x + kSize + 1);
+            body_[ kRight ][ kShoulder ][ kY ] = (data_.total_position.y + kSize);
         }
 
         // もう一度当たり判定を確認する
         if( Collision::sideColl( kRight ) == true )
         {
-            position_.x += speed_;
-            total_move_.x += speed_;
+            data_.player_position.x += speed_;
+            data_.total_position.x += speed_;
 
             // pos_x_ センターを超えるとき
-            if( position_.x > kEndLine )
+            if( data_.player_position.x > kEndLine )
             {
-                scroll_cnt_ = total_move_.x - kEndLine;
-                position_.x = kEndLine;
+                data_.scroll_cnt = data_.total_position.x - kEndLine;
+                data_.player_position.x = kEndLine;
             }
         }
     }
@@ -726,38 +725,38 @@ void Player::rightCheck()
 void Player::leftCheck()
 {
     // 上と両サイドは変更なし
-    body_[ kLeft ][ kShoulder ][ kX ] = (total_move_.x - 1);
-    body_[ kLeft ][ kShoulder ][ kY ] = (total_move_.y);
+    body_[ kLeft ][ kShoulder ][ kX ] = (data_.total_position.x - 1);
+    body_[ kLeft ][ kShoulder ][ kY ] = (data_.total_position.y);
 
-    body_[ kLeft ][ kHands ][ kX ] = (total_move_.x - 1);
+    body_[ kLeft ][ kHands ][ kX ] = (data_.total_position.x - 1);
 
     // 下の位置だけ状態に応じて変更する
-    if( status_ == kMario )
-        body_[ kLeft ][ kHands ][ kY ] = (total_move_.y + kSize - 1);
+    if( data_.player_status == kMario )
+        body_[ kLeft ][ kHands ][ kY ] = (data_.total_position.y + kSize - 1);
     else
-        body_[ kLeft ][ kHands ][ kY ] = (total_move_.y + kDoubleSize - 1);
+        body_[ kLeft ][ kHands ][ kY ] = (data_.total_position.y + kDoubleSize - 1);
 
     // マリオの左側に衝突するブロックがないとき
     if( Collision::sideColl( kLeft ) == true )
     {
         // 状態がスーパーマリオより上の時
-        if( status_ >= kSuperMario )
+        if( data_.player_status >= kSuperMario )
         {
             // 体の左側を登録
-            body_[ kLeft ][ kShoulder ][ kX ] = (total_move_.x - 1);
-            body_[ kLeft ][ kShoulder ][ kY ] = (total_move_.y + kSize);
+            body_[ kLeft ][ kShoulder ][ kX ] = (data_.total_position.x - 1);
+            body_[ kLeft ][ kShoulder ][ kY ] = (data_.total_position.y + kSize);
         }
 
         // もう一度当たり判定を確認する
         if( Collision::sideColl( kLeft ) == true )
         {
                 // ポジションゼロより左の時
-                if( position_.x <= 0 )
-                    position_.x = 0;
+                if( data_.player_position.x <= 0 )
+                    data_.player_position.x = 0;
                 else
                 {
-                    position_.x += speed_;
-                    total_move_.x += speed_;
+                    data_.player_position.x += speed_;
+                    data_.total_position.x += speed_;
                 }
         }
     }
@@ -768,24 +767,24 @@ void Player::squat()
 {
     // 下が押されたとき
     if( !(GetJoypadInputState( DX_INPUT_PAD1 ) & PAD_INPUT_DOWN) == 0 || CheckHitKey( KEY_INPUT_S ) == 1 )
-        push_time_squat_++;
+        data_.push_squat++;
     else
     {
-            defaultSize( status_ );
-            push_time_squat_ = 0;
+            defaultSize( data_.player_status );
+            data_.push_squat = 0;
     }
 
     // ジャンプした瞬間の状態をキープ
     if( !animation_flag_ )
-        push_time_squat_ = timekeep_squat_;
+        data_.push_squat = timekeep_squat_;
 
     // しゃがみが押されたときRECT切り替え
-    if( push_time_squat_ >= 1 )
+    if( data_.push_squat >= 1 )
     {
-        if( status_ == kSuperMario )
+        if( data_.player_status == kSuperMario )
             rect_.top = kSextuple;
 
-        else if( status_ == kFireMario )
+        else if( data_.player_status == kFireMario )
             rect_.top = kDecuple;
 
         rect_.left = 0;
@@ -797,7 +796,7 @@ void Player::squat()
 void Player::fireMove()
 {
     // Status FireMario
-    if( goal_flag_ )
+    if( data_.goal_flag )
     {
         if( throw_flag_ )
         {
@@ -867,10 +866,10 @@ void Player::defaultSize( int Status )
 
 void Player::rightPush()
 {
-    direction_ = true;         // 向きを右向きに変える
+    data_.direction = true;         // 向きを右向きに変える
     right_button_ = false;     // 押している(トラッカー) 
 
-    if( push_time_squat_ == 0 )
+    if( data_.push_squat == 0 )
     {           
         speed_up_++;
 
@@ -885,7 +884,7 @@ void Player::rightPush()
                 if( speed_ < 0 )
                 {
                     sliding_ = false;
-                    animation_ = 5;
+                    animation_ = kSliding;
                 }
                 else
                     sliding_ = true;
@@ -907,7 +906,7 @@ void Player::rightPush()
                 if( speed_ < 0 )
                 {
                     sliding_ = false;
-                    animation_ = 5;
+                    animation_ = kSliding;
                 }
                 else
                     sliding_ = true;
@@ -934,10 +933,10 @@ void Player::rightPush()
 
 void Player::leftPush()
 {
-    direction_ = false;        // 向きを左向きに変える
+    data_.direction = false;        // 向きを左向きに変える
     left_button_ = false;      // 押している(トラッカー)
 
-    if( push_time_squat_ == 0 )
+    if( data_.push_squat == 0 )
     {
         speed_up_++;
 
@@ -952,7 +951,7 @@ void Player::leftPush()
                 if( speed_ > 0 )
                 {
                     sliding_ = false;
-                    animation_ = 5;
+                    animation_ = kSliding;
                 }
                 else
                     sliding_ = true;
@@ -974,7 +973,7 @@ void Player::leftPush()
                 if(speed_ > 0)
                 {
                     sliding_ = false;
-                    animation_ = 5;
+                    animation_ = kSliding;
                 }
                 else
                     sliding_ = true;
@@ -998,4 +997,9 @@ void Player::leftPush()
             speed_down_ = 0;
         }
     }
+}
+
+PlayerData Player::getData()
+{
+    return data_;
 }

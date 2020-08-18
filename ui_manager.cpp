@@ -13,10 +13,10 @@ void UIManager::initialize()
     score_.initialize();
 }
 
-void UIManager::update( bool GoalFlag )
+void UIManager::update( PlayerData PlayerData )
 {    
     // ゴール状態取得
-    time_.setGoalFlag( GoalFlag );
+    time_.setGoalFlag( PlayerData.goal_flag );
 
     // 各種UI更新
     map_.update();

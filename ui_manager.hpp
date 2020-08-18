@@ -1,4 +1,5 @@
 #pragma once
+#include "namespace.hpp"
 
 /*New‚·‚éClass*/
 #include "ui_map.hpp"
@@ -10,7 +11,7 @@ class UIManager
 {
 public:
     void initialize();
-    void update( bool );
+    void update( PlayerData );
     void draw();
     void finalize();
 
