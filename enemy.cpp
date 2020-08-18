@@ -61,7 +61,7 @@ void Enemy::initalize( std::fstream& FieldEnemy )
     }
 }
 
-void Enemy::update( int ScreenOver )
+void Enemy::update( PlayerData PlayerData )
 {  
     // í‚Éupdate()‚ÍŒÄ‚Î‚ê‚é
     for( int i = 0; i < height_; i++ )
@@ -69,7 +69,7 @@ void Enemy::update( int ScreenOver )
         for( int j = 0; j < width_; j++ )
         {
             // “n‚µ‚½ScreenOver‚ÅˆÚ“®‚·‚é‚©‚ğ”»’è‚³‚¹‚é
-            enemy_[ 0 ][ i ][ j ]->update( ScreenOver );
+            enemy_[ 0 ][ i ][ j ]->update( PlayerData.scroll_cnt );
         }
     }
 }

@@ -54,8 +54,6 @@ void SceneManager::finalize()
     scene_->finalize();
 
     // 一番最後のシーン開放
-    delete scene_;
+    SAFE_DELETE( scene_);
 
-    // シーンを空にする
-    scene_ = nullptr;
 }

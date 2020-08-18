@@ -15,7 +15,7 @@ class Item
 public:
     Item( Field* Field );
     bool initialize( std::fstream& stage );
-    void update( int Brx, int Bry, int Blx, int Bly, int Status, int Screenover );
+    void update( PlayerData );
     void draw( int Screenover );
     void finalize();
 
@@ -23,8 +23,8 @@ public:
     void coinCheckLeft( int, int );
 
     void posCollision( int i, int j );      // ƒ}ƒŠƒI‚Æ“–‚½‚Á‚½‚Æ‚«‚ÉŒÄ‚Î‚ê‚éŠÖ”
-    void getGoal( bool );
-    void getEnd( bool );
+    void getGoal( PlayerData );
+    void getEnd( PlayerData );
 
     inline int getItemPosX( int i, int j ) { return item_[ 0 ][ i ][ j ]->getPosX(); }
     inline int getItemPosY( int i, int j ) { return item_[ 0 ][ i ][ j ]->getPosY(); }

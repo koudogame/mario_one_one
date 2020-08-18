@@ -33,6 +33,8 @@ private:
     BallManagement* bm_;        // ボールマネージャークラス
     PosCollision* pos_col_;     // ポジション衝突判定クラス
 
+    PlayerData player_data;
+
     int touch_;
     int clear_num_;
     int change_timer_;

@@ -1,6 +1,7 @@
 #pragma once
 #include "block_base.hpp"
 #include "release.hpp"
+#include "namespace.hpp"
 
 /* New‚·‚éClass */
 #include "mystery.hpp"
@@ -28,7 +29,7 @@ class Field
 {
 public :
     bool initialize(std::fstream& stage);
-    void update( int Brx, int Bry, int Blx, int Bly , int Status);
+    void update( PlayerData );
     void draw(int ScreenOver);
     void drawFront( int ScreenOver );
     void finalize();

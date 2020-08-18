@@ -12,13 +12,13 @@ public :
     BallManagement( Field* field ) : ff_( field ) { field_ = field; }
 
     void initialize();
-    void update( int, int, int, int, bool ,int, int );
+    void update( PlayerData PlayerData );
     void draw(const int);              // ScreenOver
     void finalize();
 
     void createFire(int, int, int, int);
     void sideCheck();
-    void posCheck(const int);          // ファイアボールの場所をチェックする
+    void posCheck(PlayerData);         // ファイアボールの場所をチェックする
     void enemyCollision( int );        // 当たったときの火を消す
 
     int getFirePosX(int);              // fireのX座標を返す
